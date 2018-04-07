@@ -8,7 +8,7 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
     redirectTo: 'login'
   })
   .when('/login', {
-    redirectTo: '/views/templates/login.html',
+    templateUrl: '/views/templates/login.html',
     controller: 'LoginController as vm'
   })
   .when('/admin', {

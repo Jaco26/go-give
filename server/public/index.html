@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>cogiv</title>
+    <title>Co-Giv{local}</title>
     <!-- Angular JS -->
     <script src="vendors/angular.js"></script>
     <script src="vendors/angular-route.js"></script>
@@ -21,8 +21,22 @@
     <!-- Custom JS -->
     <script src="scripts/client.js"></script>
 
+    <!-- Controllers -->
+    <script type="text/javascript" src="scripts/controllers/login.controller.js"></script>
+
+    <!-- Services -->
+    <script type="text/javascript" src="scripts/services/user.service.js"></script>
+
 </head>
-<body>
+<body ng-app = "myApp">
+  <main ng-view >
     <h1>Hello Co-Giv{local}</h1>
+
+  </main>
+
+  <div id="status"></div>
+  <!-- the status id is where fb messages go, this can be changed in the login view
+        this needs to be seperate from the view, otherwise we get errors-->
+
 </body>
 </html>
