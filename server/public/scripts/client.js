@@ -8,6 +8,5 @@ console.log('myApp -- config');
     redirectTo: 'login'
   })
 
-as;dlksadf;lkjdfs;lkjsda;lkjdsfa;lkjadsf;lkjdsf
 
 }])
