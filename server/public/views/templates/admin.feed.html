@@ -8,23 +8,25 @@
 <div>
         <label for="">Title</label>
         <input type="text" ng-model="vm.newFeedItem.title"  placeholder="title">
-     
+
         <label>Feed Text</label>
         <input type="text" ng-model="vm.newFeedItem.feed_text" placeholder="Feed text">
-  
+
         <label for="">Feed Img URL</label>
         <input type="text" ng-model="vm.newFeedItem.feed_img" placeholder="Img Url">
-   
+
         <label for="">Feed Video URL</label>
         <input type="text" ng-model="vm.newFeedItem.feed_video" placeholder="Video">
-  
+
         <label for="">Date</label>
         <input type="text" ng-model="vm.newFeedItem.feed_date" placeholder="Date" >
-     
-        
-     <button ng-click="vm.addFeedItem(vm.newFeedItem)">Button</button>
+
+
+     <button ng-click="vm.addFeedItem(vm.newFeedItem)">Submit Feed Item</button>
+     <button ng-click="vm.getFeedItems()">Get Feed Items</button>
+
       </div>
 
-      
+
 
 <div>
