@@ -7,6 +7,7 @@ myApp.controller('LoginController', [ 'UserService', '$window', function(UserSer
     self.addUserToDB = UserService.addUserToDB;
     self.checkForRegistration = UserService.checkForRegistration;
 
+
     // This is called with the results from from FB.getLoginStatus().
     statusChangeCallback = function(response) {
       console.log(response, 'in statusChangeCallback');
@@ -83,7 +84,6 @@ myApp.controller('LoginController', [ 'UserService', '$window', function(UserSer
           self.user.fbid = response.id;
           console.log(self.user, 'user in controller');
           self.checkForRegistration(self.user);
-          // self.addUserToDB(self.user);
 
       });
     }

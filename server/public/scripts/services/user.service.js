@@ -13,6 +13,7 @@ myApp.service('UserService', ['$http', '$location', function($http, $location) {
       data: user
     }).then(function(response){
       console.log('success in post', response);
+      self.checkForRegistration(user);
     }).catch(function(error){
       console.log('error in post', error);
     })
@@ -28,8 +29,20 @@ myApp.service('UserService', ['$http', '$location', function($http, $location) {
       if(response.data.rows.length == 0){
         console.log('not registered!');
         self.user.registerToggle = true;
-        console.log(user);
+      } else {
+        self.user = response.data.rows[0];
+        console.log(self.user, 'user in get - check for register');
+        if(self.user.role === 1){
+          //redirect to admin page
+          $location.path("/admin");
+        } else if ( self.user.role === 2) {
+          //redirect to user feed
+          $location.path("/feed");
+        }
       }
+
+
+
     }).catch(function(error){
       console.log('error in get', error);
     })
