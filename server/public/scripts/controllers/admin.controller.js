@@ -5,5 +5,6 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService',/*'AdminS
 
     self.newNonprofit = NonprofitService.newNonprofit;
     self.addNonprofit = NonprofitService.addNonprofit;
-  
+    self.getAllNonprofit = NonprofitService.getAllNonprofit;
+
 }]);

@@ -19,6 +19,18 @@ router.post('/', (request, response) => {
 })
 //end POST new nonprofit
 
+router.get('/', (request, response) => {
+  pool.query('SELECT * FROM nonprofit ORDER BY name')
+  .then((result) => {
+    console.log('success in get all nonprofits', result);
+    response.send(result)
+  })
+  .catch((err) => {
+    console.log('error in get all nonprofits', err);
+    response.sendStatus(500);
+  })
+})
+//end get all nonprofits
 
 
 module.exports = router;
