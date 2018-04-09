@@ -39,6 +39,22 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
     templateUrl: '/views/templates/support.html',
     controller: 'UserStaticController as vm'
   })
+  .when('/admin-csv', {
+    templateUrl: '/views/templates/admin.csv.html',
+    controller: 'AdminController as vm'
+  })
+  .when('/admin-feed', {
+    templateUrl: '/views/templates/admin.feed.html',
+    controller: 'AdminController as vm'
+  })
+  .when('/admin-nonprofits', {
+    templateUrl: '/views/templates/admin.nonprofit.html',
+    controller: 'AdminController as vm'
+  })
+  .when('/admin-users', {
+    templateUrl: '/views/templates/admin.user.html',
+    controller: 'AdminController as vm'
+  })
   .otherwise({
     template: '<h1>404</h1>'
   });
