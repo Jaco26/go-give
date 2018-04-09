@@ -1,3 +1,28 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
 
 <h1>Feed</h1>
+
+
+
+
+<div>
+        <label for="">Title</label>
+        <input type="text" ng-model="vm.newFeeditem.title"  placeholder="title">
+     
+        <label>Feed Text</label>
+        <input type="text" ng-model="vm.newFeeditem.feed_text" placeholder="Feed text">
+  
+        <label for="">Feed Img URL</label>
+        <input type="text" ng-model="vm.newFeeditem.feed_img" placeholder="Img Url">
+   
+        <label for="">Feed Video URL</label>
+        <input type="text" ng-model="vm.newFeeditem.feed_video" placeholder="Video">
+  
+        <label for="">Date</label>
+        <input type="text" ng-model="vm.newFeeditem.feed_date" placeholder="Date" >
+     
+        
+     <button ng-click="vm.addFeeditem(vm.newFeeditem)" >Button</button>
+      </div>
+
+<div>
