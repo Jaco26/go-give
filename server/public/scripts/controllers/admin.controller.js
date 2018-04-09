@@ -6,7 +6,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.newNonprofit = NonprofitService.newNonprofit;
     self.addNonprofit = NonprofitService.addNonprofit;
 
-    self.newFeeditem = FeedService.newFeeditem;
-    self.addFeeditem = FeedService.addFeeditem;
+    self.newFeedItem = FeedService.newFeedItem;
+    self.addFeedItem = FeedService.addFeedItem;
   
 }]);
