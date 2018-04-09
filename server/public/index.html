@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="styles/custom.css">
     <!-- Custom JS -->
     <script src="scripts/client.js"></script>
-    
+
     <script src="scripts/controllers/admin.controller.js"></script>
     <script src="scripts/controllers/login.controller.js"></script>
     <script src="scripts/controllers/stripe.controller.js"></script>
@@ -35,10 +35,12 @@
     <script src="scripts/services/user.service.js"></script>
 </head>
 <body ng-app="myApp">
-    <main ng-view></main>
-      <div id="status"></div>
+    <main ng-view>
+
+    </main>
       <!-- the status id is where fb messages go, this can be changed in the login view
       this needs to be seperate from the view, otherwise we get errors-->
+      <div id="status"></div>
 
 </body>
 </html>
