@@ -26,13 +26,14 @@ myApp.service('NonprofitService', ['$http', '$location', function($http, $locati
         method: 'GET',
         url: '/nonprofit'
       }).then(function(response){
-        console.log('success in post', response);
+        console.log('success in get all', response);
         self.allNonprofits.list = response.data.rows
+        console.log(self.allNonprofits.list, 'list of all nonprofits');
       }).catch(function(error){
         console.log('error in get all', error);
       })
     }
     //end get allNonprofits
 
-    
+
 }]); // end service
