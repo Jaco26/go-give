@@ -2,4 +2,7 @@ myApp.controller('UserNonprofitProfileController', ['UserService', function(User
     const self = this;
 
     self.fbLogout = UserService.fbLogout;
+    
+
+
 }]);
