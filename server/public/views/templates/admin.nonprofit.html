@@ -1,3 +1,29 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
 
 <h1>Nonprofits</h1>
+
+
+    <div>
+        <label for="">Name</label>
+        <input type="text" ng-model="vm.newNonprofit.name"  placeholder="Name">
+     
+        <label>Picture Url</label>
+        <input type="text" ng-model="vm.newNonprofit.picture_url" placeholder="Picture Url">
+  
+        <label for="">Logo Url</label>
+        <input type="text" ng-model="vm.newNonprofit.logo_url" placeholder="Logo Url">
+   
+        <label for="">Description</label>
+        <input type="text" ng-model="vm.newNonprofit.description" placeholder="Description">
+  
+        <label for="">Goal #</label>
+        <input type="text" ng-model="vm.newNonprofit.goal" placeholder="Goal #" >
+     
+        <label for="">Goal Description</label>
+        <input type="text" ng-model="vm.newNonprofit.goal_description" placeholder="Goal Description" >
+     <button ng-click="vm.addNonprofit(vm.newNonprofit)" >Button</button>
+      </div>
+
+<div>
+
+</div>
