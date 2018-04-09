@@ -9,10 +9,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
 
 
 
-<<<<<<< HEAD
-=======
     self.newFeedItem = FeedService.newFeedItem;
     self.addFeedItem = FeedService.addFeedItem;
   
->>>>>>> 9ec48201d8cfb5ee71dc585322c97ca949a12cce
 }]);
