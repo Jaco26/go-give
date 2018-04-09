@@ -47,9 +47,6 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
   }
 
 
-
-
-
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
    self.testAPI=function(user) {
@@ -68,7 +65,7 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
 
     });
   }
-
+//this is the version of the testAPI that is called when the user registers for the first time
   self.testAPIRegister=function(user) {
    console.log('Welcome!  Fetching your information.... ');
    FB.api('/me', function(response) {
@@ -86,7 +83,6 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
    });
   }
 
-
   self.fbLogout = function () {
     console.log('in logout');
     $location.path("/login");
@@ -95,7 +91,6 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
             console.log('in logout2');
               //Do what ever you want here when logged out like reloading the page
               self.user = {};
-              $location.path("/login");
               window.location.reload();
           });
       }

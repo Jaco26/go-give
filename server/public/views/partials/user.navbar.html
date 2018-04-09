@@ -5,6 +5,9 @@
         <li class="nav-link"><md-button class="navBtn" ng-href="#!feed">Feed</md-button></li>
         <li class="nav-link"><md-button class="navBtn" ng-href="#!discover">Discover</md-button></li>
         <li class="nav-link"><md-button class="navBtn" ng-click="vm.fbLogout()">Logout</md-button></li>
+        <li ng-show="vm.user.role == 1" class="nav-link"><md-button class="navBtn" ng-href="#!admin">Back to ADMIN</md-button></li>
+
+
 
       </ul>
     </div>
