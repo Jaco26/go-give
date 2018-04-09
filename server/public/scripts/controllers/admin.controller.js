@@ -9,6 +9,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
 
 
 
+
     self.newFeedItem = FeedService.newFeedItem;
     self.addFeedItem = FeedService.addFeedItem;
   
