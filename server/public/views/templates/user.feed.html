@@ -2,3 +2,13 @@
 
 <h1>Feed</h1>
 
+<div>
+  <ul  ng-repeat="item in vm.allFeedItems.list">
+    <li>name: {{item.name}}</li><br>
+    <li>title: {{item.title}}</li><br>
+    <li>text: {{item.feed_text}}</li><br>
+    <li>img url: {{item.feed_img_url}}</li><br>
+    <li>video url: {{item.feed_video_url}}</li><br>
+    <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
+  </ul>
+</div>
