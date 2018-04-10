@@ -55,8 +55,8 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
-      document.getElementById('pic').innerHTML =
-        `<img src=https://graph.facebook.com/${response.id}/picture/>`;
+      // document.getElementById('pic').innerHTML =
+      //   `<img src=https://graph.facebook.com/${response.id}/picture/>`;
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
         self.user.name = response.name;
         self.user.fbid = response.id;
@@ -142,7 +142,6 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
     js.src = "https://connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-
 
 
 

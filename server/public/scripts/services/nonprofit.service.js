@@ -18,7 +18,6 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         }).catch(function(error){
             console.log('error in post', error);
         })
-
     }
 
     self.getAllNonprofit = function (){
@@ -36,5 +35,22 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     }
     //end get allNonprofits
 
+    self.editNonprofit = function(id){
+      console.log('in edit nonprofit', id);
+    }
+
+    self.deleteNonprofit = function(id){
+      console.log('in delete nonprofit', id);
+      $http({
+        method: 'DELETE',
+        url: `/nonprofit/${id}`
+      }).then(function(response) {
+        console.log('success in delete nonprofit', response);
+        self.getAllNonprofit();
+      }).catch(function(error) {
+        console.log('error in delete nonprofit', error);
+      })
+    }
+    //end delete nonprofit 
 
 }]); // end service

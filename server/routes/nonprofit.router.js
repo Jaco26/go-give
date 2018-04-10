@@ -32,5 +32,18 @@ router.get('/', (request, response) => {
 })
 //end get all nonprofits
 
+router.delete('/:id', (request, response) => {
+  console.log('in delete nonprofit route', request.params.id);
+  pool.query('DELETE FROM nonprofit WHERE id = $1;', [request.params.id])
+  .then((result) => {
+    console.log('success in delete nonprofit', result);
+    response.sendStatus(200);
+  })
+  .catch((err) => {
+    console.log('error in delete nonprofit', err);
+    response.sendStatus(500);
+  })
+})
+//end delete nonprofit
 
 module.exports = router;

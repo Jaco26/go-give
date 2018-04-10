@@ -1,6 +1,8 @@
 myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService',/*'AdminService',*/ function(UserService, NonprofitService, FeedService){
     const self = this;
 
+    self.checkLoginState = UserService.checkLoginState;
+
     self.fbLogout = UserService.fbLogout;
 
     self.newNonprofit = NonprofitService.newNonprofit;
@@ -14,5 +16,8 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.getFeedItems = FeedService.getFeedItems;
     self.getFeedItems();
     self.allFeedItems = FeedService.allFeedItems;
+
+    self.editNonprofit = NonprofitService.editNonprofit;
+    self.deleteNonprofit = NonprofitService.deleteNonprofit;
 
 }]);

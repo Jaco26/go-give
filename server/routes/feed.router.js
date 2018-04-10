@@ -21,7 +21,7 @@ router.post('/', (request, response)=>{
 
 router.get('/', (request, response) => {
   console.log('in get all feed items');
-  pool.query(`SELECT nonprofit.name, feed.title, feed.feed_text, feed.feed_img_url, feed.feed_video_url, feed.feed_date_posted FROM feed
+  pool.query(`SELECT nonprofit.name, feed.title, feed.feed_text, feed.feed_img_url, feed.feed_video_url, feed.feed_date_posted, feed.id FROM feed
               JOIN nonprofit ON nonprofit.id = feed.nonprofit_id
               ORDER by feed_date_posted DESC;`)
   .then((result) => {
