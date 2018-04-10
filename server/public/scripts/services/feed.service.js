@@ -28,7 +28,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
       method:'GET',
       url: '/feed'
     }).then(function(response){
-      console.log('success in feed item', response);
+      console.log('success in feed item get', response);
       self.allFeedItems.list = response.data.rows;
     }).catch(function(error){
       console.log('error in getting all feed items', error);
