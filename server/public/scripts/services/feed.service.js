@@ -4,6 +4,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 
     self.newFeedItem = {};
     self.allFeedItems = {};
+    self.editFeedToggle = {show: false };
 
     self.addFeedItem = function( newFeedItem){
         console.log('added to feed', newFeedItem);
@@ -34,6 +35,66 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
       console.log('error in getting all feed items', error);
     })
   }
+// end getFeedItem
+
+  self.deleteFeedItem = function(id) {
+    console.log('delete item');
+    $http({
+      method:'DELETE',
+      url:`/feed/${id}`
+    }).then((response)=>{
+      console.log('deleted item');
+      self.getFeedItems();
+    }).catch((error)=>{
+      console.log('error in delete', error);
+
+    })
+  }
+// end deleteFeedItem
+
+  self.displayFeedItem = function(id){
+    console.log('in display feed');
+    $http({
+      method:'GET',
+      url:`/feed/${id}`
+    }).then(function(response){
+     let editableFeedItem = response.data.rows[0];
+     console.log('fed resp', editableFeedItem);
+
+        self.editFeedToggle.show = true;
+        console.log('self.editFeedToggle', self.editFeedToggle);
+        $route.reload();
+        self.newFeedItem.name = editableFeedItem.name;
+        self.newFeedItem.feed_img = editableFeedItem.feed_img_url;
+        self.newFeedItem.feed_text = editableFeedItem.feed_text;
+        self.newFeedItem.feed_video = editableFeedItem.feed_video_url;
+        self.newFeedItem.feed_date = editableFeedItem.feed_date_posted;
+        self.newFeedItem.title = editableFeedItem.title;
+        self.newFeedItem.id = editableFeedItem.id;
+    }).catch((error) => {
+      console.log('error in display', error);
+    })
+    }
+
+
+  self.updateFeedItem = function(newFeedItem) {
+    console.log('updated feed item');
+    $http({
+      method:'PUT',
+      url:`/feed`,
+      data: newFeedItem
+    }).then((response)=> {
+      console.log('success in update', response);
+      self.editFeedToggle.show = false;
+      self.newFeedItem = {};
+      self.getFeedItems();
+      $route.reload();
+
+    }).catch((error) => {
+      console.log('error in update', error);
+    })
+  }
+  // end updateFeedItem
 
 
 }]); // end service
