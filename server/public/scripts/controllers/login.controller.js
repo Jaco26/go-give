@@ -23,7 +23,11 @@ myApp.controller('LoginController', [ 'UserService', '$window', '$location', '$r
         // Logged into your app and Facebook.
       self.testAPI(self.user)
       } else {
-        $location.path("/login");
+
+        // checkLoginState();
+        // UserService.checkLoginState();
+        // window.location.reload();
+        $location.url("/login");
         // $route.reload();
 
         // The person is not logged into your app or we are unable to tell.

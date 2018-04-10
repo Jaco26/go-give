@@ -112,6 +112,9 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
       appId      : '1959229107724531',
       cookie     : true,  // enable cookies to allow the server to access
                           // the session
+      status     : true,  //Determines whether the current login status of the user
+                          //is freshly retrieved on every page load. If this is disabled,
+                          //that status will have to be manually retrieved using .getLoginStatus()
       xfbml      : true,  // parse social plugins on this page
       version    : 'v2.8' // use graph api version 2.8
     });
