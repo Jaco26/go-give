@@ -19,5 +19,6 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
 
     self.editNonprofit = NonprofitService.editNonprofit;
     self.deleteNonprofit = NonprofitService.deleteNonprofit;
-
+    self.submitEditedNonprofit = NonprofitService.submitEditedNonprofit;
+    self.editNonprofitToggle = NonprofitService.editNonprofitToggle
 }]);
