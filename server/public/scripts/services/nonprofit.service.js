@@ -1,4 +1,4 @@
-myApp.service('NonprofitService', ['$http', '$location', function($http, $location) {
+myApp.service('NonprofitService', ['$http', '$location', '$route', function($http, $location, $route) {
 
     let self = this;
 
@@ -14,6 +14,7 @@ myApp.service('NonprofitService', ['$http', '$location', function($http, $locati
         }).then(function(response){
             console.log('success in post', response);
             self.newNonprofit = {}
+            $route.reload();
         }).catch(function(error){
             console.log('error in post', error);
         })
