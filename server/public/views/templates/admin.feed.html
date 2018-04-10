@@ -36,7 +36,7 @@
 <div>
      <button ng-click="vm.addFeedItem(vm.newFeedItem)">Submit Feed Item</button>
      <button ng-click="vm.getFeedItems()">Get Feed Items</button>
-</div>
+     <button ng-click="vm.updateFeedItem(vm.newFeedItem)">Submit Edit</button>
 </div>
 
 <div>
@@ -47,5 +47,8 @@
     <li>img url: {{item.feed_img_url}}</li><br>
     <li>video url: {{item.feed_video_url}}</li><br>
     <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
+    <button type="submit" ng-click="vm.displayFeedItem(item.id)">Edit</button>
+    <button type="submit" ng-click="vm.deleteFeedItem(item.id)">Delete</button>
+   
   </ul>
 </div>
