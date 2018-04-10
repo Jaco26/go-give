@@ -17,11 +17,8 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
       self.userArray.list = response.data.rows
     }).catch(function(error){
       console.log('error in getAllUsers', error);
-      
     })
-  
   }
-
 
   self.addUserToDB = function (user){
     console.log('in addUserToDB', user);
@@ -57,18 +54,22 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
           //redirect to user feed
           $location.path("/feed");
         }
+        // else {
+        //   $location.path("/error");
+        //
+        // }
       }
     }).catch(function(error){
       console.log('error in get', error);
     })
   }
 
-
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
    self.testAPI=function(user) {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
+      console.log(response, 'response in testapi');
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
@@ -78,8 +79,8 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
         self.user.name = response.name;
         self.user.fbid = response.id;
         console.log(self.user, 'user in service');
-        self.checkForRegistration(self.user);
 
+        self.checkForRegistration(self.user);
     });
   }
 //this is the version of the testAPI that is called when the user registers for the first time
@@ -96,7 +97,6 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
        self.user.fbid = response.id;
        console.log(self.user, 'user in controller');
        self.addUserToDB(self.user);
-
    });
   }
 
@@ -165,11 +165,11 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
 
 // ========================================= DO NOT TOUCH ABOVE =======================================================
 
-
-
-
-
-
-
+self.checkAdminState = function (){
+console.log('in checkAdminState', self.user);
+if (self.user.role != 1){
+  $location.path("/login");
+}
+}
 
 }]); // end service

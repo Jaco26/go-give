@@ -55,6 +55,10 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
     templateUrl: '/views/templates/admin.user.html',
     controller: 'AdminController as vm'
   })
+  .when('/error', {
+    templateUrl: '/views/templates/error.html',
+    controller: 'AdminController as vm'
+  })
   .otherwise({
     template: '<h1>404</h1>'
   });

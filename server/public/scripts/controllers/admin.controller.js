@@ -2,7 +2,8 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     const self = this;
 
     self.checkLoginState = UserService.checkLoginState;
-    // self.checkLoginState();
+    self.checkAdminState = UserService.checkAdminState;
+    self.checkAdminState();
     self.fbLogout = UserService.fbLogout;
 
     self.newNonprofit = NonprofitService.newNonprofit;

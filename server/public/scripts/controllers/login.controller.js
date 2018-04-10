@@ -27,7 +27,8 @@ myApp.controller('LoginController', [ 'UserService', '$window', '$location', '$r
         // checkLoginState();
         // UserService.checkLoginState();
         // window.location.reload();
-        $location.url("/login");
+        $location.url("/error");
+        self.fbLogout();
         // $route.reload();
 
         // The person is not logged into your app or we are unable to tell.
