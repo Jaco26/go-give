@@ -47,7 +47,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
       self.getFeedItems();
     }).catch((error)=>{
       console.log('error in delete', error);
-      
+
     })
   }
 // end deleteFeedItem
@@ -60,7 +60,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     }).then(function(response){
      let editableFeedItem = response.data.rows[0];
      console.log('fed resp', editableFeedItem);
-     
+
         self.editFeedToggle.show = true;
         console.log('self.editFeedToggle', self.editFeedToggle);
         $route.reload();
@@ -73,7 +73,6 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
         self.newFeedItem.id = editableFeedItem.id;
     }).catch((error) => {
       console.log('error in display', error);
-      
     })
     }
 
@@ -86,13 +85,16 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
       data: newFeedItem
     }).then((response)=> {
       console.log('success in update', response);
+      self.editFeedToggle.show = false;
+      self.newFeedItem = {};
       self.getFeedItems();
+      $route.reload();
+
     }).catch((error) => {
       console.log('error in update', error);
     })
   }
   // end updateFeedItem
-  
+
 
 }]); // end service
-
