@@ -27,4 +27,8 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.deleteFeedItem = FeedService.deleteFeedItem;
     self.displayFeedItem = FeedService.displayFeedItem;
 
+    self.userArray = UserService.userArray;
+    self.getAllUsers = UserService.getAllUsers;
+    self.getAllUsers();
+
 }]);

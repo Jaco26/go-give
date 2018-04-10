@@ -1,3 +1,12 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
 
 <h1>Users</h1>
+
+<div>
+    <ul ng-repeat="user in vm.userArray.list">
+        <li>Username:{{user.name}}</li>
+    </ul>
+
+
+
+</div>

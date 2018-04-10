@@ -33,5 +33,17 @@ router.post('/', (request, response) => {
   })
   //end get FB user by id
 
+  router.get('/', (request, response)=>{
+    console.log('in get all users route');
+    pool.query('SELECT * FROM users ORDER BY name;')
+    .then((result)=>{
+      console.log('success in get', result);
+      response.send(result);
+    })
+    .catch((err) => {
+      response.sendStatus(500);
+    })
+  })
+// end get all users route
 
 module.exports = router;
