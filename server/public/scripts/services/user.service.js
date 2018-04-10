@@ -3,8 +3,25 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
   self.FB = '';
   self.user = {};
   self.user.registerToggle = false;
+  self.userArray = {};
 
   console.log(self.user, 'user in service');
+
+  self.getAllUsers = function(){
+    console.log('in GetAllUsers');
+    $http({
+      method:'GET',
+      url:'/user',
+    }).then(function(response){
+      console.log('working in getAllUsers');
+      self.userArray.list = response.data.rows
+    }).catch(function(error){
+      console.log('error in getAllUsers', error);
+      
+    })
+  
+  }
+
 
   self.addUserToDB = function (user){
     console.log('in addUserToDB', user);
@@ -145,6 +162,11 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
     js.src = "https://connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
+
+// ========================================= DO NOT TOUCH ABOVE =======================================================
+
+
+
 
 
 
