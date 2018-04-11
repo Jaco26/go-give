@@ -5,6 +5,8 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     self.newNonprofit = {};
     self.allNonprofits = {};
     self.editNonprofitToggle = {show: false};
+    self.soloNonprofit = {};
+    self.nonprofitToDisplay = {};
 
     self.addNonprofit = function (newNonprofit){
         console.log('add non profit', newNonprofit);
@@ -20,9 +22,6 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
             console.log('error in post', error);
         })
     }
-
-
-
 
     self.getAllNonprofit = function (){
       console.log('in get all nonprofits -- service');
@@ -60,23 +59,17 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
 
     self.populateEditFields = function(id){
       console.log('in populateEditFields', id);
-      $http({
-        method: 'GET',
-        url: `/nonprofit/${id}`
-      }).then(function(response) {
-        console.log('success in populate edit', response);
-        let editableNonprofit = response.data.rows[0];
+      self.getSoloNonprofit(id)
+      .then(function() {
+        console.log('response in populate nonprofit after then', self.soloNonprofit);
         self.editNonprofitToggle.show = true;
-        // $route.reload();
-        self.newNonprofit.name = editableNonprofit.name;
-        self.newNonprofit.description = editableNonprofit.description;
-        self.newNonprofit.goal = editableNonprofit.goal_value;
-        self.newNonprofit.goal_description = editableNonprofit.goal_description;
-        self.newNonprofit.picture_url = editableNonprofit.picture_url;
-        self.newNonprofit.logo_url = editableNonprofit.logo_url;
-        self.newNonprofit.id = editableNonprofit.id
-      }).catch(function(error) {
-        console.log('error in populate edit fields', error);
+        self.newNonprofit.name = self.soloNonprofit.name;
+        self.newNonprofit.description = self.soloNonprofit.description;
+        self.newNonprofit.goal = self.soloNonprofit.goal_value;
+        self.newNonprofit.goal_description = self.soloNonprofit.goal_description;
+        self.newNonprofit.picture_url = self.soloNonprofit.picture_url;
+        self.newNonprofit.logo_url = self.soloNonprofit.logo_url;
+        self.newNonprofit.id = self.soloNonprofit.id;
       })
     }
     //end populateEditFields
@@ -98,5 +91,29 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         console.log('error in edit nonprofit', error);
       })
     }
+
+    self.displaySoloNonprofit = function(id){
+      console.log('in displaySoloNonprofit', id);
+      self.getSoloNonprofit(id)
+        .then(function(){
+          console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
+          self.nonprofitToDisplay.solo = self.soloNonprofit;
+        })
+    }
+
+
+    self.getSoloNonprofit = function(id) {
+      console.log('in sologet ', id);
+       return $http({
+        method: 'GET',
+        url: `/nonprofit/${id}`
+      }).then(function(response) {
+        console.log('success in get solo nonprofit', response);
+        self.soloNonprofit = response.data.rows[0];
+      }).catch(function(error) {
+        console.log('error in populate edit fields', error);
+      })
+    }
+
 
 }]); // end service

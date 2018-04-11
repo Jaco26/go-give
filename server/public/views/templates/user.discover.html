@@ -4,8 +4,8 @@
 
 <div>
   <ul  ng-repeat="nonprofit in vm.allNonprofits.list">
-    
-    name:<a href='/#!/nonprofit-profile/'>{{nonprofit.name}}</a><br>
+
+    name:<a href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a><br>
     <li>description: {{nonprofit.description}}</li><br>
     <li>goal value: {{nonprofit.goal_value}}</li><br>
     <li>goal description: {{nonprofit.goal_description}}</li><br>

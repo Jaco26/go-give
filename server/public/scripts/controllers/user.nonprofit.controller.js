@@ -1,5 +1,8 @@
-myApp.controller('UserNonprofitProfileController', ['UserService', function(UserService){
+myApp.controller('UserNonprofitProfileController',['UserService', '$routeParams', 'NonprofitService',
+                  function(UserService, $routeParams, NonprofitService){
     const self = this;
+    self.nonprofitToDisplay = NonprofitService.nonprofitToDisplay;
+
 
     self.fbLogout = UserService.fbLogout;
     let userNonprofitAuthResponse = function(){
@@ -11,5 +14,10 @@ myApp.controller('UserNonprofitProfileController', ['UserService', function(User
       $location.path("/login");
       $window.location.reload();
     }
+
+    NonprofitService.displaySoloNonprofit($routeParams.id)
+
+
+
 
 }]);

@@ -23,7 +23,7 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
     templateUrl: '/views/templates/user.profile.html',
     controller: 'UserProfileController as vm'
   })
-  .when('/nonprofit-profile', {
+  .when('/nonprofit-profile/:id', {
     templateUrl: '/views/templates/user.nonprofit.html',
     controller: 'UserNonprofitProfileController as vm'
   })

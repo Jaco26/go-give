@@ -4,7 +4,7 @@
 
 <div>
   <ul  ng-repeat="item in vm.allFeedItems.list">
-    name:<a href='/#!/nonprofit-profile/'>{{item.name}}</a><br>
+    name:<a href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a><br>
     <li>title: {{item.title}}</li><br>
     <li>text: {{item.feed_text}}</li><br>
     <li>img url: {{item.feed_img_url}}</li><br>
@@ -12,4 +12,3 @@
     <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
   </ul>
 </div>
-
