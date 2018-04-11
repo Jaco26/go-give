@@ -18,4 +18,12 @@ myApp.controller('UserStaticController', ['UserService', 'FeedService', 'Nonprof
 
     self.allFeedItems = FeedService.allFeedItems;
     self.allNonprofits = NonprofitService.allNonprofits;
+
+    self.getAllNonprofit = NonprofitService.getAllNonprofit;
+    self.getAllNonprofit();
+
+    self.getFeedItems = FeedService.getFeedItems;
+    self.getFeedItems();
+
+
 }]);
