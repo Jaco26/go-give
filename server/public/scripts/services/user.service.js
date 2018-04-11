@@ -170,4 +170,21 @@ self.checkAdminState = function (){
   }
 }
 
+self.deleteUser = function (id){
+  console.log('in Delete user');
+  $http({
+    method:'DELETE',
+    url:`/user/${id}`,
+  }).then(function(response){
+    console.log('deleted user');
+    self.getAllUsers();
+  }).catch((error)=>{
+    console.log('error in delete', error);
+    
+  });
+  
+}
+
 }]); // end service
+
+

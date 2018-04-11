@@ -46,4 +46,22 @@ router.post('/', (request, response) => {
   })
 // end get all users route
 
+  router.delete('/:id', (request, response) => {
+    console.log('in delete user route', request.params.id);
+    pool.query('DELETE FROM users WHERE id = $1;', [request.params.id])
+    .then((result) => {
+      console.log('success in deleting user', result);
+      response.sendStatus(200);
+    })    
+    .catch((err) => {
+      console.log('error in delete user', err);
+      response.sendStatus(500);
+    })
+  })
+
+
+
+
 module.exports = router;
+
+
