@@ -1,8 +1,20 @@
-myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService',/*'AdminService',*/ function(UserService, NonprofitService, FeedService){
+myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService', function(UserService, NonprofitService, FeedService){
     const self = this;
 
     self.checkLoginState = UserService.checkLoginState;
-    // self.checkLoginState();
+    self.checkAdminState = UserService.checkAdminState;
+    self.checkAdminState();
+
+    let adminAuthResponse = function(){
+     return FB.getAuthResponse();
+    }
+    if(adminAuthResponse() == null){
+
+      console.log('user must login to view this data');
+      $location.path("/login");
+      $window.location.reload();
+    }
+
     self.fbLogout = UserService.fbLogout;
 
     self.newNonprofit = NonprofitService.newNonprofit;
@@ -27,4 +39,9 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.deleteFeedItem = FeedService.deleteFeedItem;
     self.displayFeedItem = FeedService.displayFeedItem;
     self.editFeedToggle = FeedService.editFeedToggle;
+
+    self.userArray = UserService.userArray;
+    self.getAllUsers = UserService.getAllUsers;
+    self.getAllUsers();
+
 }]);

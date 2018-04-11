@@ -1,10 +1,24 @@
-myApp.service('UserService', ['$http', '$location', '$window', function($http, $location, $window) {
+myApp.service('UserService', ['$http', '$location', '$window', '$route', function($http, $location, $window, $route) {
   let self = this;
   self.FB = '';
   self.user = {};
   self.user.registerToggle = false;
+  self.userArray = {};
 
   console.log(self.user, 'user in service');
+
+  self.getAllUsers = function(){
+    console.log('in GetAllUsers');
+    $http({
+      method:'GET',
+      url:'/user',
+    }).then(function(response){
+      console.log('working in getAllUsers');
+      self.userArray.list = response.data.rows
+    }).catch(function(error){
+      console.log('error in getAllUsers', error);
+    })
+  }
 
   self.addUserToDB = function (user){
     console.log('in addUserToDB', user);
@@ -40,12 +54,15 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
           //redirect to user feed
           $location.path("/feed");
         }
+        else {
+          $location.path("/error");
+
+        }
       }
     }).catch(function(error){
       console.log('error in get', error);
     })
   }
-
 
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
@@ -60,14 +77,11 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
         self.user.name = response.name;
         self.user.fbid = response.id;
-        console.log(self.user, 'user in service');
         self.checkForRegistration(self.user);
-
     });
   }
 //this is the version of the testAPI that is called when the user registers for the first time
   self.testAPIRegister=function(user) {
-   console.log('Welcome!  Fetching your information.... ');
    FB.api('/me', function(response) {
      console.log('Successful login for: ' + response.name);
      document.getElementById('status').innerHTML =
@@ -77,21 +91,17 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
        self.user.url = `https://graph.facebook.com/${response.id}/picture`
        self.user.name = response.name;
        self.user.fbid = response.id;
-       console.log(self.user, 'user in controller');
        self.addUserToDB(self.user);
-
    });
   }
 
   self.fbLogout = function () {
     console.log('in logout');
     $location.path("/login");
-
           FB.logout(function (response) {
-            console.log('in logout2');
               //Do what ever you want here when logged out like reloading the page
               self.user = {};
-              window.location.reload();
+              $window.location.reload();
           });
       }
 
@@ -134,7 +144,6 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
     FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
     });
-
   };
 
   // Load the SDK asynchronously
@@ -146,8 +155,15 @@ myApp.service('UserService', ['$http', '$location', '$window', function($http, $
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 
+// ========================================= DO NOT TOUCH ABOVE =======================================================
 
-
-
+//on load of the admin controller this function checks to see if the current
+//user is an admin and redirects the user back to login if they are not listed as an admin
+self.checkAdminState = function (){
+  if (self.user.role != 1){
+    $location.path("/login");
+    $window.location.reload();
+  }
+}
 
 }]); // end service
