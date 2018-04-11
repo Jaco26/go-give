@@ -69,13 +69,16 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   // successful.  See statusChangeCallback() for when this call is made.
    self.testAPI=function(user) {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
+    FB.api('/me', {fields: 'last_name, first_name, name, picture'}, function(response) {
+      console.log(response, 'lastname?');
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+        'Thanks for logging in, ' + response.first_name + '!';
       // document.getElementById('pic').innerHTML =
       //   `<img src=https://graph.facebook.com/${response.id}/picture/>`;
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
+        self.user.first_name = response.first_name;
+        self.user.last_name = response.last_name;
         self.user.name = response.name;
         self.user.fbid = response.id;
         self.checkForRegistration(self.user);

@@ -6,8 +6,8 @@ console.log('in user router');
 
 router.post('/', (request, response) => {
   console.log('in POST fb', request.body);
-  pool.query('INSERT INTO users (name, img_url, fb_id) VALUES ($1, $2, $3);',
-              [request.body.name, request.body.url, request.body.fbid])
+  pool.query('INSERT INTO users (name, img_url, fb_id, first_name, last_name) VALUES ($1, $2, $3, $4, $5);',
+              [request.body.name, request.body.url, request.body.fbid, request.body.first_name, request.body.last_name])
     .then((result) => {
       console.log('registered new user');
       response.sendStatus(201);
