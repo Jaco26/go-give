@@ -3,7 +3,7 @@ const pool = require('../modules/pool.js');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const router = express.Router();
 
-console.log('in stripe router');
+console.log('in stripe router', process.env.STRIPE_SECRET_KEY);
 
 // Get all transactions on Whyatt's account
 router.get('/all-transactions', (req, res) => {
