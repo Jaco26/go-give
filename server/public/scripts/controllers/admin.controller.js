@@ -8,10 +8,9 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     let adminAuthResponse = function(){
      return FB.getAuthResponse();
     }
+
     if(adminAuthResponse() == null){
 
-      console.log('user must login to view this data');
-      $location.path("/login");
       $window.location.reload();
     }
 
@@ -28,7 +27,6 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.getFeedItems = FeedService.getFeedItems;
     self.getFeedItems();
     self.allFeedItems = FeedService.allFeedItems;
-
 
     self.editNonprofit = NonprofitService.editNonprofit;
     self.deleteNonprofit = NonprofitService.deleteNonprofit;

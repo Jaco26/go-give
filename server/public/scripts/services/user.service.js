@@ -1,8 +1,8 @@
 myApp.service('UserService', ['$http', '$location', '$window', '$route', function($http, $location, $window, $route) {
   let self = this;
-  self.FB = '';
+  // self.FB = '';
   self.user = {};
-  self.user.registerToggle = false;
+  // self.user.registerToggle = false;
   self.userArray = {};
 
   console.log(self.user, 'user in service');
@@ -40,10 +40,11 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       method: 'GET',
       url: `/user/${user.fbid}`
     }).then(function(response) {
-      console.log('success in get', response);
+      console.log('success in get check for reg', response);
       if(response.data.rows.length == 0){
         console.log('not registered!');
-        self.user.registerToggle = true;
+        // self.user.registerToggle = true;
+        self.addUserToDB(user);
       } else {
         self.user = response.data.rows[0];
         console.log(self.user, 'user in get - check for register');
@@ -54,10 +55,10 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
           //redirect to user feed
           $location.path("/feed");
         }
-        else {
-          $location.path("/error");
-
-        }
+        // else {
+        //   $location.path("/error");
+        //
+        // }
       }
     }).catch(function(error){
       console.log('error in get', error);
@@ -81,19 +82,19 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
     });
   }
 //this is the version of the testAPI that is called when the user registers for the first time
-  self.testAPIRegister=function(user) {
-   FB.api('/me', function(response) {
-     console.log('Successful login for: ' + response.name);
-     document.getElementById('status').innerHTML =
-       'Thanks for logging in, ' + response.name + '!';
-     document.getElementById('pic').innerHTML =
-       `<img src=https://graph.facebook.com/${response.id}/picture/>`;
-       self.user.url = `https://graph.facebook.com/${response.id}/picture`
-       self.user.name = response.name;
-       self.user.fbid = response.id;
-       self.addUserToDB(self.user);
-   });
-  }
+  // self.testAPIRegister=function(user) {
+  //  FB.api('/me', function(response) {
+  //    console.log('Successful login for: ' + response.name);
+  //    document.getElementById('status').innerHTML =
+  //      'Thanks for logging in, ' + response.name + '!';
+  //    document.getElementById('pic').innerHTML =
+  //      `<img src=https://graph.facebook.com/${response.id}/picture/>`;
+  //      self.user.url = `https://graph.facebook.com/${response.id}/picture`
+  //      self.user.name = response.name;
+  //      self.user.fbid = response.id;
+  //      self.addUserToDB(self.user);
+  //  });
+  // }
 
   self.fbLogout = function () {
     console.log('in logout');
@@ -105,11 +106,11 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
           });
       }
 
-  self.register = function(){
-    console.log('in register');
-    self.testAPIRegister();
-    self.user.registerToggle = false;
-  }
+  // self.register = function(){
+  //   console.log('in register');
+  //   self.testAPIRegister();
+  //   self.user.registerToggle = false;
+  // }
 
   self.checkLoginState = function() {
    FB.getLoginStatus(function(response) {
