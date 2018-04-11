@@ -1,8 +1,6 @@
 myApp.service('UserService', ['$http', '$location', '$window', '$route', function($http, $location, $window, $route) {
   let self = this;
-  // self.FB = '';
   self.user = {};
-  // self.user.registerToggle = false;
   self.userArray = {};
 
   console.log(self.user, 'user in service');
@@ -180,11 +178,9 @@ self.deleteUser = function (id){
     self.getAllUsers();
   }).catch((error)=>{
     console.log('error in delete', error);
-    
+
   });
-  
+
 }
 
 }]); // end service
-
-

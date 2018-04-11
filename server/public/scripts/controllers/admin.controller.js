@@ -5,14 +5,14 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.checkAdminState = UserService.checkAdminState;
     self.checkAdminState();
 
-    let adminAuthResponse = function(){
-     return FB.getAuthResponse();
-    }
-
-    if(adminAuthResponse() == null){
-
-      $window.location.reload();
-    }
+    // let adminAuthResponse = function(){
+    //  return FB.getAuthResponse();
+    // }
+    //
+    // if(adminAuthResponse() == null){
+    //
+    //   $window.location.reload();
+    // }
 
     self.fbLogout = UserService.fbLogout;
 
@@ -42,6 +42,6 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.getAllUsers = UserService.getAllUsers;
     self.getAllUsers();
     self.deleteUser = UserService.deleteUser;
-    
+
 
 }]);
