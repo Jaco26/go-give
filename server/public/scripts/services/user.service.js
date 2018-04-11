@@ -159,11 +159,12 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
 //on load of the admin controller this function checks to see if the current
 //user is an admin and redirects the user back to login if they are not listed as an admin
-self.checkAdminState = function (){
-  if (self.user.role != 1){
-    $location.path("/login");
-    $window.location.reload();
+  self.checkAdminState = function (){
+    if (self.user.role != 1){
+      $location.path("/login");
+      $window.location.reload();
+    }
   }
-}
 
+  
 }]); // end service

@@ -5,6 +5,7 @@ id serial primary key,
 name varchar,
 img_url varchar,
 fb_id varchar,
+stripe_id varchar,
 role int default 2
 );
 
