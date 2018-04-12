@@ -1,11 +1,13 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
 
 <h1>Users</h1>
-<container>
-        <input type="text" placeholder="Search Username">
-</container>
+
+
+
 <div>
-    <ul ng-repeat="user in vm.userArray.list">
+  <input type="text" placeholder="Search Username" ng-model="searchBox">
+
+    <ul ng-repeat="user in vm.userArray.list | filter: searchBox">
         <li>Username: {{user.first_name}} {{user.last_name}}</li>
         <li><button ng-click="vm.deleteUser(user.id)">Delete User</button></li>
     </ul>
