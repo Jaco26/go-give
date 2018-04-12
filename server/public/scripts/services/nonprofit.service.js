@@ -7,6 +7,8 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     self.editNonprofitToggle = {show: false};
     self.soloNonprofit = {};
     self.nonprofitToDisplay = {};
+    self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz")
+
 
     self.addNonprofit = function (newNonprofit){
         console.log('add non profit', newNonprofit);
@@ -112,6 +114,27 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         self.soloNonprofit = response.data.rows[0];
       }).catch(function(error) {
         console.log('error in populate edit fields', error);
+      })
+    }
+
+    self.upload = function(type){
+      console.log('in upload');
+      self.client.pick({
+        accept: 'image/*',
+        maxFiles: 1
+      }).then(function(result){
+        console.log(result, 'filestack upload');
+        $route.reload();
+
+        if (type == 'photo'){
+        self.newNonprofit.picture_url = result.filesUploaded[0].url;
+        console.log('self.newNonprofit.picture_url', self.newNonprofit.picture_url)
+      } else if(type == 'logo') {
+        self.newNonprofit.logo_url = result.filesUploaded[0].url;
+        console.log('self.newNonprofit.logo_url', self.newNonprofit.logo_url)
+      }
+
+
       })
     }
 
