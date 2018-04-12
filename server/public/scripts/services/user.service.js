@@ -46,6 +46,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
         self.user.registerToggle = true;
       } else {
         self.user = response.data.rows[0];
+        self.getStripeCustomerInfo();
         console.log(self.user, 'user in get - check for register');
         if(self.user.role === 1){
           //redirect to admin page
@@ -174,5 +175,23 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
     originatorEv = ev;
     $mdMenu.open(ev);
   };
+
+  self.getStripeCustomerInfo = function () {
+    $http.get(`/stripe/customer/${self.user.stripe_id}`)
+    .then(response => {
+      self.stripeCustomerInfo = response.data;
+      console.log('CUSTOMER:', self.stripeCustomerInfo);
+    }).catch(err => {
+        console.log(err);  
+    });
+  }
+
+  self.checkStripeRegistration = function() {
+    if (self.user.stripe_id.length > 0){
+      $location.path("/payment");
+    } else {
+      $location.path("/register");
+    }
+  }
 
 }]); // end service

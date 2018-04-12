@@ -117,6 +117,7 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         $http.post('/stripe/register', newCustomerData)
         .then(response => {
             console.log(response);
+            $location.path('/payment');
         }).catch(err => {
             console.log(err);  
         });    
@@ -251,6 +252,5 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
             console.log(err);
         })
     }
-
 
 }]);

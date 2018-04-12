@@ -184,3 +184,17 @@ li a:hover {
 .material-icons {
     padding-top: 6px;
 }
+
+.creditCard {
+  padding: 20px;
+  padding-top: 10px;
+  margin: 5px;
+  width: 300px;
+  height: 150px;
+  background-color: lightcyan;
+}
+
+.content {
+  padding: 20px;
+  padding-left: 30px;
+}
