@@ -2,8 +2,26 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   let self = this;
   self.user = {};
   self.userArray = {};
+  self.callbackResponse = '';
 
   console.log(self.user, 'user in service');
+
+  self.redirectAfterLogin = function (user) {
+    console.log('in redirect after login', $location.url());
+
+    if($location.url() == '/login'){
+      if(self.user.role === 1){
+        //redirect to admin page
+        self.checkAdminState();
+        $location.path("/admin");
+      } else if ( self.user.role === 2) {
+        //redirect to user feed
+        $location.path("/feed");
+      }
+    } else {
+      $route.reload();
+    }
+  }
 
   self.getAllUsers = function(){
     console.log('in GetAllUsers');
@@ -26,7 +44,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       data: user
     }).then(function(response){
       console.log('success in post', response);
-      self.checkForRegistration(user);
+      self.redirectAfterLogin(user);
     }).catch(function(error){
       console.log('error in post', error);
     })
@@ -41,22 +59,17 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       console.log('success in get check for reg', response);
       if(response.data.rows.length == 0){
         console.log('not registered!');
-        // self.user.registerToggle = true;
         self.addUserToDB(user);
-      } else {
-        self.user = response.data.rows[0];
-        console.log(self.user, 'user in get - check for register');
-        if(self.user.role === 1){
-          //redirect to admin page
-          $location.path("/admin");
-        } else if ( self.user.role === 2) {
-          //redirect to user feed
-          $location.path("/feed");
-        }
-        // else {
-        //   $location.path("/error");
-        //
-        // }
+      }
+      else {
+        // self.user = response.data.rows[0];
+        self.user.url = `https://graph.facebook.com/${response.id}/picture`
+        self.user.first_name = response.data.rows[0].first_name;
+        self.user.last_name = response.data.rows[0].last_name;
+        self.user.name = response.data.rows[0].name;
+        self.user.fbid = response.data.rows[0].id;
+        self.user.role = response.data.rows[0].role;
+        self.redirectAfterLogin(user);
       }
     }).catch(function(error){
       console.log('error in get', error);
@@ -68,12 +81,11 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
    self.testAPI=function(user) {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', {fields: 'last_name, first_name, name, picture'}, function(response) {
-      console.log(response, 'lastname?');
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.first_name + '!';
-      // document.getElementById('pic').innerHTML =
-      //   `<img src=https://graph.facebook.com/${response.id}/picture/>`;
+      document.getElementById('pic').innerHTML =
+        `<img src=https://graph.facebook.com/${response.id}/picture/>`;
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
         self.user.first_name = response.first_name;
         self.user.last_name = response.last_name;
@@ -82,20 +94,6 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
         self.checkForRegistration(self.user);
     });
   }
-//this is the version of the testAPI that is called when the user registers for the first time
-  // self.testAPIRegister=function(user) {
-  //  FB.api('/me', function(response) {
-  //    console.log('Successful login for: ' + response.name);
-  //    document.getElementById('status').innerHTML =
-  //      'Thanks for logging in, ' + response.name + '!';
-  //    document.getElementById('pic').innerHTML =
-  //      `<img src=https://graph.facebook.com/${response.id}/picture/>`;
-  //      self.user.url = `https://graph.facebook.com/${response.id}/picture`
-  //      self.user.name = response.name;
-  //      self.user.fbid = response.id;
-  //      self.addUserToDB(self.user);
-  //  });
-  // }
 
   self.fbLogout = function () {
     console.log('in logout');
@@ -106,12 +104,6 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
               $window.location.reload();
           });
       }
-
-  // self.register = function(){
-  //   console.log('in register');
-  //   self.testAPIRegister();
-  //   self.user.registerToggle = false;
-  // }
 
   self.checkLoginState = function() {
    FB.getLoginStatus(function(response) {
@@ -162,9 +154,12 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 //on load of the admin controller this function checks to see if the current
 //user is an admin and redirects the user back to login if they are not listed as an admin
 self.checkAdminState = function (){
-  if (self.user.role != 1){
+  console.log(self.user, 'in checkAdminState');
+  if (self.user.role === 1){
+    // $location.path("/login");
+    // $window.location.reload();
+  } else {
     $location.path("/login");
-    $window.location.reload();
   }
 }
 
@@ -180,7 +175,6 @@ self.deleteUser = function (id){
     console.log('error in delete', error);
 
   });
-
 }
 
 }]); // end service
