@@ -1,6 +1,7 @@
 myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService', '$window',
         function(UserService, NonprofitService, FeedService, $window){
     const self = this;
+    self.user = UserService.user;
 
     // This is called with the results from from FB.getLoginStatus().
     statusChangeCallback = function(response) {
@@ -63,7 +64,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     };
 
     self.checkAdminState = UserService.checkAdminState;
-    self.checkAdminState();
+    self.checkAdminState(self.user);
 
 
     self.fbLogout = UserService.fbLogout;

@@ -12,7 +12,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
     if($location.url() == '/login'){
       if(self.user.role === 1){
         //redirect to admin page
-        self.checkAdminState();
+        self.checkAdminState(self.user);
         $location.path("/admin");
       } else if ( self.user.role === 2) {
         //redirect to user feed
@@ -153,12 +153,14 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
 //on load of the admin controller this function checks to see if the current
 //user is an admin and redirects the user back to login if they are not listed as an admin
-self.checkAdminState = function (){
-  console.log(self.user, 'in checkAdminState');
-  if (self.user.role === 1){
+self.checkAdminState = function (user){
+  console.log(user, 'in checkAdminState');
+  if (user.role === 1){
+    console.log('is admin');
     // $location.path("/login");
     // $window.location.reload();
   } else {
+    console.log('not admin');
     $location.path("/login");
   }
 }
@@ -173,7 +175,6 @@ self.deleteUser = function (id){
     self.getAllUsers();
   }).catch((error)=>{
     console.log('error in delete', error);
-
   });
 }
 
