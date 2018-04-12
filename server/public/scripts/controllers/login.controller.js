@@ -2,6 +2,8 @@ myApp.controller('LoginController', [ 'UserService', '$window', '$location', '$r
   console.log('in login controller');
     const self = this;
 
+    self.UserService = UserService;
+
     self.picture = {url:''};
     self.user = UserService.user;
     self.addUserToDB = UserService.addUserToDB;

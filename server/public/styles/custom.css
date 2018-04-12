@@ -181,3 +181,6 @@ li a:hover {
     background-color: lightgray;
     margin: 10px;
   }
+.material-icons {
+    padding-top: 6px;
+}

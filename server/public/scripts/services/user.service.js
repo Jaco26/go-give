@@ -166,5 +166,13 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
     }
   }
 
-  
+  var originatorEv;
+
+  self.menuHref = "http://www.google.com/design/spec/components/menus.html#menus-specs";
+
+  self.openMenu = function($mdMenu, ev) {
+    originatorEv = ev;
+    $mdMenu.open(ev);
+  };
+
 }]); // end service

@@ -1,8 +1,11 @@
 myApp.controller('StripeController', ['UserService', '$location', '$window', '$http', function(UserService, $location, $window, $http){
-  const self = this;
+    const self = this;
 
-  self.userService = UserService;
-  self.user = UserService.user;
+
+    self.user = UserService.user;
+    self.UserService = UserService;
+
+    self.fbLogout = UserService.fbLogout;
 
   self.stripeCustomerInfo = UserService.stripeCustomerInfo;
   self.getStripeCustomerInfo = UserService.getStripeCustomerInfo;

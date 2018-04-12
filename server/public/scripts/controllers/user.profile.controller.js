@@ -1,6 +1,8 @@
 myApp.controller('UserProfileController', ['UserService', function(UserService){
     const self = this;
 
+    self.UserService = UserService;
+
     self.fbLogout = UserService.fbLogout;
     let userProfileAuthResponse = function(){
      return FB.getAuthResponse();

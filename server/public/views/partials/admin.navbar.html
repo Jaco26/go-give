@@ -1,14 +1,25 @@
 <div class="navbar">
     <div class="container nav">
         <ul>
-            <li class="nav-link"><md-button class="navBtn" ng-href="#!admin">Home</md-button></li>
+            <li class="nav-link">
+                <md-menu>
+                    <md-button class="navBtn" ng-click="vm.UserService.openMenu($mdMenu, $event)">
+                    <i class="material-icons">menu</i>
+                    </md-button>
+                    <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-button ng-href="#!feed">USER view</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="vm.fbLogout()">Log Out</md-button>
+                    </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </li>
             <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-csv">CSV</md-button></li>
             <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-feed">Feed</md-button></li>
             <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-nonprofits">Nonprofits</md-button></li>
             <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-users">Users</md-button></li>
-            <li class="nav-link"><md-button class="navBtn" ng-click="vm.fbLogout()">Logout</md-button></li>
-
-
         </ul>
     </div>
 </div>

@@ -1,6 +1,8 @@
 myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService', function(UserService, NonprofitService, FeedService){
     const self = this;
 
+    self.UserService = UserService;
+
     self.checkLoginState = UserService.checkLoginState;
     self.checkAdminState = UserService.checkAdminState;
     self.checkAdminState();
