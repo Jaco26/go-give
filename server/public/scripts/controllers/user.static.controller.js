@@ -1,6 +1,8 @@
 myApp.controller('UserStaticController', ['UserService', 'FeedService', 'NonprofitService', '$location', '$window', function(UserService, FeedService, NonprofitService, $location, $window){
     const self = this;
 
+    self.UserService = UserService;
+
     self.fbLogout = UserService.fbLogout;
     self.user = UserService.user;
 

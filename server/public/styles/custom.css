@@ -42,4 +42,6 @@ li a:hover {
     letter-spacing: 2.5px;
 }
 
-
+.material-icons {
+    padding-top: 6px;
+}

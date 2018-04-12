@@ -36,7 +36,7 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
     controller: 'StripeController as vm'
   })
   .when('/support', {
-    templateUrl: '/views/templates/support.html',
+    templateUrl: '/views/templates/user.support.html',
     controller: 'UserStaticController as vm'
   })
   .when('/admin-csv', {

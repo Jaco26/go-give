@@ -1,6 +1,8 @@
 myApp.controller('UserNonprofitProfileController', ['UserService', function(UserService){
     const self = this;
 
+    self.UserService = UserService;
+
     self.fbLogout = UserService.fbLogout;
     let userNonprofitAuthResponse = function(){
      return FB.getAuthResponse();

@@ -1,6 +1,8 @@
 myApp.controller('StripeController', ['UserService', function(UserService){
     const self = this;
 
+    self.UserService = UserService;
+
     self.fbLogout = UserService.fbLogout;
 
     let stripeAuthResponse = function(){
