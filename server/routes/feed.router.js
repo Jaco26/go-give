@@ -21,7 +21,7 @@ router.post('/', (request, response)=>{
 
 router.get('/', (request, response) => {
   console.log('in get all feed items');
-  pool.query(`SELECT nonprofit.name, feed.title, feed.feed_text, feed.feed_img_url, feed.feed_video_url, feed.feed_date_posted, feed.id FROM feed
+  pool.query(`SELECT nonprofit.name, feed.title, feed.feed_text, feed.feed_img_url, feed.feed_video_url, feed.feed_date_posted, feed.id, feed.nonprofit_id FROM feed
               JOIN nonprofit ON nonprofit.id = feed.nonprofit_id
               ORDER by feed_date_posted DESC;`)
   .then((result) => {
@@ -47,7 +47,7 @@ router.delete('/:id', (request, response) => {
     console.log('error in delete', err);
     response.sendStatus(500);
   })
-  
+
 })
 // end delete feed items
 
@@ -57,12 +57,12 @@ router.get('/:id', (request , response) => {
   WHERE feed.id = $1;`, [request.params.id])
   .then((result) => {
     console.log('success in get for edit', result);
-    
+
     response.send(result)
   })
   .catch((err) => {
     console.log('error in get for edit', err);
-    
+
     response.sendStatus(500)
   })
 })
@@ -76,7 +76,7 @@ router.put('/', (request, response) => {
   .then((result) => {
     console.log('success in update', result);
     response.sendStatus(201);
-    
+
   })
   .catch((err) => {
     console.log('error in update', err);
@@ -87,4 +87,3 @@ router.put('/', (request, response) => {
 
 
 module.exports = router;
-

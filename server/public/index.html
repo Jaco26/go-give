@@ -36,6 +36,10 @@
     <script src="scripts/services/report.service.js"></script>
     <script src="scripts/services/stripe.service.js"></script>
     <script src="scripts/services/user.service.js"></script>
+
+    <!-- fliestack -->
+    <script type="text/javascript" src="https://static.filestackapi.com/v3/filestack.js"></script>
+
 </head>
 <body ng-app="myApp">
     <main ng-view>
@@ -44,6 +48,8 @@
       <!-- the status id is where fb messages go, this can be changed in the login view
       this needs to be seperate from the view, otherwise we get errors-->
       <div id="status"></div>
+      <div id="pic"></div>
+
 
 </body>
 </html>

@@ -1,11 +1,29 @@
 myApp.service('UserService', ['$http', '$location', '$window', '$route', function($http, $location, $window, $route) {
   let self = this;
-  self.FB = '';
   self.user = {};
-  self.user.registerToggle = false;
   self.userArray = {};
+  self.callbackResponse = '';
 
   console.log(self.user, 'user in service');
+
+  self.redirectAfterLogin = function (user) {
+    console.log('in redirect after login', $location.url());
+    if(self.user.stripe_id){
+      self.getStripeCustomerInfo();
+    }
+    if($location.url() == '/login'){
+      if(self.user.role === 1){
+        //redirect to admin page
+        self.checkAdminState(self.user);
+        $location.path("/admin");
+      } else if ( self.user.role === 2) {
+        //redirect to user feed
+        $location.path("/feed");
+      }
+    } else {
+      $route.reload();
+    }
+  }
 
   self.getAllUsers = function(){
     console.log('in GetAllUsers');
@@ -28,7 +46,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       data: user
     }).then(function(response){
       console.log('success in post', response);
-      self.checkForRegistration(user);
+      self.redirectAfterLogin(user);
     }).catch(function(error){
       console.log('error in post', error);
     })
@@ -40,25 +58,20 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       method: 'GET',
       url: `/user/${user.fbid}`
     }).then(function(response) {
-      console.log('success in get', response);
+      console.log('success in get check for reg', response);
       if(response.data.rows.length == 0){
         console.log('not registered!');
-        self.user.registerToggle = true;
-      } else {
-        self.user = response.data.rows[0];
-        self.getStripeCustomerInfo();
-        console.log(self.user, 'user in get - check for register');
-        if(self.user.role === 1){
-          //redirect to admin page
-          $location.path("/admin");
-        } else if ( self.user.role === 2) {
-          //redirect to user feed
-          $location.path("/feed");
-        }
-        else {
-          $location.path("/error");
-
-        }
+        self.addUserToDB(user);
+      }
+      else {
+        // self.user = response.data.rows[0];
+        self.user.url = `https://graph.facebook.com/${response.id}/picture`
+        self.user.first_name = response.data.rows[0].first_name;
+        self.user.last_name = response.data.rows[0].last_name;
+        self.user.name = response.data.rows[0].name;
+        self.user.fbid = response.data.rows[0].id;
+        self.user.role = response.data.rows[0].role;
+        self.redirectAfterLogin(user);
       }
     }).catch(function(error){
       console.log('error in get', error);
@@ -69,31 +82,19 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   // successful.  See statusChangeCallback() for when this call is made.
    self.testAPI=function(user) {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
+    FB.api('/me', {fields: 'last_name, first_name, name, picture'}, function(response) {
+      console.log('Successful login for: ', response);
       document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-      // document.getElementById('pic').innerHTML =
-      //   `<img src=https://graph.facebook.com/${response.id}/picture/>`;
+        'Thanks for logging in, ' + response.first_name + '!';
+      document.getElementById('pic').innerHTML =
+        `<img src=https://graph.facebook.com/${response.id}/picture/>`;
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
+        self.user.first_name = response.first_name;
+        self.user.last_name = response.last_name;
         self.user.name = response.name;
         self.user.fbid = response.id;
         self.checkForRegistration(self.user);
     });
-  }
-//this is the version of the testAPI that is called when the user registers for the first time
-  self.testAPIRegister=function(user) {
-   FB.api('/me', function(response) {
-     console.log('Successful login for: ' + response.name);
-     document.getElementById('status').innerHTML =
-       'Thanks for logging in, ' + response.name + '!';
-     document.getElementById('pic').innerHTML =
-       `<img src=https://graph.facebook.com/${response.id}/picture/>`;
-       self.user.url = `https://graph.facebook.com/${response.id}/picture`
-       self.user.name = response.name;
-       self.user.fbid = response.id;
-       self.addUserToDB(self.user);
-   });
   }
 
   self.fbLogout = function () {
@@ -105,12 +106,6 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
               $window.location.reload();
           });
       }
-
-  self.register = function(){
-    console.log('in register');
-    self.testAPIRegister();
-    self.user.registerToggle = false;
-  }
 
   self.checkLoginState = function() {
    FB.getLoginStatus(function(response) {
@@ -160,12 +155,6 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
 //on load of the admin controller this function checks to see if the current
 //user is an admin and redirects the user back to login if they are not listed as an admin
-  self.checkAdminState = function (){
-    if (self.user.role != 1){
-      $location.path("/login");
-      $window.location.reload();
-    }
-  }
 
   var originatorEv;
 
@@ -187,11 +176,36 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   }
 
   self.checkStripeRegistration = function() {
-    if (self.user.stripe_id.length > 0){
+    if (self.user.stripe_id){
       $location.path("/payment");
     } else {
       $location.path("/register");
     }
   }
+
+self.checkAdminState = function (user){
+  console.log(user, 'in checkAdminState');
+  if (user.role === 1){
+    console.log('is admin');
+    // $location.path("/login");
+    // $window.location.reload();
+  } else {
+    console.log('not admin');
+    $location.path("/login");
+  }
+}
+
+self.deleteUser = function (id){
+  console.log('in Delete user');
+  $http({
+    method:'DELETE',
+    url:`/user/${id}`,
+  }).then(function(response){
+    console.log('deleted user');
+    self.getAllUsers();
+  }).catch((error)=>{
+    console.log('error in delete', error);
+  });
+}
 
 }]); // end service
