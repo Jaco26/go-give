@@ -7,9 +7,10 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   console.log(self.user, 'user in service');
 
   self.redirectAfterLogin = function (user) {
-    console.log('in redirect after login', $location.url());
+    console.log('in redirect after login', $location.url(), 'user', user);
 
     if($location.url() == '/login'){
+
       if(self.user.role === 1){
         //redirect to admin page
         self.checkAdminState(self.user);
@@ -57,18 +58,21 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       url: `/user/${user.fbid}`
     }).then(function(response) {
       console.log('success in get check for reg', response);
+
       if(response.data.rows.length == 0){
         console.log('not registered!');
         self.addUserToDB(user);
       }
       else {
+        self.user.fbid = response.data.rows[0].fb_id;
+
         // self.user = response.data.rows[0];
-        self.user.url = `https://graph.facebook.com/${response.id}/picture`
+        self.user.url = `https://graph.facebook.com/${self.user.fbid}/picture`
         self.user.first_name = response.data.rows[0].first_name;
         self.user.last_name = response.data.rows[0].last_name;
         self.user.name = response.data.rows[0].name;
-        self.user.fbid = response.data.rows[0].id;
         self.user.role = response.data.rows[0].role;
+        self.user.id = response.data.rows[0].id
         self.redirectAfterLogin(user);
       }
     }).catch(function(error){
@@ -80,12 +84,13 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   // successful.  See statusChangeCallback() for when this call is made.
    self.testAPI=function(user) {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', {fields: 'last_name, first_name, name, picture'}, function(response) {
+    FB.api('/me', {fields: 'last_name, first_name, name, picture.type(large)'}, function(response) {
       console.log('Successful login for: ', response);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.first_name + '!';
       document.getElementById('pic').innerHTML =
-        `<img src=https://graph.facebook.com/${response.id}/picture/>`;
+        `<img src=https://graph.facebook.com/${response.id}/picture/>
+          <img src=https://graph.facebook.com/${response.id}/picture/>`;
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
         self.user.first_name = response.first_name;
         self.user.last_name = response.last_name;
