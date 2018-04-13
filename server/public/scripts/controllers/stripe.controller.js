@@ -161,6 +161,9 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         });
     });
 
+    console.log('user id', UserService.user.id);
+    
+
     function stripeSourceHandler(source) {
         // Insert the source ID into the form so it gets submitted to the server
         let form = document.getElementById('register-form');
@@ -178,6 +181,8 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         $http.post('/stripe/register', newCustomerData)
         .then(response => {
             console.log(response);
+            self.UserService.checkForRegistration(self.UserService.user);
+            self.getStripeCustomerInfo();
             $location.path('/payment');
         }).catch(err => {
             console.log(err);  
