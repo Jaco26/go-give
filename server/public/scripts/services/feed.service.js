@@ -5,6 +5,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     self.newFeedItem = {};
     self.allFeedItems = {};
     self.editFeedToggle = {show: false };
+    self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz")
 
     self.addFeedItem = function( newFeedItem){
         console.log('added to feed', newFeedItem);
@@ -96,5 +97,22 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
   }
   // end updateFeedItem
 
+  self.feedUpload = function(type){
+    console.log('in feedUpload');
+    self.client.pick({
+      accept:'image/*',
+      maxFiles: 1
+    }).then(function(result){
+      console.log('feedFilestack upload', result);
+      $route.reload();
+      self.newFeedItem.feed_img = result.filesUploaded[0].url;
+      console.log('self.newFeedItem.feed_img_url', self.newFeedItem.feed_img);
+    })
+    
+  }
+
+
 
 }]); // end service
+
+

@@ -23,8 +23,18 @@
         </div>
         <div>
                 <label for="">Feed Img URL</label>
-                <input type="text" ng-model="vm.newFeedItem.feed_img" placeholder="Img Url">
+                <button ng-click="vm.feedUpload('photo')">Upload Photo</button>
+                <p>{{vm.newFeedItem.feed_img}}</p>
         </div>
+        <!-- <div>
+                <label>Picture Url</label>
+                <button ng-click="vm.upload('photo')">Upload Photo</button>
+                <p>{{vm.newNonprofit.picture_url}}</p>
+        </div> -->
+        <!-- <div>
+                <label for="">Feed Img URL</label>
+                <input type="text" ng-model="vm.newFeedItem.feed_img" placeholder="Img Url">
+        </div> -->
         <div>
                 <label for="">Feed Video URL</label>
                 <input type="text" ng-model="vm.newFeedItem.feed_video" placeholder="Video">
@@ -44,7 +54,7 @@
         <li>name: {{item.name}}</li><br>
         <li>title: {{item.title}}</li><br>
         <li>text: {{item.feed_text}}</li><br>
-        <li>img url: {{item.feed_img_url}}</li><br>
+        <li><img ng-src="{{item.feed_img_url}}" width="100px"/></li><br><br><br><br>
         <li>video url: {{item.feed_video_url}}</li><br>
         <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
         <button type="submit" ng-click="vm.displayFeedItem(item.id)">Edit</button>
@@ -53,3 +63,5 @@
         </ul>
         </div>
 </div>
+
+

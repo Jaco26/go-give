@@ -93,6 +93,8 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.deleteFeedItem = FeedService.deleteFeedItem;
     self.displayFeedItem = FeedService.displayFeedItem;
     self.editFeedToggle = FeedService.editFeedToggle;
+    self.feedUpload = FeedService.feedUpload;
+
 
     self.userArray = UserService.userArray;
     self.getAllUsers = UserService.getAllUsers;
