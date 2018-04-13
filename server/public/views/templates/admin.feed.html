@@ -1,54 +1,55 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-
-<h1>Feed</h1>
-
-
+<div class="content">
+        <h1>Feed</h1>
 
 
-<div>
-<div ng-hide="vm.editFeedToggle.show">
-        <label for ="nonprofitSelect">Select Nonprofit: </label>
-        <select name="nonprofitSelect" ng-model="vm.newFeedItem.id">
-          <option ng-repeat="name in vm.allNonprofits.list" value="{{name.id}}"
-                    label="{{name.name}}">{{name.id}}</option>
-        </select>
-</div>
-<div>
-        <label for="">Title</label>
-        <input type="text" ng-model="vm.newFeedItem.title"  placeholder="title">
-</div>
-<div>
-        <label>Feed Text</label>
-        <input type="text" ng-model="vm.newFeedItem.feed_text" placeholder="Feed text">
-</div>
-<div>
-        <label for="">Feed Img URL</label>
-        <input type="text" ng-model="vm.newFeedItem.feed_img" placeholder="Img Url">
-</div>
-<div>
-        <label for="">Feed Video URL</label>
-        <input type="text" ng-model="vm.newFeedItem.feed_video" placeholder="Video">
-</div>
-<div ng-hide="vm.editFeedToggle.show">
-        <label for="">Date</label>
-        <input type="text" ng-model="vm.newFeedItem.feed_date" placeholder="Date" >
-</div>
-<div>
-     <button ng-click="vm.addFeedItem(vm.newFeedItem)">Submit Feed Item</button>
-     <button ng-click="vm.getFeedItems()">Get Feed Items</button>
-     <button ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Submit Edit</button>
-</div>
 
-<div>
-  <ul  ng-repeat="item in vm.allFeedItems.list">
-    <li>name: {{item.name}}</li><br>
-    <li>title: {{item.title}}</li><br>
-    <li>text: {{item.feed_text}}</li><br>
-    <li>img url: {{item.feed_img_url}}</li><br>
-    <li>video url: {{item.feed_video_url}}</li><br>
-    <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
-    <button type="submit" ng-click="vm.displayFeedItem(item.id)">Edit</button>
-    <button type="submit" ng-click="vm.deleteFeedItem(item.id)">Delete</button>
 
-  </ul>
+        <div>
+        <div ng-hide="vm.editFeedToggle.show">
+                <label for ="nonprofitSelect">Select Nonprofit: </label>
+                <select name="nonprofitSelect" ng-model="vm.newFeedItem.id">
+                <option ng-repeat="name in vm.allNonprofits.list" value="{{name.id}}"
+                        label="{{name.name}}">{{name.id}}</option>
+                </select>
+        </div>
+        <div>
+                <label for="">Title</label>
+                <input type="text" ng-model="vm.newFeedItem.title"  placeholder="title">
+        </div>
+        <div>
+                <label>Feed Text</label>
+                <input type="text" ng-model="vm.newFeedItem.feed_text" placeholder="Feed text">
+        </div>
+        <div>
+                <label for="">Feed Img URL</label>
+                <input type="text" ng-model="vm.newFeedItem.feed_img" placeholder="Img Url">
+        </div>
+        <div>
+                <label for="">Feed Video URL</label>
+                <input type="text" ng-model="vm.newFeedItem.feed_video" placeholder="Video">
+        </div>
+        <div ng-hide="vm.editFeedToggle.show">
+                <label for="">Date</label>
+                <input type="text" ng-model="vm.newFeedItem.feed_date" placeholder="Date" >
+        </div>
+        <div>
+        <button ng-click="vm.addFeedItem(vm.newFeedItem)">Submit Feed Item</button>
+        <button ng-click="vm.getFeedItems()">Get Feed Items</button>
+        <button ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Submit Edit</button>
+        </div>
+
+        <div>
+        <ul  ng-repeat="item in vm.allFeedItems.list">
+        <li>name: {{item.name}}</li><br>
+        <li>title: {{item.title}}</li><br>
+        <li>text: {{item.feed_text}}</li><br>
+        <li>img url: {{item.feed_img_url}}</li><br>
+        <li>video url: {{item.feed_video_url}}</li><br>
+        <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
+        <button type="submit" ng-click="vm.displayFeedItem(item.id)">Edit</button>
+        <button type="submit" ng-click="vm.deleteFeedItem(item.id)">Delete</button>
+
+        </ul>
+        </div>
 </div>

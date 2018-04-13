@@ -6,8 +6,8 @@ console.log('in user router');
 
 router.post('/', (request, response) => {
   console.log('in POST fb', request.body);
-  pool.query('INSERT INTO users (name, img_url, fb_id) VALUES ($1, $2, $3);',
-              [request.body.name, request.body.url, request.body.fbid])
+  pool.query('INSERT INTO users (name, img_url, fb_id, first_name, last_name) VALUES ($1, $2, $3, $4, $5);',
+              [request.body.name, request.body.url, request.body.fbid, request.body.first_name, request.body.last_name])
     .then((result) => {
       console.log('registered new user');
       response.sendStatus(201);
@@ -46,4 +46,22 @@ router.post('/', (request, response) => {
   })
 // end get all users route
 
+  router.delete('/:id', (request, response) => {
+    console.log('in delete user route', request.params.id);
+    pool.query('DELETE FROM users WHERE id = $1;', [request.params.id])
+    .then((result) => {
+      console.log('success in deleting user', result);
+      response.sendStatus(200);
+    })    
+    .catch((err) => {
+      console.log('error in delete user', err);
+      response.sendStatus(500);
+    })
+  })
+
+
+
+
 module.exports = router;
+
+
