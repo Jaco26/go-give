@@ -1,8 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool.js');
 const router = express.Router();
+const userData= require('../modules/userData.js');
 
 console.log('in user router');
+// console.log(userData());
 
 router.post('/', (request, response) => {
   console.log('in POST fb', request.body);
@@ -20,16 +22,27 @@ router.post('/', (request, response) => {
 //end POST new user
 
   router.get('/:id', (request, response) => {
-    console.log('in get check for register', request.params.id);
-    pool.query('SELECT * FROM users WHERE fb_id = $1;', [request.params.id])
-    .then((result) => {
-      console.log('success in get', result);
-      response.send(result);
-    })
-    .catch((err) => {
-      console.log('error in get', err);
+    user = userData(request.params.id)
+    .then( user => {
+    console.log(user, 'user in get a user router');
+    if(user == null){
       response.sendStatus(500);
+    } else {
+      response.send({user:user});
+    }
     })
+
+
+    // console.log('in get check for register', request.params.id);
+    // pool.query('SELECT * FROM users WHERE fb_id = $1;', [request.params.id])
+    // .then((result) => {
+    //   console.log('success in get', result);
+    //   response.send(result);
+    // })
+    // .catch((err) => {
+    //   console.log('error in get', err);
+    //   response.sendStatus(500);
+    // })
   })
   //end get FB user by id
 
@@ -52,7 +65,7 @@ router.post('/', (request, response) => {
     .then((result) => {
       console.log('success in deleting user', result);
       response.sendStatus(200);
-    })    
+    })
     .catch((err) => {
       console.log('error in delete user', err);
       response.sendStatus(500);
@@ -63,5 +76,3 @@ router.post('/', (request, response) => {
 
 
 module.exports = router;
-
-

@@ -61,21 +61,24 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
     }).then(function(response) {
       console.log('success in get check for reg', response);
 
-      if(response.data.rows.length == 0){
-        console.log('not registered!');
-        self.addUserToDB(user);
+      if(response.data.user){
+        console.log('registered', response.data.user);
+        // self.user = response.data.user;
+        self.user.fbid = response.data.user.fb_id;
+        self.user.url = `https://graph.facebook.com/${self.user.fbid}/picture`
+        self.user.first_name = response.data.user.first_name;
+        self.user.last_name = response.data.user.last_name;
+        self.user.name = response.data.user.name;
+        self.user.id = response.data.user.id;
+        self.user.role = response.data.user.role;
+        self.user.stripe_id = response.data.user.stripe_id;
+        self.redirectAfterLogin(self.user);
+
       }
       else {
-        self.user.fbid = response.data.rows[0].fb_id;
-        // self.user = response.data.rows[0];
-        self.user.url = `https://graph.facebook.com/${self.user.fbid}/picture`
-        self.user.first_name = response.data.rows[0].first_name;
-        self.user.last_name = response.data.rows[0].last_name;
-        self.user.name = response.data.rows[0].name;
-        self.user.id = response.data.rows[0].id;
-        self.user.role = response.data.rows[0].role;
-        self.user.stripe_id = response.data.rows[0].stripe_id;
-        self.redirectAfterLogin(user);
+        console.log('not registered!');
+        self.addUserToDB(user);
+
       }
     }).catch(function(error){
       console.log('error in get', error);
