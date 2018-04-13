@@ -1,6 +1,7 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
+<div class="content">
+  <h1>Nonprofits</h1>
 
-<h1>Nonprofits</h1>
 
 
     <div>
@@ -33,12 +34,13 @@
         <label for="">Goal Description</label>
         <input type="text" ng-model="vm.newNonprofit.goal_description" placeholder="Goal Description" >
       </div>
-      <div>
-         <button ng-click="vm.addNonprofit(vm.newNonprofit)" >Submit nonprofit</button>
-         <button ng-click="vm.getAllNonprofit()" >Get All Nonprofits</button>
-         <button ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Put Edits</button>
+
+        <div>
+          <button ng-click="vm.addNonprofit(vm.newNonprofit)" >Submit nonprofit</button>
+          <button ng-click="vm.getAllNonprofit()" >Get All Nonprofits</button>
+          <button ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Put Edits</button>
+        </div>
       </div>
-    </div>
 
 <div>
   <ul  ng-repeat="nonprofit in vm.allNonprofits.list">
@@ -54,8 +56,9 @@
     <li>twenty_plan_id: {{nonprofit.twenty_plan_id}}</li><br>
     <li>id: {{nonprofit.id}}</li><br>
 
-<br><br>
-<button ng-click="vm.editNonprofit(nonprofit.id)">edit</button>
-<button ng-click="vm.deleteNonprofit(nonprofit.id)">delete</button>
-  </ul>
+  <br><br>
+  <button ng-click="vm.editNonprofit(nonprofit.id)">edit</button>
+  <button ng-click="vm.deleteNonprofit(nonprofit.id)">delete</button>
+    </ul>
+  </div>
 </div>

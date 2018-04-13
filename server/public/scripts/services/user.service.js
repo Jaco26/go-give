@@ -7,8 +7,10 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   console.log(self.user, 'user in service');
 
   self.redirectAfterLogin = function (user) {
-    console.log('in redirect after login', $location.url(), 'user', user);
-
+    console.log('in redirect after login', $location.url(), 'user', user));
+    if(self.user.stripe_id){
+      self.getStripeCustomerInfo();
+    }
     if($location.url() == '/login'){
 
       if(self.user.role === 1){
@@ -65,14 +67,23 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       }
       else {
         self.user.fbid = response.data.rows[0].fb_id;
+<<<<<<< HEAD
 
+=======
+>>>>>>> d020c302bf6943ec588c967ecf3abd7b8bf6b682
         // self.user = response.data.rows[0];
         self.user.url = `https://graph.facebook.com/${self.user.fbid}/picture`
         self.user.first_name = response.data.rows[0].first_name;
         self.user.last_name = response.data.rows[0].last_name;
         self.user.name = response.data.rows[0].name;
+<<<<<<< HEAD
         self.user.role = response.data.rows[0].role;
         self.user.id = response.data.rows[0].id
+=======
+        self.user.id = response.data.rows[0].id;
+        self.user.role = response.data.rows[0].role;
+        self.user.stripe_id = response.data.rows[0].stripe_id;
+>>>>>>> d020c302bf6943ec588c967ecf3abd7b8bf6b682
         self.redirectAfterLogin(user);
       }
     }).catch(function(error){
@@ -158,6 +169,34 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
 //on load of the admin controller this function checks to see if the current
 //user is an admin and redirects the user back to login if they are not listed as an admin
+
+  var originatorEv;
+
+  self.menuHref = "http://www.google.com/design/spec/components/menus.html#menus-specs";
+
+  self.openMenu = function($mdMenu, ev) {
+    originatorEv = ev;
+    $mdMenu.open(ev);
+  };
+
+  self.getStripeCustomerInfo = function () {
+    $http.get(`/stripe/customer/${self.user.stripe_id}`)
+    .then(response => {
+      self.stripeCustomerInfo = response.data;
+      console.log('CUSTOMER:', self.stripeCustomerInfo);
+    }).catch(err => {
+        console.log(err);
+    });
+  }
+
+  self.checkStripeRegistration = function() {
+    if (self.user.stripe_id){
+      $location.path("/payment");
+    } else {
+      $location.path("/register");
+    }
+  }
+
 self.checkAdminState = function (user){
   console.log(user, 'in checkAdminState');
   if (user.role === 1){

@@ -1,6 +1,10 @@
 myApp.controller('UserStaticController', ['UserService', 'FeedService', 'NonprofitService', '$location', '$window', function(UserService, FeedService, NonprofitService, $location, $window){
     const self = this;
 
+    self.UserService = UserService;
+
+    self.fbLogout = UserService.fbLogout;
+    self.user = UserService.user;
     // This is called with the results from from FB.getLoginStatus().
     statusChangeCallback = function(response) {
       console.log(response, 'in statusChangeCallback');

@@ -2,6 +2,8 @@ myApp.controller('UserNonprofitProfileController',['UserService', '$routeParams'
                   function(UserService, $routeParams, NonprofitService, $window){
     const self = this;
 
+    self.UserService = UserService;
+
     // This is called with the results from from FB.getLoginStatus().
     statusChangeCallback = function(response) {
       console.log(response, 'in statusChangeCallback');

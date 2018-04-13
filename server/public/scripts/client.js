@@ -31,12 +31,16 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
     templateUrl: '/views/templates/user.discover.html',
     controller: 'UserStaticController as vm'
   })
+  .when('/register', {
+    templateUrl: '/views/templates/user.register.html',
+    controller: 'StripeController as vm'
+  })
   .when('/payment', {
     templateUrl: '/views/templates/user.payment.html',
     controller: 'StripeController as vm'
   })
   .when('/support', {
-    templateUrl: '/views/templates/support.html',
+    templateUrl: '/views/templates/user.support.html',
     controller: 'UserStaticController as vm'
   })
   .when('/admin-csv', {

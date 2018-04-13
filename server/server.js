@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const env = require('dotenv').config();
 //pem for generating our own SSL Certificate
 let pem = require('pem')
 //need to be on https for facebook

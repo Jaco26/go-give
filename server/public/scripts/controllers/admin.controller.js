@@ -1,6 +1,7 @@
 myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService', '$window',
         function(UserService, NonprofitService, FeedService, $window){
     const self = this;
+    self.UserService = UserService;
     self.user = UserService.user;
 
     // This is called with the results from from FB.getLoginStatus().

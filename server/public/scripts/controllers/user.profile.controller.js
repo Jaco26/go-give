@@ -1,6 +1,10 @@
 myApp.controller('UserProfileController', ['UserService', '$window', function(UserService, $window){
     const self = this;
 
+    self.UserService = UserService;
+
+    self.fbLogout = UserService.fbLogout;
+
     // This is called with the results from from FB.getLoginStatus().
     statusChangeCallback = function(response) {
       console.log(response, 'in statusChangeCallback');
