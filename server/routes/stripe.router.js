@@ -140,7 +140,7 @@ router.post('/oneTimeDonate', (req, res) => {
     stripe.charges.create({
         amount: Number(donation.amount) * 100,
         currency: 'usd',
-        customer: donation.customer,
+        customer: donation.customer_id,
         metadata: {product_id: donation.product}
     }, (err, plan) => {
         if(err){

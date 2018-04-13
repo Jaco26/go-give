@@ -290,12 +290,74 @@ self.deleteUser = function (id){
   });
 }
 
+///// WE BROUGHT THIS IN FROM THE STRIPE.SERVICE
 
-//////////////////////////////////////////////////
-///////////// JACOB'S INTEGRATION ///////////////
-////////////////////////////////////////////////
+self.plan; 
+self.subscribeToThisPlan = function (charity, planId) {
+  if(self.user.stripeCustomerInfo){
+    if (self.user.stripeCustomerInfo.customerObject.subscriptions.data.length > 0){
+      for (subscription of self.user.stripeCustomerInfo.customerObject.subscriptions.data){
+          if (charity.product_id == subscription.plan.product){
+              console.log('already subscribed to this charity');
+              //unsubscribe customer to old subscription
+              $http({
+                  method: 'POST',
+                  url: '/stripe/unsubscribe',
+                  data: {id: subscription.id}
+              }).then(response => {
+                  self.getStripeCustomerInfo();
+              }).catch(err => {
+                  console.log(err);
+              })
+          }
+      }
+      //subscribe customer to new subscription
+      let data = { planId: planId, customerId: self.user.fromOurDB.customer_id };
+      $http.post('/stripe/subscribe_to_plan', data)
+          .then(response => {
+              self.plan = ''
+              self.getStripeCustomerInfo();
+          }).catch(err => {
+              console.log(err);
+          });
+  }
+  else {
+      let data = { planId: planId, customerId: self.user.fromOurDB.customer_id };
+      $http.post('/stripe/subscribe_to_plan', data)
+          .then(response => {
+              self.plan = ''
+              self.getStripeCustomerInfo();
+          }).catch(err => {
+              console.log(err);
+          });
+  }
+  } else {
+    alert('Please register for Stripe');
+  }
+   
+}
 
-// self.getUserInfo
+self.oneTimeAmount;
 
+self.oneTimeDonate = function(product, amount) {
+  console.log(amount);
+  
+  let donation = {}
+  donation.customer = self.user.fromOurDB.customer_id;
+  donation.product = product;
+  donation.amount = amount;
+
+    $http({
+        method: 'POST',
+        url: '/stripe/oneTimeDonate',
+        data: donation
+    })
+    .then(response => {
+        console.log(response);
+        self.oneTimeAmount = '';
+    }).catch(err => {
+        console.log(err);
+    })
+}
 
 }]); // end service
