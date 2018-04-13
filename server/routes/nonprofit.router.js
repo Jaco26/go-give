@@ -7,7 +7,7 @@ console.log('in nonprofit router');
 
 router.post('/', (request, response) => {
   console.log('in post new nonprofit -- route', request.body);
-  stripeCreateProduct(request.body, response)
+  stripeCreateProduct(request.body, response);
 })
 //end POST new nonprofit
 
