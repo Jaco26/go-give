@@ -24,11 +24,11 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
     }
     if($location.url() == '/login'){
 
-      if(self.user.role === 1){
+      if(self.user.fromOurDB.role === 1){
         //redirect to admin page
         self.checkAdminState(self.user);
         $location.path("/admin");
-      } else if ( self.user.role === 2) {
+      } else if (self.user.fromOurDB.role === 2) {
         //redirect to user feed
         $location.path("/feed");
       }
@@ -267,7 +267,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
 self.checkAdminState = function (user){
   console.log(user, 'in checkAdminState');
-  if (user.role === 1){
+  if (user.fromOurDB.role === 1){
     console.log('is admin');
     // $location.path("/login");
     // $window.location.reload();
