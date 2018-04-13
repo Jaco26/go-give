@@ -1,6 +1,15 @@
 myApp.service('UserService', ['$http', '$location', '$window', '$route', function($http, $location, $window, $route) {
   let self = this;
-  self.user = {};
+  self.user = {
+    stripeCustomerInfo: {
+      customerObject: {},
+      forReports: {
+        invoicesByOrg: [], // for subscriptions
+        chargesByOrg: [], // for onetime donations
+      }
+    },
+    fromOurDB: {}
+  };
   self.userArray = {};
   self.callbackResponse = '';
 
@@ -66,17 +75,20 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
         self.addUserToDB(user);
       }
       else {
-        self.user.fbid = response.data.rows[0].fb_id;
-        // self.user = response.data.rows[0];
-        self.user.url = `https://graph.facebook.com/${self.user.fbid}/picture`
-        self.user.first_name = response.data.rows[0].first_name;
-        self.user.last_name = response.data.rows[0].last_name;
-        self.user.name = response.data.rows[0].name;
-        self.user.id = response.data.rows[0].id;
-        self.user.role = response.data.rows[0].role;
-        self.user.stripe_id = response.data.rows[0].stripe_id;
+        self.user.fromOurDB = response.data.rows[0];
+        self.user.fromOurDB.img_url = `https://graph.facebook.com/${self.user.fromOurDB.fb_id}/picture`
+        // self.user.fb_id = response.data.rows[0].fb_id;
+        // // self.user = response.data.rows[0];
+        // self.user.url = `https://graph.facebook.com/${self.user.fbid}/picture`
+        // self.user.first_name = response.data.rows[0].first_name;
+        // self.user.last_name = response.data.rows[0].last_name;
+        // self.user.name = response.data.rows[0].name;
+        // self.user.id = response.data.rows[0].id;
+        // self.user.role = response.data.rows[0].role;
+        // self.user.customer_id = response.data.rows[0].customer_id;
         self.redirectAfterLogin(user);
       }
+      console.log('USER OBJECT after checkForRegistration', self.user);
     }).catch(function(error){
       console.log('error in get', error);
     })
@@ -211,5 +223,13 @@ self.deleteUser = function (id){
     console.log('error in delete', error);
   });
 }
+
+
+//////////////////////////////////////////////////
+///////////// JACOB'S INTEGRATION ///////////////
+////////////////////////////////////////////////
+
+// self.getUserInfo
+
 
 }]); // end service
