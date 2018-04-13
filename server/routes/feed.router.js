@@ -25,7 +25,7 @@ router.get('/', (request, response) => {
               JOIN nonprofit ON nonprofit.id = feed.nonprofit_id
               ORDER by feed_date_posted DESC;`)
   .then((result) => {
-    console.log('success in get all feeds', result);
+    // console.log('success in get all feeds', result);
     response.send(result)
   })
   .catch((err) => {
@@ -56,7 +56,7 @@ router.get('/:id', (request , response) => {
   JOIN nonprofit ON nonprofit.id = feed.nonprofit_id
   WHERE feed.id = $1;`, [request.params.id])
   .then((result) => {
-    console.log('success in get for edit', result);
+    // console.log('success in get for edit', result);
 
     response.send(result)
   })
@@ -74,7 +74,7 @@ router.put('/', (request, response) => {
   pool.query(`UPDATE feed SET title = $1, feed_text = $2, feed_img_url = $3, feed_video_url = $4
                WHERE feed.id = $5;`, [request.body.title, request.body.feed_text, request.body.feed_img, request.body.feed_video, request.body.id])
   .then((result) => {
-    console.log('success in update', result);
+    // console.log('success in update', result);
     response.sendStatus(201);
 
   })

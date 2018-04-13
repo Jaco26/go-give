@@ -1,28 +1,20 @@
 const express = require('express');
 const pool = require('../modules/pool.js');
 const router = express.Router();
+const stripeCreateProduct = require('../modules/stripe.create.product.module.js')
 
 console.log('in nonprofit router');
 
-router.post('/', (req, res) => {
-    console.log('in post new nonprofit -- route', request.body);
-  const sqlText = 'INSERT INTO nonprofit (name, picture_url, logo_url, description, goal_value, goal_description) VALUES ($1, $2, $3, $4, $5, $6);';
-    pool.query(sqlText, [req.body.name, req.body.picture_url, req.body.logo_url, req.body.description, req.body.goal, req.body.goal_description])
-    .then((result) => {
-      console.log('registered new nonprofit');
-      res.sendStatus(201);
-    })
-    .catch((err) => {
-      console.log('error in nonprofit post', err);
-      res.sendStatus(500);
-    });
-});
+router.post('/', (request, response) => {
+  console.log('in post new nonprofit -- route', request.body);
+  stripeCreateProduct(request.body, response)
+})
 //end POST new nonprofit
 
 router.get('/', (request, response) => {
   pool.query('SELECT * FROM nonprofit ORDER BY name')
   .then((result) => {
-    console.log('success in get all nonprofits', result);
+    // console.log('success in get all nonprofits', result);
     response.send(result)
   })
   .catch((err) => {
@@ -36,7 +28,7 @@ router.get('/:id', (request, response) => {
   console.log('in populate edit --get', request.params.id);
   pool.query('SELECT * FROM nonprofit WHERE id = $1;', [request.params.id])
   .then((result) => {
-    console.log('success in get populateEdit', result);
+    // console.log('success in get populateEdit', result);
     response.send(result)
   })
   .catch((err) => {
@@ -50,7 +42,7 @@ router.delete('/:id', (request, response) => {
   console.log('in delete nonprofit route', request.params.id);
   pool.query('DELETE FROM nonprofit WHERE id = $1;', [request.params.id])
   .then((result) => {
-    console.log('success in delete nonprofit', result);
+    // console.log('success in delete nonprofit', result);
     response.sendStatus(200);
   })
   .catch((err) => {
