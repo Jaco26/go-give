@@ -7,7 +7,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   console.log(self.user, 'user in service');
 
   self.redirectAfterLogin = function (user) {
-    console.log('in redirect after login', $location.url(), 'user', user));
+    console.log('in redirect after login', $location.url(), 'user', user);
     if(self.user.stripe_id){
       self.getStripeCustomerInfo();
     }
@@ -47,7 +47,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       data: user
     }).then(function(response){
       console.log('success in post', response);
-      self.redirectAfterLogin(user);
+      self.checkForRegistration(user);
     }).catch(function(error){
       console.log('error in post', error);
     })
@@ -67,23 +67,14 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       }
       else {
         self.user.fbid = response.data.rows[0].fb_id;
-<<<<<<< HEAD
-
-=======
->>>>>>> d020c302bf6943ec588c967ecf3abd7b8bf6b682
         // self.user = response.data.rows[0];
         self.user.url = `https://graph.facebook.com/${self.user.fbid}/picture`
         self.user.first_name = response.data.rows[0].first_name;
         self.user.last_name = response.data.rows[0].last_name;
         self.user.name = response.data.rows[0].name;
-<<<<<<< HEAD
-        self.user.role = response.data.rows[0].role;
-        self.user.id = response.data.rows[0].id
-=======
         self.user.id = response.data.rows[0].id;
         self.user.role = response.data.rows[0].role;
         self.user.stripe_id = response.data.rows[0].stripe_id;
->>>>>>> d020c302bf6943ec588c967ecf3abd7b8bf6b682
         self.redirectAfterLogin(user);
       }
     }).catch(function(error){
@@ -100,8 +91,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.first_name + '!';
       document.getElementById('pic').innerHTML =
-        `<img src=https://graph.facebook.com/${response.id}/picture/>
-          <img src=https://graph.facebook.com/${response.id}/picture/>`;
+        `<img src=https://graph.facebook.com/${response.id}/picture/>`;
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
         self.user.first_name = response.first_name;
         self.user.last_name = response.last_name;
