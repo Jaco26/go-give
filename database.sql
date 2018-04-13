@@ -2,6 +2,8 @@
 
 CREATE TABLE users(
 id serial primary key,
+first_name varchar,
+last_name varchar, 
 name varchar,
 img_url varchar,
 fb_id varchar,

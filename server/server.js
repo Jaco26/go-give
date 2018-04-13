@@ -7,6 +7,23 @@ let pem = require('pem')
 //need to be on https for facebook
 let https = require('https')
 
+var passport = require('passport')
+  , FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "https://localhost:4430/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log('Facebook profile', profile);
+
+    // TODO: connect with your databse and create or get user
+
+    done(null, {username: 'blah'}); // <-
+  }
+));
+
 //pem generates our SSL Certifiace here
 pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
   if (err) {
@@ -30,6 +47,7 @@ const nonprofitRouter = require('./routes/nonprofit.router');
 const feedRouter = require('./routes/feed.router');
 const reportRouter = require('./routes/report.router');
 const userRouter = require('./routes/user.router');
+const authRouter = require('./routes/auth.router');
 
 /* Routes */
 app.use('/stripe', stripeRouter);
@@ -37,6 +55,7 @@ app.use('/nonprofit', nonprofitRouter);
 app.use('/feed', feedRouter);
 app.use('/report', reportRouter);
 app.use('/user', userRouter);
+app.use('/auth', authRouter);
 
 
 

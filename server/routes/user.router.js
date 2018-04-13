@@ -1,8 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool.js');
 const router = express.Router();
+// const user = require('../public/scripts/services/user.service.js')
 
 console.log('in user router');
+
 
 router.post('/', (request, response) => {
   console.log('in POST fb', request.body);
@@ -35,7 +37,7 @@ router.post('/', (request, response) => {
 
   router.get('/', (request, response)=>{
     console.log('in get all users route');
-    pool.query('SELECT * FROM users ORDER BY name;')
+    pool.query('SELECT * FROM users ORDER BY last_name;')
     .then((result)=>{
       console.log('success in get', result);
       response.send(result);
@@ -52,7 +54,7 @@ router.post('/', (request, response) => {
     .then((result) => {
       console.log('success in deleting user', result);
       response.sendStatus(200);
-    })    
+    })
     .catch((err) => {
       console.log('error in delete user', err);
       response.sendStatus(500);
@@ -63,5 +65,3 @@ router.post('/', (request, response) => {
 
 
 module.exports = router;
-
-
