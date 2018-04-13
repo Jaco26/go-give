@@ -23,7 +23,7 @@ router.post('/', (request, response) => {
     console.log('in get check for register', request.params.id);
     pool.query('SELECT * FROM users WHERE fb_id = $1;', [request.params.id])
     .then((result) => {
-      console.log('success in get', result);
+      // console.log('success in get', result);
       response.send(result);
     })
     .catch((err) => {
@@ -37,7 +37,7 @@ router.post('/', (request, response) => {
     console.log('in get all users route');
     pool.query('SELECT * FROM users ORDER BY name;')
     .then((result)=>{
-      console.log('success in get', result);
+      // console.log('success in get', result);
       response.send(result);
     })
     .catch((err) => {
@@ -50,7 +50,7 @@ router.post('/', (request, response) => {
     console.log('in delete user route', request.params.id);
     pool.query('DELETE FROM users WHERE id = $1;', [request.params.id])
     .then((result) => {
-      console.log('success in deleting user', result);
+      // console.log('success in deleting user', result);
       response.sendStatus(200);
     })    
     .catch((err) => {

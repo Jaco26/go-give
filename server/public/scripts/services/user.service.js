@@ -8,8 +8,10 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
   self.redirectAfterLogin = function (user) {
     console.log('in redirect after login', $location.url(), 'user', user);
-    if(self.user.stripe_id){
+    if(self.user.customer_id){
       self.getStripeCustomerInfo();
+      self.getAllCharges();
+      self.getAllInvoices();
     }
     if($location.url() == '/login'){
 
@@ -74,7 +76,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
         self.user.name = response.data.rows[0].name;
         self.user.id = response.data.rows[0].id;
         self.user.role = response.data.rows[0].role;
-        self.user.stripe_id = response.data.rows[0].stripe_id;
+        self.user.customer_id = response.data.rows[0].customer_id;
         self.redirectAfterLogin(user);
       }
     }).catch(function(error){
@@ -170,7 +172,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   };
 
   self.getStripeCustomerInfo = function () {
-    $http.get(`/stripe/customer/${self.user.stripe_id}`)
+    $http.get(`/stripe/customer/${self.user.customer_id}`)
     .then(response => {
       self.stripeCustomerInfo = response.data;
       console.log('CUSTOMER:', self.stripeCustomerInfo);
@@ -180,11 +182,75 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   }
 
   self.checkStripeRegistration = function() {
-    if (self.user.stripe_id){
+    if (self.user.customer_id){
       $location.path("/payment");
     } else {
       $location.path("/register");
     }
+  }
+
+    // get a list of all stripe charges
+    self.getAllCharges = function () {
+      $http.get('/stripe/all-charges')
+          .then(response => {
+              console.log('CHARGES:',response.data.data);
+              filterChargesByUser(response.data.data)
+          }).catch(err => {
+              console.log(err);
+          });
+  }
+
+  function filterChargesByUser (charges) {
+      const usersCharges = charges.filter(item => {
+          return item.customer == self.user.customer_id;
+      });  
+      filterUserChargeIdsByOrg (usersCharges);
+  }
+
+  function filterUserChargeIdsByOrg (userCharges) {
+      let prodIds = [];
+      for(let charge of userCharges){
+          if (!charge.metadata.product_id) {
+              continue;
+          } else {
+              prodIds.push(charge.metadata.product_id);
+          }
+      }
+      let uniqueProdIds = [...new Set(prodIds)]
+      // console.log('USER CHARGES\' PROD IDS:', uniqueProdIds);
+      getChargeObjectsForEachOrg (uniqueProdIds, userCharges);
+  }
+
+  function getChargeObjectsForEachOrg (uniqueIdsArr, userChargesArr) {
+      let chargesByOrg = [];
+      for(let uniqueId of uniqueIdsArr){
+          let orgsCharges = {uniqueId: uniqueId, charges: []};
+          for(let charge of userChargesArr){
+              if(charge.metadata.product_id == uniqueId){
+                  orgsCharges.charges.push(charge);
+              }
+          }
+          chargesByOrg.push(orgsCharges);
+      }
+      console.log('CHARGES BY ORGANIZATION:', chargesByOrg); 
+      self.user.stripeCustomerInfo.chargesByOrg = chargesByOrg;
+  }
+
+  // get a list of all invoices
+  self.getAllInvoices = function () {
+      $http.get('/stripe/all-invoices')
+      .then(response => {
+          console.log('ALL INVOICES:',response.data.data);
+          filterInvoicesByUser(response.data.data)
+      }).catch(err => {
+          console.log(err);  
+      });
+  }
+
+  function filterInvoicesByUser (invoices) {
+      const userInvoices = invoices.filter(item => item.customer == self.user.customer_id);
+      console.log('USER INVOICES:', userInvoices);
+      self.user.stripeCustomerInfo.allInvoices = userInvoices;
   }
 
 self.checkAdminState = function (user){

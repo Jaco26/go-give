@@ -72,7 +72,7 @@ router.post('/register', function (req, res) {
                 res.sendStatus(500)
             } else {
                 console.log('customer ++++ + ++ ++', customer);
-                const sqlText = `UPDATE users SET stripe_id=$1 WHERE id=$2`;
+                const sqlText = `UPDATE users SET customer_id=$1 WHERE id=$2`;
                 pool.query(sqlText, [customer.id, userId])
                 .then(response => {
                     res.sendStatus(201);
@@ -109,77 +109,77 @@ router.post('/subscribe_to_plan', (req, res) => {
 
 let nonprofit = {};
 
-router.post('/nonprofit', (req, res) => {
-    nonprofit = req.body
-    stripe.products.create({
-        name: nonprofit.name,
-        type: 'service',
-    }, (err, product) => {
-        if(err){
-            console.log(err);
-            res.sendStatus(500);  
-        } else {
-            nonprofit.product_id = product.id
-            createFiveDollarPlan(nonprofit.product_id);
-            res.sendStatus(200);
-        } 
-    });
-})
+// router.post('/nonprofit', (req, res) => {
+//     nonprofit = req.body
+//     stripe.products.create({
+//         name: nonprofit.name,
+//         type: 'service',
+//     }, (err, product) => {
+//         if(err){
+//             console.log(err);
+//             res.sendStatus(500);  
+//         } else {
+//             nonprofit.product_id = product.id
+//             createFiveDollarPlan(nonprofit.product_id);
+//             res.sendStatus(200);
+//         } 
+//     });
+// })
 
-function createFiveDollarPlan(id){
-    stripe.plans.create({
-        product: id,
-        currency: 'usd',
-        interval: 'month',
-        nickname: '$5/month',
-        amount: 500,
-    }, (err, plan) => {
-        if(err){
-            console.log(err); 
-        } else {
-            nonprofit.plan_id_five = plan.id
-            createTenDollarPlan(id);
-        } 
-    });
-} //end createPlans
+// function createFiveDollarPlan(id){
+//     stripe.plans.create({
+//         product: id,
+//         currency: 'usd',
+//         interval: 'month',
+//         nickname: '$5/month',
+//         amount: 500,
+//     }, (err, plan) => {
+//         if(err){
+//             console.log(err); 
+//         } else {
+//             nonprofit.plan_id_five = plan.id
+//             createTenDollarPlan(id);
+//         } 
+//     });
+// } //end createPlans
 
-function createTenDollarPlan(id){
-    stripe.plans.create({
-        product: id,
-        currency: 'usd',
-        interval: 'month',
-        nickname: '$10/month',
-        amount: 1000,
-    }, (err, plan) => {
-        if(err){
-            console.log(err);
-        } else {
-            nonprofit.plan_id_ten = plan.id
-            createTwentyDollarPlan(id)
-        } 
-    });
-}
+// function createTenDollarPlan(id){
+//     stripe.plans.create({
+//         product: id,
+//         currency: 'usd',
+//         interval: 'month',
+//         nickname: '$10/month',
+//         amount: 1000,
+//     }, (err, plan) => {
+//         if(err){
+//             console.log(err);
+//         } else {
+//             nonprofit.plan_id_ten = plan.id
+//             createTwentyDollarPlan(id)
+//         } 
+//     });
+// }
 
-function createTwentyDollarPlan(id){
-    stripe.plans.create({
-        product: id,
-        currency: 'usd',
-        interval: 'month',
-        nickname: '$20/month',
-        amount: 2000,
-    }, (err, plan) => {
-        if(err){
-            console.log(err); 
-        } else {
-            nonprofit.plan_id_twenty = plan.id
-            postNonprofit(nonprofit);
-        } 
-    });
-}
+// function createTwentyDollarPlan(id){
+//     stripe.plans.create({
+//         product: id,
+//         currency: 'usd',
+//         interval: 'month',
+//         nickname: '$20/month',
+//         amount: 2000,
+//     }, (err, plan) => {
+//         if(err){
+//             console.log(err); 
+//         } else {
+//             nonprofit.plan_id_twenty = plan.id
+//             postNonprofit(nonprofit);
+//         } 
+//     });
+// }
 
 function postNonprofit(nonprofit){
     console.log(nonprofit);
-    const sqlText = `INSERT INTO nonprofits (name, city, state, description, product_id, plan_id_five, plan_id_ten, plan_id_twenty, created)
+    const sqlText = `INSERT INTO nonprofit (name, city, state, description, product_id, plan_id_five, plan_id_ten, plan_id_twenty, created)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
     pool.query(sqlText, [nonprofit.name, nonprofit.city, nonprofit.state, nonprofit.description, nonprofit.product_id, nonprofit.plan_id_five, nonprofit.plan_id_ten, nonprofit.plan_id_twenty, new Date()])
     .then(response => {
