@@ -54,10 +54,6 @@ router.delete('/:id', (request, response) => {
 
 
 
-
-
-
-
 router.put('/', (request, response) => {
   console.log('in edit nonprofit route', request.body);
   pool.query('UPDATE nonprofit SET name = $1, picture_url = $2, logo_url = $3, description = $4, goal_value = $5, goal_description = $6 WHERE id = $7;',

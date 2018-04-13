@@ -176,7 +176,7 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
             name: form.elements[5].defaultValue,
             email: form.elements[6].defaultValue,
             stripeSource: form.elements[7].defaultValue,
-            userId: UserService.user.id,
+            userId: UserService.user.fromOurDB.id,
         };
         $http.post('/stripe/register', newCustomerData)
         .then(response => {

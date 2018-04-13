@@ -17,7 +17,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
   self.redirectAfterLogin = function (user) {
     console.log('in redirect after login', $location.url(), 'user', user);
-    if(self.user.customer_id){
+    if(self.user.fromOurDB.customer_id){
       self.getStripeCustomerInfo();
       self.getAllCharges();
       self.getAllInvoices();
@@ -184,10 +184,10 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   };
 
   self.getStripeCustomerInfo = function () {
-    $http.get(`/stripe/customer/${self.user.customer_id}`)
+    $http.get(`/stripe/customer/${self.user.fromOurDB.customer_id}`)
     .then(response => {
-      self.stripeCustomerInfo = response.data;
-      console.log('CUSTOMER:', self.stripeCustomerInfo);
+      self.user.stripeCustomerInfo.customerObject = response.data;
+      console.log('CUSTOMER:', self.user.stripeCustomerInfo);
     }).catch(err => {
         console.log(err);
     });
