@@ -29,6 +29,7 @@ router.get('/charges/:customerId', (req, res) => {
             console.log(err);
             res.sendStatus(500)
         } else {
+            // console.log('CHARGES----------', charges);
             userReports.filterDataForUserReportOnOnetimeDonations(charges, customerId, res);
         }
     });
@@ -44,6 +45,7 @@ router.get('/invoices/:customerId', (req, res) => {
             console.log(err);
             res.sendStatus(500)
         } else {
+            // console.log('INVOICES ------- ', invoices);     
             userReports.filterDataForUserReportOnSubscriptionDonations(invoices, customerId, res);
         }
     });
@@ -147,7 +149,7 @@ router.post('/oneTimeDonate', (req, res) => {
     stripe.charges.create({
         amount: Number(donation.amount) * 100,
         currency: 'usd',
-        customer: donation.customer_id,
+        customer: donation.customer,
         metadata: {product_id: donation.product}
     }, (err, plan) => {
         if(err){
