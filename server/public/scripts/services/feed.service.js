@@ -6,12 +6,13 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     self.allFeedItems = {};
     self.editFeedToggle = {show: false };
 
-    self.addFeedItem = function( newFeedItem){
+    self.addFeedItem = function( newFeedItem, user){
         console.log('added to feed', newFeedItem);
         $http({
             method: 'POST',
             url: '/feed',
-            data: newFeedItem
+            data: {newFeedItem: newFeedItem,
+                   user: user}
         }).then(function(response){
             console.log('success in feed item', response);
             self.newFeedItem = {}
@@ -37,17 +38,16 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
   }
 // end getFeedItem
 
-  self.deleteFeedItem = function(id) {
+  self.deleteFeedItem = function(id, user) {
     console.log('delete item');
     $http({
       method:'DELETE',
-      url:`/feed/${id}`
+      url:`/feed/${id}/${user.fbid}`
     }).then((response)=>{
       console.log('deleted item');
       self.getFeedItems();
     }).catch((error)=>{
       console.log('error in delete', error);
-
     })
   }
 // end deleteFeedItem
@@ -77,12 +77,13 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     }
 
 
-  self.updateFeedItem = function(newFeedItem) {
+  self.updateFeedItem = function(newFeedItem, user) {
     console.log('updated feed item');
     $http({
       method:'PUT',
       url:`/feed`,
-      data: newFeedItem
+      data: {newFeedItem: newFeedItem,
+             user: user}
     }).then((response)=> {
       console.log('success in update', response);
       self.editFeedToggle.show = false;

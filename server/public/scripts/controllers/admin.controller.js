@@ -67,7 +67,6 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.checkAdminState = UserService.checkAdminState;
     self.checkAdminState(self.user);
 
-
     self.fbLogout = UserService.fbLogout;
 
     self.newNonprofit = NonprofitService.newNonprofit;
@@ -88,16 +87,15 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.editNonprofitToggle = NonprofitService.editNonprofitToggle
     self.upload = NonprofitService.upload;
 
-
     self.updateFeedItem = FeedService.updateFeedItem;
     self.deleteFeedItem = FeedService.deleteFeedItem;
     self.displayFeedItem = FeedService.displayFeedItem;
     self.editFeedToggle = FeedService.editFeedToggle;
 
     self.userArray = UserService.userArray;
+    self.user = UserService.user;
     self.getAllUsers = UserService.getAllUsers;
     self.getAllUsers();
     self.deleteUser = UserService.deleteUser;
-
 
 }]);

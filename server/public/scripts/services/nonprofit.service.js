@@ -10,12 +10,13 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz")
 
 
-    self.addNonprofit = function (newNonprofit){
-        console.log('add non profit', newNonprofit);
+    self.addNonprofit = function (newNonprofit, user){
+        console.log('add non profit', newNonprofit, user);
         $http({
             method:'POST',
             url:'/nonprofit',
-            data: newNonprofit
+            data: {newNonprofit: newNonprofit,
+                   user: user}
         }).then(function(response){
             console.log('success in post', response);
             self.newNonprofit = {}
@@ -45,11 +46,11 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       self.populateEditFields(id);
     }
 
-    self.deleteNonprofit = function(id){
-      console.log('in delete nonprofit', id);
+    self.deleteNonprofit = function(id, user){
+      console.log('in delete nonprofit', id, user);
       $http({
         method: 'DELETE',
-        url: `/nonprofit/${id}`
+        url: `/nonprofit/${id}/${user.fbid}`
       }).then(function(response) {
         console.log('success in delete nonprofit', response);
         self.getAllNonprofit();
@@ -76,12 +77,13 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     }
     //end populateEditFields
 
-    self.submitEditedNonprofit = function (editedNonprofit){
-      console.log('in submitEditedNonprofit', editedNonprofit);
+    self.submitEditedNonprofit = function (editedNonprofit, user){
+      console.log('in submitEditedNonprofit', editedNonprofit, user);
       $http({
         method: 'PUT',
         url: '/nonprofit',
-        data: editedNonprofit
+        data: {editedNonprofit: editedNonprofit,
+               user: user}
       }).then(function(response){
         console.log('success in edit nonprofit', response);
         self.editNonprofitToggle.show = false;
@@ -93,6 +95,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         console.log('error in edit nonprofit', error);
       })
     }
+    //end submit edit nonprofit
 
     self.displaySoloNonprofit = function(id){
       console.log('in displaySoloNonprofit', id);

@@ -7,7 +7,7 @@
 
     <ul ng-repeat="user in vm.userArray.list | filter: searchBox">
         <li>Username: {{user.first_name}} {{user.last_name}}</li>
-        <li><button ng-click="vm.deleteUser(user.id)">Delete User</button></li>
+        <li><button ng-click="vm.deleteUser(user.id, vm.user)">Delete User</button></li>
     </ul>
 
 

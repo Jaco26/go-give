@@ -34,9 +34,9 @@
                 <input type="text" ng-model="vm.newFeedItem.feed_date" placeholder="Date" >
         </div>
         <div>
-        <button ng-click="vm.addFeedItem(vm.newFeedItem)">Submit Feed Item</button>
+        <button ng-click="vm.addFeedItem(vm.newFeedItem, vm.user)">Submit Feed Item</button>
         <button ng-click="vm.getFeedItems()">Get Feed Items</button>
-        <button ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Submit Edit</button>
+        <button ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem, vm.user)">Submit Edit</button>
         </div>
 
         <div>
@@ -48,7 +48,7 @@
         <li>video url: {{item.feed_video_url}}</li><br>
         <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
         <button type="submit" ng-click="vm.displayFeedItem(item.id)">Edit</button>
-        <button type="submit" ng-click="vm.deleteFeedItem(item.id)">Delete</button>
+        <button type="submit" ng-click="vm.deleteFeedItem(item.id, vm.user)">Delete</button>
 
         </ul>
         </div>

@@ -1,23 +1,32 @@
 const express = require('express');
 const pool = require('../modules/pool.js');
 const router = express.Router();
+const userData= require('../modules/userData.js');
 
 console.log('in feed router');
 
 router.post('/', (request, response)=>{
     console.log('in post new feed item', request.body);
-    pool.query(`INSERT INTO feed (nonprofit_id, title, feed_text, feed_img_url, feed_video_url, feed_date_posted) VALUES ($1, $2, $3, $4, $5, $6);`,
-                [request.body.id, request.body.title, request.body.feed_text, request.body.feed_img, request.body.feed_video, request.body.feed_date])
-                .then((result) => {
-                    console.log('registered new feed');
-                    response.sendStatus(201);
-                })
-                .catch((err) => {
-                    console.log('error in feed' , err);
-                    response.sendStatus(500);
-                })
-})
-//end post feed item
+    user = userData(request.body.user.fbid)
+     .then(function(user){
+      if(user.role == 1){
+        pool.query(`INSERT INTO feed (nonprofit_id, title, feed_text, feed_img_url, feed_video_url, feed_date_posted) VALUES ($1, $2, $3, $4, $5, $6);`,
+          [request.body.newFeedItem.id, request.body.newFeedItem.title, request.body.newFeedItem.feed_text, request.body.newFeedItem.feed_img, request.body.newFeedItem.feed_video, request.body.newFeedItem.feed_date])
+          .then((result) => {
+              console.log('registered new feed');
+              response.sendStatus(201);
+          })
+          .catch((err) => {
+              console.log('error in feed' , err);
+              response.sendStatus(500);
+          })
+      } else {
+        response.sendStatus(500)
+        console.log('error, must be admin');
+      }
+     })
+   })
+//end post feed item, protected
 
 router.get('/', (request, response) => {
   console.log('in get all feed items');
@@ -25,31 +34,37 @@ router.get('/', (request, response) => {
               JOIN nonprofit ON nonprofit.id = feed.nonprofit_id
               ORDER by feed_date_posted DESC;`)
   .then((result) => {
-    console.log('success in get all feeds', result);
+    console.log('success in get all feeds', result.rows);
     response.send(result)
   })
   .catch((err) => {
     console.log('error in get all feeds', err);
     response.sendStatus(500);
   })
-})//end get all feed items
-
-
-
-router.delete('/:id', (request, response) => {
-  console.log('in delete router', request.params.id);
-  pool.query(`DELETE FROM feed WHERE id = $1;`,[request.params.id])
-  .then((result) => {
-    console.log('success in delete', result);
-    response.sendStatus(201);
-  })
-  .catch((err) => {
-    console.log('error in delete', err);
-    response.sendStatus(500);
-  })
-
 })
-// end delete feed items
+//end get all feed items
+
+router.delete('/:id/:user', (request, response) => {
+  console.log('in delete router', request.params.id, request.params.user);
+  user = userData(request.params.user)
+   .then(function(user){
+     if(user.role == 1){
+       pool.query(`DELETE FROM feed WHERE id = $1;`,[request.params.id])
+       .then((result) => {
+         console.log('success in delete', result);
+         response.sendStatus(201);
+       })
+       .catch((err) => {
+         console.log('error in delete', err);
+         response.sendStatus(500);
+       })
+     }else {
+       response.sendStatus(500)
+       console.log('error, must be admin');
+     }
+   })
+})
+// end delete feed items, protected
 
 router.get('/:id', (request , response) => {
   pool.query(`SELECT nonprofit.name, feed.title, feed.feed_text, feed.feed_img_url, feed.feed_video_url, feed.feed_date_posted, feed.id FROM feed
@@ -57,33 +72,36 @@ router.get('/:id', (request , response) => {
   WHERE feed.id = $1;`, [request.params.id])
   .then((result) => {
     console.log('success in get for edit', result);
-
     response.send(result)
   })
   .catch((err) => {
     console.log('error in get for edit', err);
-
     response.sendStatus(500)
   })
 })
 // end get for update
 
-
 router.put('/', (request, response) => {
   console.log('in update router', request.body);
-  pool.query(`UPDATE feed SET title = $1, feed_text = $2, feed_img_url = $3, feed_video_url = $4
-               WHERE feed.id = $5;`, [request.body.title, request.body.feed_text, request.body.feed_img, request.body.feed_video, request.body.id])
-  .then((result) => {
-    console.log('success in update', result);
-    response.sendStatus(201);
-
-  })
-  .catch((err) => {
-    console.log('error in update', err);
-    response.sendStatus(500);
-  })
+  user = userData(request.body.user.fbid)
+    .then(function(user){
+      if(user.role == 1){
+        pool.query(`UPDATE feed SET title = $1, feed_text = $2, feed_img_url = $3, feed_video_url = $4
+                     WHERE feed.id = $5;`, [request.body.newFeedItem.title, request.body.newFeedItem.feed_text, request.body.newFeedItem.feed_img, request.body.newFeedItem.feed_video, request.body.newFeedItem.id])
+        .then((result) => {
+          console.log('success in update', result);
+          response.sendStatus(201);
+        })
+        .catch((err) => {
+          console.log('error in update', err);
+          response.sendStatus(500);
+        })
+      } else {
+        response.sendStatus(500)
+        console.log('error, must be admin');
+        }
+    })
 })
-
-
+//end submit edited feed, protected
 
 module.exports = router;

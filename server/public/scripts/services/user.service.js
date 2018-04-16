@@ -203,11 +203,11 @@ self.checkAdminState = function (user){
   }
 }
 
-self.deleteUser = function (id){
-  console.log('in Delete user');
+self.deleteUser = function (id, user){
+  console.log('in Delete user', id, user.fbid);
   $http({
     method:'DELETE',
-    url:`/user/${id}`,
+    url:`/user/${user.fbid}/${id}`,
   }).then(function(response){
     console.log('deleted user');
     self.getAllUsers();

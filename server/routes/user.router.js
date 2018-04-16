@@ -3,8 +3,8 @@ const pool = require('../modules/pool.js');
 const router = express.Router();
 const userData= require('../modules/userData.js');
 
+
 console.log('in user router');
-// console.log(userData());
 
 router.post('/', (request, response) => {
   console.log('in POST fb', request.body);
@@ -19,30 +19,18 @@ router.post('/', (request, response) => {
       response.sendStatus(500);
     })
 })
-//end POST new user
+//end POST new user, protect not needed
 
   router.get('/:id', (request, response) => {
     user = userData(request.params.id)
     .then( user => {
-    console.log(user, 'user in get a user router');
-    if(user == null){
-      response.sendStatus(500);
-    } else {
-      response.send({user:user});
-    }
+    console.log(user, 'user in get a user router from module');
+      if(user == null){
+        response.sendStatus(500);
+      } else {
+        response.send({user:user});
+      }
     })
-
-
-    // console.log('in get check for register', request.params.id);
-    // pool.query('SELECT * FROM users WHERE fb_id = $1;', [request.params.id])
-    // .then((result) => {
-    //   console.log('success in get', result);
-    //   response.send(result);
-    // })
-    // .catch((err) => {
-    //   console.log('error in get', err);
-    //   response.sendStatus(500);
-    // })
   })
   //end get FB user by id
 
@@ -50,29 +38,36 @@ router.post('/', (request, response) => {
     console.log('in get all users route');
     pool.query('SELECT * FROM users ORDER BY name;')
     .then((result)=>{
-      console.log('success in get', result);
+      console.log('success in get', result.rows);
       response.send(result);
     })
     .catch((err) => {
       response.sendStatus(500);
     })
   })
-// end get all users route
+// end get all users route, protect not needed
 
-  router.delete('/:id', (request, response) => {
-    console.log('in delete user route', request.params.id);
-    pool.query('DELETE FROM users WHERE id = $1;', [request.params.id])
-    .then((result) => {
-      console.log('success in deleting user', result);
-      response.sendStatus(200);
-    })
-    .catch((err) => {
-      console.log('error in delete user', err);
-      response.sendStatus(500);
-    })
+router.delete('/:user/:id', (request, response) => {
+  console.log('in delete user route', request.params.id, request.params.user);
+    user = userData(request.params.user)
+    .then(function(user){
+      console.log(user, 'user in delete after check');
+      if(user.role == 1){
+        pool.query('DELETE FROM users WHERE id = $1;', [request.params.id])
+        .then((result) => {
+          console.log('success in deleting user', result);
+          response.sendStatus(200);
+        })
+        .catch((err) => {
+          console.log('error in delete user', err);
+          response.sendStatus(500);
+        })
+      } else {
+        response.sendStatus(500)
+        console.log('error in delete, must be admin');
+        }
   })
-
-
-
+})
+  // end delete user route, protected
 
 module.exports = router;
