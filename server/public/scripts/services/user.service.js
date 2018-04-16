@@ -194,7 +194,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   }
 
   self.checkStripeRegistration = function() {
-    if (self.user.customer_id){
+    if (self.user.fromOurDB.customer_id){
       $location.path("/payment");
     } else {
       $location.path("/register");

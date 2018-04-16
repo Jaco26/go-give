@@ -22,14 +22,14 @@
             </md-menu-content>
           </md-menu>
         </li>
-        <li class="nav-link"><a ng-href="#!user-profile">
-          <img ng-hide="vm.UserService.currentPath === '/user-profile'" src="styles/assets/profile_mobile.png" alt="">
-          <img ng-if="vm.UserService.currentPath === '/user-profile'" src="styles/assets/profile_selected_mobile.png" alt="">
+        <li class="nav-link"><a ng-href="#!feed">
+          <img ng-hide="vm.UserService.currentPath === '/feed'" src="styles/assets/profile_mobile.png" alt="">
+          <img ng-if="vm.UserService.currentPath === '/feed'" src="styles/assets/profile_selected_mobile.png" alt="">
             </a>
         </li>
-        <li class="nav-link"><a ng-href="#!feed">
-          <img ng-hide="vm.UserService.currentPath === '/feed'" src="styles/assets/feed_mobile.png" alt="">
-          <img ng-if="vm.UserService.currentPath === '/feed'" src="styles/assets/feed_selected_mobile.png" alt="">
+        <li class="nav-link"><a ng-href="#!user-profile">
+          <img ng-hide="vm.UserService.currentPath === '/user-profile'" src="styles/assets/feed_mobile.png" alt="">
+          <img ng-if="vm.UserService.currentPath === '/user-profile'" src="styles/assets/feed_selected_mobile.png" alt="">
             </a>
         </li>
         <li class="nav-link"><a ng-href="#!discover">
