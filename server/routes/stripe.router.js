@@ -23,15 +23,17 @@ router.get('/all-transactions', (req, res) => {
 router.get('/charges/:customerId', (req, res) => {
     // const thatCharge = 'ch_1CDl88FewByiHSs3cyMAUBxP';
     const customerId = req.params.customerId;
-    stripe.charges.list(
-        {limit: 100},
+    stripe.charges.list({
+            limit: 100,
+            customer: customerId
+        },
         (err, charges) => {
         if(err){
             console.log(err);
             res.sendStatus(500)
         } else {
-            // console.log('CHARGES----------', charges);
-            userReports.filterDataForUserReportOnOnetimeDonations(charges, customerId, res);
+            // console.log('CHARGES ----------', charges);
+            userReports.filterDataForUserReportOnOnetimeDonations(charges, res);
         }
     });
 });
@@ -39,15 +41,17 @@ router.get('/charges/:customerId', (req, res) => {
 //list all invoices
 router.get('/invoices/:customerId', (req, res) => {
     const customerId = req.params.customerId;
-    stripe.invoices.list(
-        {limit: 100},
+    stripe.invoices.list({
+            customer: customerId,
+            limit: 100
+        },
         (err, invoices) => {
         if (err) {
             console.log(err);
             res.sendStatus(500)
         } else {
             // console.log('INVOICES ------- ', invoices);     
-            userReports.filterDataForUserReportOnSubscriptionDonations(invoices, customerId, res);
+            userReports.filterDataForUserReportOnSubscriptionDonations(invoices, res);
         }
     });
 });

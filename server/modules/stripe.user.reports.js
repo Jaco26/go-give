@@ -5,14 +5,17 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 ///// given user's one-time donations. Each one contains a 'productId' with stripes prod_id AND a     ///
 ///// 'charges' array of the stripe.charge objects whose metadata.product_id matches the 'productId' ///
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-function filterDataForUserReportOnOnetimeDonations(charges, customerId, res) {
-    filterChargesByUser(charges, customerId, res);
+function filterDataForUserReportOnOnetimeDonations(charges, res) {
+    // filterChargesByUser(charges, customerId, res);
+    console.log('FILTER BY CHARGE', charges);
+    
+    getUniqueProductIdsFromUserCharges(charges.data, res)
 }
 
-function filterChargesByUser(charges, customerId, res) {
-    const userCharges = charges.data.filter(charge => charge.customer == customerId);
-    getUniqueProductIdsFromUserCharges(userCharges, res);
-}
+// function filterChargesByUser(charges, customerId, res) {
+//     const userCharges = charges.data.filter(charge => charge.customer == customerId);
+//     getUniqueProductIdsFromUserCharges(userCharges, res);
+// }
 
 function getUniqueProductIdsFromUserCharges(userCharges, res) {
     let productIds = [];
@@ -48,16 +51,18 @@ function organizeChargesByProductChargedFor(uniqueProductIds, userCharges, res) 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function filterDataForUserReportOnSubscriptionDonations(invoices, customerId, res) {
-    let userInvoices = invoices.data.filter(invoice => invoice.customer == customerId);
-    filterInvoicesByProduct(userInvoices, res)
-}
-
-function filterInvoicesByProduct(userInvoices, res) {
-    let productIds = userInvoices.map(invoice => invoice.lines.data[0].plan.product);
+function filterDataForUserReportOnSubscriptionDonations(invoices, res) {
+    let userInvoices = invoices.data.map(invoice => invoice);
+    let productIds = invoices.data.map(invoice => invoice.lines.data[0].plan.product);
     let uniqueProductIds = [...new Set(productIds)];
     organizeInvoicesByProductSubscribedTo(uniqueProductIds, userInvoices, res);
 }
+
+// function filterInvoicesByProduct(userInvoices, res) {
+//     let productIds = userInvoices.map(invoice => invoice.lines.data[0].plan.product);
+//     let uniqueProductIds = [...new Set(productIds)];
+//     organizeInvoicesByProductSubscribedTo(uniqueProductIds, userInvoices, res);
+// }
 
 function organizeInvoicesByProductSubscribedTo(uniqueProductIds, userInvoices, res) {
     let invoicesByProduct = [];
