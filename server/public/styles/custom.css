@@ -1,8 +1,11 @@
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: white;
+}
+
 .navbar {
-    background-color: rgb(1, 147, 214);
     width: 100%;
     border-radius: 0px;
-    /* padding: 15px; */
     padding-left: 0px;
 }
 
@@ -34,16 +37,23 @@ li a:hover {
 
 .nav-link {
     margin-top: 30px;
+    margin: 20px;
 }
 
 .md-button.navBtn {
-    color: skyblue;
+    color: #B7B7B7;
     font-size: 16px;
     letter-spacing: 2.5px;
 }
 
+.md-button.menu {
+  margin-top: 10px;
+  color: #B7B7B7;
+  min-width: 1%;
+}
+
 .example.example1 * {
-    font-family: Roboto, Open Sans, Segoe UI, sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-size: 16px;
     font-weight: 500;
   }
@@ -52,7 +62,7 @@ li a:hover {
     margin: 0 15px 20px;
     padding: 0;
     border-style: none;
-    background-color: #7795f8;
+    background-color: #4689DF;
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
       inset 0 1px 0 #829fff;
     border-radius: 4px;
@@ -74,7 +84,7 @@ li a:hover {
     width: 15%;
     min-width: 70px;
     padding: 11px 0;
-    color: #c4f0ff;
+    color: #D8F1FE;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -128,9 +138,9 @@ li a:hover {
     width: calc(100% - 30px);
     height: 40px;
     margin: 40px 15px 0;
-    background-color: #f6a4eb;
+    background-color: #FF5B9A;
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #ffb9f6;
+      inset 0 1px 0 #FF5B9A;
     border-radius: 4px;
     color: #fff;
     font-weight: 600;
@@ -138,9 +148,9 @@ li a:hover {
   }
   
   .example.example1 button:active {
-    background-color: #d782d9;
+    background-color: rgb(250, 128, 175);
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #e298d8;
+      inset 0 1px 0 rgb(250, 128, 175);
   }
   
   .example.example1 .error svg .base {
@@ -181,6 +191,7 @@ li a:hover {
     background-color: lightgray;
     margin: 10px;
   }
+
 .material-icons {
     padding-top: 6px;
 }
@@ -191,10 +202,48 @@ li a:hover {
   margin: 5px;
   width: 300px;
   height: 150px;
-  background-color: lightcyan;
+  background-color: #D8F1FE;
 }
 
 .content {
-  padding: 20px;
+  margin-top: 0px;
+  /* padding-top: 0px;
+  padding: 20px; */
   padding-left: 30px;
+  padding-right: 30px;
+}
+
+.nonprofit_image {
+  max-width: 300px;
+}
+
+.nonprofit_logo {
+  border-radius: 50%;
+  max-width: 75px;
+}
+
+h1 {
+  margin-top: 0px;
+}
+
+.nonprofit_link {
+  font-size: 130%;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+.nonprofit_link:visited {
+  color: black;
+}
+
+.login {
+  height: 300px;
+  width: 400px;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: center;
 }

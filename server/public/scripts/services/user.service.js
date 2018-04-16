@@ -13,14 +13,15 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   self.userArray = {};
   self.callbackResponse = '';
 
-  console.log(self.user, 'user in service');
+  // console.log(self.user, 'user in service');
 
   self.redirectAfterLogin = function (user) {
-    console.log('in redirect after login', $location.url(), 'user', user);
+    // console.log('in redirect after login', $location.url(), 'user', user);
     if(self.user.fromOurDB.customer_id){
       self.getStripeCustomerInfo();
       self.getUsersCharges();
       self.getUsersInvoices();
+      self.getUsersOneTimeDonationsFromDB(self.user.fromOurDB.id);
     }
     if($location.url() == '/login'){
 
@@ -70,7 +71,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
       method: 'GET',
       url: `/user/${user.fbid}`
     }).then(function(response) {
-      console.log('success in get check for reg', response);
+      // console.log('success in get check for reg', response);
 
       if(response.data.rows.length == 0){
         console.log('not registered!');
@@ -99,13 +100,13 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
    self.testAPI=function(user) {
-    console.log('Welcome!  Fetching your information.... ');
+    // console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', {fields: 'last_name, first_name, name, picture.type(large)'}, function(response) {
-      console.log('Successful login for: ', response);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.first_name + '!';
-      document.getElementById('pic').innerHTML =
-        `<img src=https://graph.facebook.com/${response.id}/picture/>`;
+      // console.log('Successful login for: ', response);
+      // document.getElementById('status').innerHTML =
+      //   'Thanks for logging in, ' + response.first_name + '!';
+      // document.getElementById('pic').innerHTML =
+      //   `<img src=https://graph.facebook.com/${response.id}/picture/>`;
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
         self.user.first_name = response.first_name;
         self.user.last_name = response.last_name;
@@ -194,7 +195,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   }
 
   self.checkStripeRegistration = function() {
-    if (self.user.customer_id){
+    if (self.user.fromOurDB.customer_id){
       $location.path("/payment");
     } else {
       $location.path("/register");
@@ -227,7 +228,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   }
 
 self.checkAdminState = function (user){
-  console.log(user, 'in checkAdminState');
+  // console.log(user, 'in checkAdminState');
   if (user.fromOurDB.role === 1){
     console.log('is admin');
     // $location.path("/login");
@@ -299,7 +300,6 @@ self.subscribeToThisPlan = function (charity, planId) {
 }
 
 self.oneTimeAmount;
-
 self.oneTimeDonate = function(product, amount) {
   let donation = {}
   donation.customer = self.user.fromOurDB.customer_id;
@@ -317,5 +317,22 @@ self.oneTimeDonate = function(product, amount) {
         console.log(err);
     })
 }
+
+self.currentPath = $location.path();
+
+self.oneTimeDonations = [];
+self.getUsersOneTimeDonationsFromDB = function(id){
+  $http({
+    method: 'GET',
+    url:`/user/donations/${id}`
+  })
+  .then(response => {
+    self.oneTimeDonations = response.data;
+  }).catch(err => {
+    console.log(err);
+  })
+}
+
+
 
 }]); // end service

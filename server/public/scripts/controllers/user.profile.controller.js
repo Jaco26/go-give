@@ -7,7 +7,7 @@ myApp.controller('UserProfileController', ['UserService', '$window', function(Us
 
     // This is called with the results from from FB.getLoginStatus().
     statusChangeCallback = function(response) {
-      console.log(response, 'in statusChangeCallback');
+      // console.log(response, 'in statusChangeCallback');
       // The response object is returned with a status field that lets the
       // app know the current login status of the person.
       // Full docs on the response object can be found in the documentation
