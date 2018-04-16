@@ -86,7 +86,7 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
     let elements = stripe.elements({
         fonts: [
             {
-                cssSrc: 'https://fonts.googleapis.com/css?family=Roboto',
+                cssSrc: 'https://fonts.googleapis.com/css?family=Nunito',
             },
         ],
         // Stripe's examples are localized to specific languages, but if
@@ -110,10 +110,10 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         iconStyle: 'solid',
         style: {
             base: {
-                iconColor: '#c4f0ff',
+                iconColor: '#d8f1fe',
                 color: '#fff',
                 fontWeight: 500,
-                fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+                fontFamily: 'Nunito, sans-serif',
                 fontSize: '16px',
                 fontSmoothing: 'antialiased',
 
