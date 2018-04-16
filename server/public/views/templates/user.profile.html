@@ -1,8 +1,11 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
 <div class="content">
     <h1>{{vm.UserService.user.name}}</h1>
-    <div ng-repeat="nonprofit in vm.UserService.oneTimeDonations">
-        <img class="nonprofit_logo" ng-src="{{nonprofit.logo_url}}" alt="">
-        {{nonprofit.name}}
+    <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.oneTimeDonations">
+        <img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt="">
+        <br>
+        <div class="strong">{{nonprofit.name}}</div>
+        <br>
+        You've donated ${{nonprofit.totalCharged / 100}}.00
     </div>
 </div>
