@@ -1,32 +1,37 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
 
 <div class="content">
-  <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
-  {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
+    <div layout="row">
+        <div flex="30">
+            <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
+        </div>
+        <div flex>
+        <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
+        {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
+        </div>
+    </div>
 
-  <h2>Give on a monthly basis</h2>
   <md-input-container flex>
-      <label>Amount ($)</label>
+      <label>$/month</label>
       <md-select name="type" ng-model="vm.plan">
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_five}}>5/month</md-option>
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_ten}}>10/month</md-option>
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_twenty}}>20/month</md-option>
+          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_five}}>$5/month</md-option>
+          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_ten}}>$10/month</md-option>
+          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_twenty}}>$20/month</md-option>
       </md-select>
   </md-input-container>
   <md-button ng-click="vm.subscribeToThisPlan(vm.nonprofitToDisplay.solo, vm.plan)" class="md-raised md-primary">Subscribe</md-button>
 
-  <h2>Make a one time donation</h2>
   <div layout="row" flex>
-      <md-input-container class="md-icon-float md-block title" flex="25">
-          <input ng-model="vm.oneTimeAmount" placeholder="Amount ($)">
+      <md-input-container md-no-float class="md-block title" flex="20">
+          <input ng-model="vm.oneTimeAmount" placeholder="$">
       </md-input-container>
       <div>
-          <md-button class="md-raised md-warn" ng-click="vm.oneTimeDonate(vm.nonprofitToDisplay.solo.product_id, vm.oneTimeAmount)">Donate</md-button>
+          <md-button class="md-raised md-warn" ng-click="vm.oneTimeDonate(vm.nonprofitToDisplay.solo.product_id, vm.oneTimeAmount)">One-time donate</md-button>
       </div>
   </div>
 
   <div>
-    <img ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="">
+    <img class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="">
     <br>
     <br>
     {{vm.nonprofitToDisplay.solo.description}}

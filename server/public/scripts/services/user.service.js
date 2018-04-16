@@ -102,10 +102,10 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', {fields: 'last_name, first_name, name, picture.type(large)'}, function(response) {
       console.log('Successful login for: ', response);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.first_name + '!';
-      document.getElementById('pic').innerHTML =
-        `<img src=https://graph.facebook.com/${response.id}/picture/>`;
+      // document.getElementById('status').innerHTML =
+      //   'Thanks for logging in, ' + response.first_name + '!';
+      // document.getElementById('pic').innerHTML =
+      //   `<img src=https://graph.facebook.com/${response.id}/picture/>`;
         self.user.url = `https://graph.facebook.com/${response.id}/picture`
         self.user.first_name = response.first_name;
         self.user.last_name = response.last_name;
@@ -359,5 +359,7 @@ self.oneTimeDonate = function(product, amount) {
         console.log(err);
     })
 }
+
+self.currentPath = $location.path();
 
 }]); // end service
