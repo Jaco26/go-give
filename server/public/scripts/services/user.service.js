@@ -110,6 +110,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
           FB.logout(function (response) {
               //Do what ever you want here when logged out like reloading the page
               self.user = {};
+              console.log(self.user, 'user in logout');
               $window.location.reload();
           });
       }
