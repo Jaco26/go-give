@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool.js');
 const router = express.Router();
+const userReportsDB = require('../modules/ourDB.user.reports');
 
 console.log('in user router');
 
@@ -58,6 +59,19 @@ router.post('/', (request, response) => {
       response.sendStatus(500);
     })
   })
+
+router.get('/donations/:id', (request, response) => {
+  pool.query(`SELECT onetime_donations.amount_charged, nonprofit.name, nonprofit.logo_url FROM onetime_donations 
+      JOIN nonprofit ON nonprofit.id = onetime_donations.nonprofit_id 
+      WHERE user_id=$1`, [request.params.id])
+  .then((result) => {
+    userReportsDB(result.rows, response)
+  })
+  .catch((err) => {
+    console.log(err);
+    response.sendStatus(500);
+  })
+})
 
 
 

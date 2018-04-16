@@ -161,9 +161,6 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         });
     });
 
-    console.log('user id', UserService.user.id);
-    
-
     function stripeSourceHandler(source) {
         // Insert the source ID into the form so it gets submitted to the server
         let form = document.getElementById('register-form');
