@@ -2,8 +2,9 @@ const express = require('express');
 const pool = require('../modules/pool.js');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const router = express.Router();
+// Helpful Modules
 const userReports = require('../modules/stripe.user.reports');
-
+const insertIntoOnetime_Donations = require('../modules/save.onetime.donation');
 console.log('in stripe router', process.env.STRIPE_SECRET_KEY);
 
 // Get all transactions on Whyatt's account
@@ -151,12 +152,13 @@ router.post('/oneTimeDonate', (req, res) => {
         currency: 'usd',
         customer: donation.customer,
         metadata: {product_id: donation.product}
-    }, (err, plan) => {
+    }, (err, charge) => {
         if(err){
             res.sendStatus(500);
             console.log(err);
         } else {
-            res.sendStatus(200);
+            insertIntoOnetime_Donations(charge, res)
+            // res.sendStatus(200);
         } 
     });
 })
