@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool.js');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const router = express.Router();
+const userReports = require('../modules/stripe.user.reports');
 
 console.log('in stripe router', process.env.STRIPE_SECRET_KEY);
 
@@ -18,26 +19,32 @@ router.get('/all-transactions', (req, res) => {
 })
 
 // find a stripe.charge by id
-router.get('/all-charges', (req, res) => {
+router.get('/charges/:customerId', (req, res) => {
     // const thatCharge = 'ch_1CDl88FewByiHSs3cyMAUBxP';
-    stripe.charges.list( (err, charges) => {
+    const customerId = req.params.customerId;
+    stripe.charges.list(
+        {limit: 100},
+        (err, charges) => {
         if(err){
             console.log(err);
             res.sendStatus(500)
         } else {
-            res.send(charges)
+            userReports.filterDataForUserReportOnOnetimeDonations(charges, customerId, res);
         }
     });
 });
 
 //list all invoices
-router.get('/all-invoices', (req, res) => {
-    stripe.invoices.list( (err, invoices) => {
+router.get('/invoices/:customerId', (req, res) => {
+    const customerId = req.params.customerId;
+    stripe.invoices.list(
+        {limit: 100},
+        (err, invoices) => {
         if (err) {
             console.log(err);
             res.sendStatus(500)
         } else {
-            res.send(invoices)
+            userReports.filterDataForUserReportOnSubscriptionDonations(invoices, customerId, res);
         }
     });
 });
