@@ -23,8 +23,8 @@ function createFiveDollarPlan(id, response){
     stripe.plans.create({
         product: id,
         currency: 'usd',
-        interval: 'month',
-        nickname: '$5/month',
+        interval: 'day',
+        nickname: '$5/day',
         amount: 500,
     }, (err, plan) => {
         if(err){
@@ -40,8 +40,8 @@ function createTenDollarPlan(id, response){
     stripe.plans.create({
         product: id,
         currency: 'usd',
-        interval: 'month',
-        nickname: '$10/month',
+        interval: 'day',
+        nickname: '$10/day',
         amount: 1000,
     }, (err, plan) => {
         if(err){
@@ -57,8 +57,8 @@ function createTwentyDollarPlan(id, response){
     stripe.plans.create({
         product: id,
         currency: 'usd',
-        interval: 'month',
-        nickname: '$20/month',
+        interval: 'day',
+        nickname: '$20/day',
         amount: 2000,
     }, (err, plan) => {
         if(err){
