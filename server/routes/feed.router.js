@@ -25,7 +25,7 @@ router.get('/', (request, response) => {
               JOIN nonprofit ON nonprofit.id = feed.nonprofit_id
               ORDER by feed_date_posted DESC;`)
   .then((result) => {
-    console.log('success in get all feeds', result);
+    console.log('success in get all feeds', result.rows);
     response.send(result)
   })
   .catch((err) => {

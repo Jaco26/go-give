@@ -4,60 +4,125 @@ const myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   console.log('myApp -- config');
   $routeProvider
+  // .when('/', {
+  //   redirectTo: '/login'
+  // })
   .when('/', {
-    redirectTo: 'login'
-  })
-  .when('/login', {
     templateUrl: '/views/templates/login.html',
-    controller: 'LoginController as vm'
+    controller: 'LoginController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getInitialLocation();
+        }
+      }
   })
   .when('/admin', {
     templateUrl: '/views/templates/admin.html',
-    controller: 'AdminController as vm'
+    controller: 'AdminController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getAdmin();
+        }
+      }
   })
   .when('/feed', {
     templateUrl: '/views/templates/user.feed.html',
-    controller: 'UserStaticController as vm'
+    controller: 'UserStaticController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getUser();
+        }
+      }
   })
   .when('/user-profile', {
     templateUrl: '/views/templates/user.profile.html',
-    controller: 'UserProfileController as vm'
+    controller: 'UserProfileController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getUser();
+        }
+      }
   })
   .when('/nonprofit-profile/:id', {
     templateUrl: '/views/templates/user.nonprofit.html',
-    controller: 'UserNonprofitProfileController as vm'
+    controller: 'UserNonprofitProfileController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getUser();
+        }
+      }
   })
   .when('/discover', {
     templateUrl: '/views/templates/user.discover.html',
-    controller: 'UserStaticController as vm'
+    controller: 'UserStaticController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getUser();
+        }
+      }
   })
   .when('/register', {
     templateUrl: '/views/templates/user.register.html',
-    controller: 'StripeController as vm'
+    controller: 'StripeController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getUser();
+        }
+      }
   })
   .when('/payment', {
     templateUrl: '/views/templates/user.payment.html',
-    controller: 'StripeController as vm'
+    controller: 'StripeController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getUser();
+        }
+      }
   })
   .when('/support', {
     templateUrl: '/views/templates/user.support.html',
-    controller: 'UserStaticController as vm'
+    controller: 'UserStaticController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getUser();
+        }
+      }
   })
   .when('/admin-csv', {
     templateUrl: '/views/templates/admin.csv.html',
-    controller: 'AdminController as vm'
+    controller: 'AdminController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getAdmin();
+        }
+      }
   })
   .when('/admin-feed', {
     templateUrl: '/views/templates/admin.feed.html',
-    controller: 'AdminController as vm'
+    controller: 'AdminController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getAdmin();
+        }
+      }
   })
   .when('/admin-nonprofits', {
     templateUrl: '/views/templates/admin.nonprofit.html',
-    controller: 'AdminController as vm'
+    controller: 'AdminController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getAdmin();
+        }
+      }
   })
   .when('/admin-users', {
     templateUrl: '/views/templates/admin.user.html',
-    controller: 'AdminController as vm'
+    controller: 'AdminController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getAdmin();
+        }
+      }
   })
   .when('/error', {
     templateUrl: '/views/templates/error.html',

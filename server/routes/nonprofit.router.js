@@ -22,7 +22,7 @@ router.post('/', (request, response) => {
 router.get('/', (request, response) => {
   pool.query('SELECT * FROM nonprofit ORDER BY name')
   .then((result) => {
-    console.log('success in get all nonprofits', result);
+    console.log('success in get all nonprofits', result.rows);
     response.send(result)
   })
   .catch((err) => {

@@ -6,23 +6,17 @@ const env = require('dotenv').config();
 let pem = require('pem')
 //need to be on https for facebook
 let https = require('https')
+const pool = require('./modules/pool.js');
+const passport = require('./strategies/fb.strategy.js');
+const sessionConfig = require('./modules/session-middleware');
 
-var passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy;
 
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "https://localhost:4430/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    console.log('Facebook profile', profile);
+// Passport Session Configuration
+app.use(sessionConfig);
 
-    // TODO: connect with your databse and create or get user
-
-    done(null, {username: 'blah'}); // <-
-  }
-));
+// Start up passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
 
 //pem generates our SSL Certifiace here
 pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {

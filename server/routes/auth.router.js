@@ -20,8 +20,8 @@ router.get('/', (req, res) => {
 
 
 router.get('/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/feed',
-                                      failureRedirect: '/error' }));
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/' }));
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route

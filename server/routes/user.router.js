@@ -1,12 +1,12 @@
 const express = require('express');
 const pool = require('../modules/pool.js');
 const router = express.Router();
-// const user = require('../public/scripts/services/user.service.js')
 
 console.log('in user router');
 
 
 router.post('/', (request, response) => {
+
   console.log('in POST fb', request.body);
   pool.query('INSERT INTO users (name, img_url, fb_id, first_name, last_name) VALUES ($1, $2, $3, $4, $5);',
               [request.body.name, request.body.url, request.body.fbid, request.body.first_name, request.body.last_name])
@@ -39,7 +39,7 @@ router.post('/', (request, response) => {
     console.log('in get all users route');
     pool.query('SELECT * FROM users ORDER BY last_name;')
     .then((result)=>{
-      console.log('success in get', result);
+      console.log('success in get', result.rows);
       response.send(result);
     })
     .catch((err) => {
