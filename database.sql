@@ -47,18 +47,22 @@ CREATE TABLE onetime_donations
     nonprofit_id integer REFERENCES nonprofit
 );
 
-CREATE TABLE subscription_donations
+CREATE TABLE invoices
 (
     id SERIAL PRIMARY KEY,
-    amount_charged integer,
+    amount_paid integer,
+    invoice_id character varying,
     product_id character varying,
     charge_id character varying,
-    invoice_id character varying,
     subscription_id character varying,
-    date timestamp,
+    plan_id character varying,
+    period_start date,
+    period_end date,
+    date_saved timestamp,
     user_id integer REFERENCES users,
     nonprofit_id integer REFERENCES nonprofit
 );
+
 
 CREATE TABLE feed
 (
