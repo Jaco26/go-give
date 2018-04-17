@@ -50,12 +50,3 @@ app.use('/feed', feedRouter);
 app.use('/report', reportRouter);
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
-
-
-
-// This Code below is the leftover listen from the original server
-
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//     console.log('Server ready on PORT:', PORT);
-// });

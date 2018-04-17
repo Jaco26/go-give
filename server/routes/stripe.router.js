@@ -2,7 +2,9 @@ const express = require('express');
 const pool = require('../modules/pool.js');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const router = express.Router();
-
+// Helpful Modules
+const userReports = require('../modules/stripe.user.reports');
+const insertIntoOnetime_Donations = require('../modules/save.onetime.donation');
 console.log('in stripe router', process.env.STRIPE_SECRET_KEY);
 
 // Get all transactions on Whyatt's account
@@ -22,16 +24,21 @@ router.get('/all-transactions', (req, res) => {
 })
 
 // find a stripe.charge by id
-router.get('/all-charges', (req, res) => {
+router.get('/charges/:customerId', (req, res) => {
     // const thatCharge = 'ch_1CDl88FewByiHSs3cyMAUBxP';
-    if (req.isAuthenticated()){
-
-    stripe.charges.list( (err, charges) => {
+  if (req.isAuthenticated()){
+    const customerId = req.params.customerId;
+    stripe.charges.list({
+            limit: 100,
+            customer: customerId
+        },
+        (err, charges) => {
         if(err){
             console.log(err);
             res.sendStatus(500)
         } else {
-            res.send(charges)
+            // console.log('CHARGES ----------', charges);
+            userReports.filterDataForUserReportOnOnetimeDonations(charges, res);
         }
     });
   } else {
@@ -40,14 +47,20 @@ router.get('/all-charges', (req, res) => {
 });
 
 //list all invoices
-router.get('/all-invoices', (req, res) => {
-  if (req.isAuthenticated()){
-    stripe.invoices.list( (err, invoices) => {
+router.get('/invoices/:customerId', (req, res) => {
+  if(req.isAuthenticated()){
+    const customerId = req.params.customerId;
+    stripe.invoices.list({
+            customer: customerId,
+            limit: 100
+        },
+        (err, invoices) => {
         if (err) {
             console.log(err);
             res.sendStatus(500)
         } else {
-            res.send(invoices)
+            // console.log('INVOICES ------- ', invoices);
+            userReports.filterDataForUserReportOnSubscriptionDonations(invoices, res);
         }
     });
   } else {
@@ -90,7 +103,7 @@ router.post('/register', function (req, res) {
                 res.sendStatus(500)
             } else {
                 console.log('customer ++++ + ++ ++', customer);
-                const sqlText = `UPDATE users SET stripe_id=$1 WHERE id=$2`;
+                const sqlText = `UPDATE users SET customer_id=$1 WHERE id=$2`;
                 pool.query(sqlText, [customer.id, userId])
                 .then(response => {
                     res.sendStatus(201);
@@ -134,81 +147,9 @@ router.post('/subscribe_to_plan', (req, res) => {
 
 let nonprofit = {};
 
-router.post('/nonprofit', (req, res) => {
-  if (req.isAuthenticated()){
-    nonprofit = req.body
-    stripe.products.create({
-        name: nonprofit.name,
-        type: 'service',
-    }, (err, product) => {
-        if(err){
-            console.log(err);
-            res.sendStatus(500);
-        } else {
-            nonprofit.product_id = product.id
-            createFiveDollarPlan(nonprofit.product_id);
-            res.sendStatus(200);
-        }
-    });
-  } else {
-    res.sendStatus(403);
-  }
-})
-
-function createFiveDollarPlan(id){
-    stripe.plans.create({
-        product: id,
-        currency: 'usd',
-        interval: 'month',
-        nickname: '$5/month',
-        amount: 500,
-    }, (err, plan) => {
-        if(err){
-            console.log(err);
-        } else {
-            nonprofit.plan_id_five = plan.id
-            createTenDollarPlan(id);
-        }
-    });
-} //end createPlans
-
-function createTenDollarPlan(id){
-    stripe.plans.create({
-        product: id,
-        currency: 'usd',
-        interval: 'month',
-        nickname: '$10/month',
-        amount: 1000,
-    }, (err, plan) => {
-        if(err){
-            console.log(err);
-        } else {
-            nonprofit.plan_id_ten = plan.id
-            createTwentyDollarPlan(id)
-        }
-    });
-}
-
-function createTwentyDollarPlan(id){
-    stripe.plans.create({
-        product: id,
-        currency: 'usd',
-        interval: 'month',
-        nickname: '$20/month',
-        amount: 2000,
-    }, (err, plan) => {
-        if(err){
-            console.log(err);
-        } else {
-            nonprofit.plan_id_twenty = plan.id
-            postNonprofit(nonprofit);
-        }
-    });
-}
-
 function postNonprofit(nonprofit){
     console.log(nonprofit);
-    const sqlText = `INSERT INTO nonprofits (name, city, state, description, product_id, plan_id_five, plan_id_ten, plan_id_twenty, created)
+    const sqlText = `INSERT INTO nonprofit (name, city, state, description, product_id, plan_id_five, plan_id_ten, plan_id_twenty, created)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
     pool.query(sqlText, [nonprofit.name, nonprofit.city, nonprofit.state, nonprofit.description, nonprofit.product_id, nonprofit.plan_id_five, nonprofit.plan_id_ten, nonprofit.plan_id_twenty, new Date()])
     .then(response => {
@@ -221,6 +162,7 @@ function postNonprofit(nonprofit){
  // find a stripe.customer by id
 router.get('/customer/:customerId', (req, res) => {
     const customerId = req.params.customerId;
+    console.log(customerId, 'customerIDhn4444444444444444444');
     stripe.customers.retrieve(customerId, (err, customer) => {
         if(err){
             console.log('ERROR on getting customer ' + customerId + ' from stripe ----- ', err);
@@ -240,12 +182,13 @@ router.post('/oneTimeDonate', (req, res) => {
         currency: 'usd',
         customer: donation.customer,
         metadata: {product_id: donation.product}
-    }, (err, plan) => {
+    }, (err, charge) => {
         if(err){
             res.sendStatus(500);
             console.log(err);
         } else {
-            res.sendStatus(200);
+            insertIntoOnetime_Donations(charge, res)
+            // res.sendStatus(200);
         }
     });
   } else {

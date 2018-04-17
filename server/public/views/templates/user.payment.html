@@ -3,9 +3,9 @@
     <h1>Payment Info</h1>
     <div>
         <md-card class="creditCard">
-            <h3>{{vm.UserService.stripeCustomerInfo.sources.data[0].card.brand.toUpperCase()}}</h3>
+            <h3>{{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.brand.toUpperCase()}}</h3>
             <br>
-            #### #### #### {{vm.UserService.stripeCustomerInfo.sources.data[0].card.last4}}
+            #### #### #### {{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.last4}}
         </md-card>
         <br>
         <div ng-hide="vm.editingCard == true">
@@ -26,23 +26,23 @@
             </form>
         </div>
         <md-button ng-click="vm.editingCard = false" class="md-raised">Cancel</md-button>
-        <md-button ng-click="vm.updateCard(vm.UserService.stripeCustomerInfo.id)" class="md-primary md-raised">Save Changes</md-button>
+        <md-button ng-click="vm.updateCard(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
     </div>
     <br>
     <br>
     <div ng-hide="vm.editingEmail == true">
-        {{vm.UserService.stripeCustomerInfo.email}}
+        {{vm.UserService.userObject.stripeCustomerInfo.customerObject.email}}
         <br>
         <br>
         <md-button ng-click="vm.editingEmail = true" class="md-primary md-raised">Edit</md-button>
     </div>
 
     <div ng-show="vm.editingEmail == true">
-        <input type="text" ng-value="vm.UserService.stripeCustomerInfo.email" ng-model="vm.updatedEmail">
+        <input type="text" ng-value="vm.UserService.userObject.stripeCustomerInfo.customerObject.email" ng-model="vm.updatedEmail">
         <br>
         <br>
         <md-button ng-click="vm.editingEmail = false; updateEmail(vm.updatedEmail)" class="md-raised">Cancel</md-button>
-        <md-button ng-click="vm.updateEmail(vm.UserService.stripeCustomerInfo.id)" class="md-primary md-raised">Save Changes</md-button>
+        <md-button ng-click="vm.updateEmail(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
     </div>
     <br>
     <br>

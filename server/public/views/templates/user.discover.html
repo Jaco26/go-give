@@ -2,20 +2,12 @@
 <div class="content">
   <h1>Discover</h1>
 
-<div>
-  <ul  ng-repeat="nonprofit in vm.allNonprofits.list">
-
-    name:<a href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a><br>
-    <li>description: {{nonprofit.description}}</li><br>
-    <li>goal value: {{nonprofit.goal_value}}</li><br>
-    <li>goal description: {{nonprofit.goal_description}}</li><br>
-    <li>picture url: {{nonprofit.picture_url}}</li><br>
-    <li>logo url: {{nonprofit.logo_url}}</li><br>
-    <li>product_id: {{nonprofit.product_id}}</li><br>
-    <li>five_plan_id: {{nonprofit.five_plan_id}}</li><br>
-    <li>ten_plan_id: {{nonprofit.ten_plan_id}}</li><br>
-    <li>twenty_plan_id: {{nonprofit.twenty_plan_id}}</li><br>
-    <li>id: {{nonprofit.id}}</li><br><br>
-  </ul>
-
+<div ng-repeat="nonprofit in vm.allNonprofits.list">
+  <a href='/#!/nonprofit-profile/{{nonprofit.id}}'> <img class="nonprofit_image" ng-src="{{nonprofit.picture_url}}" alt="nonprofit"></a> 
+  <br>
+  <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
+  <br>
+  {{nonprofit.city}}, {{nonprofit.state}}
+  <br>
+  <br>
 </div>

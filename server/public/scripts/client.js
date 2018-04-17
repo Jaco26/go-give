@@ -4,9 +4,6 @@ const myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   console.log('myApp -- config');
   $routeProvider
-  // .when('/', {
-  //   redirectTo: '/login'
-  // })
   .when('/', {
     templateUrl: '/views/templates/login.html',
     controller: 'LoginController as vm',
