@@ -5,7 +5,9 @@ const userReportsDB = require('../modules/ourDB.user.reports');
 
 console.log('in user router');
 
+
 router.post('/', (request, response) => {
+  if (request.isAuthenticated()){
   console.log('in POST fb', request.body);
   pool.query('INSERT INTO users (name, img_url, fb_id, first_name, last_name) VALUES ($1, $2, $3, $4, $5);',
               [request.body.name, request.body.url, request.body.fbid, request.body.first_name, request.body.last_name])
@@ -17,52 +19,67 @@ router.post('/', (request, response) => {
       console.log('error in new user post', err);
       response.sendStatus(500);
     })
+  } else {
+    response.sendStatus(403);
+  }
 })
 //end POST new user
 
   router.get('/:id', (request, response) => {
-    console.log('in get check for register', request.params.id);
-    pool.query('SELECT * FROM users WHERE fb_id = $1;', [request.params.id])
-    .then((result) => {
-      // console.log('success in get', result);
-      response.send(result);
-    })
-    .catch((err) => {
-      console.log('error in get', err);
-      response.sendStatus(500);
-    })
+    if (request.isAuthenticated()){
+      console.log('in get check for register', request.params.id);
+      pool.query('SELECT * FROM users WHERE fb_id = $1;', [request.params.id])
+      .then((result) => {
+        console.log('success in get', result);
+        response.send(result);
+      })
+      .catch((err) => {
+        console.log('error in get', err);
+        response.sendStatus(500);
+      })
+    } else {
+      response.sendStatus(403);
+    }
   })
   //end get FB user by id
 
   router.get('/', (request, response)=>{
-    console.log('in get all users route');
-    pool.query('SELECT * FROM users ORDER BY name;')
-    .then((result)=>{
-      // console.log('success in get', result);
-      response.send(result);
-    })
-    .catch((err) => {
-      response.sendStatus(500);
-    })
+    if (request.isAuthenticated()){
+      console.log('in get all users route');
+      pool.query('SELECT * FROM users ORDER BY last_name;')
+      .then((result)=>{
+        console.log('success in get', result.rows);
+        response.send(result);
+      })
+      .catch((err) => {
+        response.sendStatus(500);
+      })
+    } else {
+      response.sendStatus(403);
+    }
   })
 // end get all users route
 
   router.delete('/:id', (request, response) => {
-    console.log('in delete user route', request.params.id);
-    pool.query('DELETE FROM users WHERE id = $1;', [request.params.id])
-    .then((result) => {
-      // console.log('success in deleting user', result);
-      response.sendStatus(200);
-    })    
-    .catch((err) => {
-      console.log('error in delete user', err);
-      response.sendStatus(500);
-    })
+    if (request.isAuthenticated()){
+      console.log('in delete user route', request.params.id);
+      pool.query('DELETE FROM users WHERE id = $1;', [request.params.id])
+      .then((result) => {
+        console.log('success in deleting user', result);
+        response.sendStatus(200);
+      })
+      .catch((err) => {
+        console.log('error in delete user', err);
+        response.sendStatus(500);
+      })
+    } else {
+      response.sendStatus(403);
+    }
   })
 
 router.get('/donations/:id', (request, response) => {
-  pool.query(`SELECT onetime_donations.amount_charged, nonprofit.name, nonprofit.logo_url, nonprofit.id FROM onetime_donations 
-      JOIN nonprofit ON nonprofit.id = onetime_donations.nonprofit_id 
+  pool.query(`SELECT onetime_donations.amount_charged, nonprofit.name, nonprofit.logo_url, nonprofit.id FROM onetime_donations
+      JOIN nonprofit ON nonprofit.id = onetime_donations.nonprofit_id
       WHERE user_id=$1`, [request.params.id])
   .then((result) => {
     userReportsDB(result.rows, response)
@@ -77,5 +94,3 @@ router.get('/donations/:id', (request, response) => {
 
 
 module.exports = router;
-
-
