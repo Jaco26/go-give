@@ -52,6 +52,13 @@ li a:hover {
   min-width: 1%;
 }
 
+.md-button.login_btn {
+  color: white;
+  width: 100%;
+  font-weight: bolder;
+  background-color: #0770D9;
+}
+
 .example.example1 * {
     font-family: 'Nunito', sans-serif;
     font-size: 16px;
