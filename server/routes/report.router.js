@@ -8,10 +8,10 @@ console.log('in report router');
 
 // updateInvoices();
 // Execute the code block once every MINUTE
-cron.schedule('35 * * * *', function () {
-    console.log('NODE-CRONNING!!', new Date().toLocaleTimeString());
-    updateInvoices();
-});
+// cron.schedule('35 * * * *', function () {
+//     console.log('NODE-CRONNING!!', new Date().toLocaleTimeString());
+//     updateInvoices();
+// });
 
 
 module.exports = router;

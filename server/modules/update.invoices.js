@@ -9,15 +9,21 @@ function getUsersFromOurDB () {
     const sqlText = `SELECT * FROM users ORDER BY id;`;
     pool.query(sqlText, [])
     .then(response => {
+      console.log(response, 'response in getUsersFromOurDB');
         // console.log('RESPONSE ------ ', response);
-        response.rows.forEach(user => getStripeCustomerInfoFor(user));
+        response.rows.forEach(user => {
+          if(user.customer_id){
+            getStripeCustomerInfoFor(user)
+          }
+        });
     }).catch(err => {
         console.log(err);
     });
 }
 
 function getStripeCustomerInfoFor (user) {
-    stripe.customers.retrieve(user.customer_id, 
+  console.log(user, '*******************user in getStripeCustomerInfoFor');
+    stripe.customers.retrieve(user.customer_id,
         (err, customer) => {
             if(err){
                 console.log(err);
@@ -25,7 +31,7 @@ function getStripeCustomerInfoFor (user) {
                 customer.subscriptions.data.forEach(subscription => getInvoicesFor(subscription));
             }
         });
-} 
+}
 
 function getInvoicesFor (subscription) {
     stripe.invoices.list({
@@ -33,7 +39,7 @@ function getInvoicesFor (subscription) {
     },
     (err, invoices) => {
         if(err) {
-            console.log(err);            
+            console.log(err);
         } else {
             getInvoicesFromDBAndCheckAgainstThese(invoices.data)
         }
@@ -57,7 +63,7 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
             });
         } else {
             stripeInvoices.forEach(stripeInvoice => insertIntoOurDB(stripeInvoice));
-        }  
+        }
     })
     .catch(err => {
         console.log(err);
@@ -65,16 +71,16 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
 }
 
 function updateOurDBWith (invoice) {
-    const sqlText = `UPDATE invoices SET 
+    const sqlText = `UPDATE invoices SET
             amount_paid=$1,
-            date_saved=$2 
+            date_saved=$2
         WHERE invoice_id=$3;`;
     pool.query(sqlText, [invoice.amount_paid, new Date(), invoice.id])
     .then(response => {
         console.log('SUCCESS on UPDATE invoices');
     })
     .catch(err => {
-        console.log('ERROR on UPDATE invoices');        
+        console.log('ERROR on UPDATE invoices');
     });
 }
 

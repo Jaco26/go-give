@@ -9,6 +9,7 @@ console.log('in stripe router', process.env.STRIPE_SECRET_KEY);
 
 // Get all transactions on Whyatt's account
 router.get('/all-transactions', (req, res) => {
+  if (req.isAuthenticated()){
     stripe.balance.listTransactions( (err, transactions) => {
         if(err){
             console.log(err);
@@ -17,11 +18,15 @@ router.get('/all-transactions', (req, res) => {
             res.send(transactions)
         }
     })
+  } else {
+    res.sendStatus(403);
+  }
 })
 
 // find a stripe.charge by id
 router.get('/charges/:customerId', (req, res) => {
     // const thatCharge = 'ch_1CDl88FewByiHSs3cyMAUBxP';
+  if (req.isAuthenticated()){
     const customerId = req.params.customerId;
     stripe.charges.list({
             limit: 100,
@@ -36,10 +41,14 @@ router.get('/charges/:customerId', (req, res) => {
             userReports.filterDataForUserReportOnOnetimeDonations(charges, res);
         }
     });
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 //list all invoices
 router.get('/invoices/:customerId', (req, res) => {
+  if(req.isAuthenticated()){
     const customerId = req.params.customerId;
     stripe.invoices.list({
             customer: customerId,
@@ -50,29 +59,37 @@ router.get('/invoices/:customerId', (req, res) => {
             console.log(err);
             res.sendStatus(500)
         } else {
-            // console.log('INVOICES ------- ', invoices);     
+            // console.log('INVOICES ------- ', invoices);
             userReports.filterDataForUserReportOnSubscriptionDonations(invoices, res);
         }
     });
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 // list all orders
 router.get('/all-orders', (req, res) => {
+  if (req.isAuthenticated()){
     stripe.orders.list( (err, orders) => {
         if (err) {
             console.log(err);
-            res.sendStatus(500);            
+            res.sendStatus(500);
         } else {
-            res.send(orders); 
+            res.send(orders);
         }
     });
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 
-// Send new customer email and source (encripted card token) 
-// information to stripe. Then save some important bits from 
+// Send new customer email and source (encripted card token)
+// information to stripe. Then save some important bits from
 // the response––a customer object––in our database
 router.post('/register', function (req, res) {
+  if (req.isAuthenticated()){
     console.log('req.body ----- - -- ----- ', req.body);
     let source = req.body.stripeSource;
     let email = req.body.email;
@@ -96,12 +113,16 @@ router.post('/register', function (req, res) {
                 })
             }
         });
+    } else {
+      res.sendStatus(403);
+    }
 });
 
 
 
 // Create subscription
 router.post('/subscribe_to_plan', (req, res) => {
+  if (req.isAuthenticated()){
     console.log('customer id -----------', req.body.customerId);
     console.log('plan id ---------------', req.body.planId);
     stripe.subscriptions.create({
@@ -119,6 +140,9 @@ router.post('/subscribe_to_plan', (req, res) => {
             res.send(subscription);
         }
     })
+  } else {
+    res.sendStatus(403);
+  }
 })
 
 let nonprofit = {};
@@ -132,12 +156,13 @@ function postNonprofit(nonprofit){
         console.log(response);
     }).catch(err => {
         console.log('ERROR on INSERT INTO users', err);
-    })        
+    })
 }
 
  // find a stripe.customer by id
 router.get('/customer/:customerId', (req, res) => {
     const customerId = req.params.customerId;
+    console.log(customerId, 'customerIDhn4444444444444444444');
     stripe.customers.retrieve(customerId, (err, customer) => {
         if(err){
             console.log('ERROR on getting customer ' + customerId + ' from stripe ----- ', err);
@@ -150,6 +175,7 @@ router.get('/customer/:customerId', (req, res) => {
 
 
 router.post('/oneTimeDonate', (req, res) => {
+  if (req.isAuthenticated()){
     let donation = req.body;
     stripe.charges.create({
         amount: Number(donation.amount) * 100,
@@ -163,11 +189,15 @@ router.post('/oneTimeDonate', (req, res) => {
         } else {
             insertIntoOnetime_Donations(charge, res)
             // res.sendStatus(200);
-        } 
+        }
     });
+  } else {
+    res.sendStatus(403);
+  }
 })
 
 router.post('/updateCard', (req, res) => {
+  if (req.isAuthenticated()){
     let customer = req.body;
     stripe.customers.update(customer.id, {
         source: customer.source,
@@ -177,12 +207,16 @@ router.post('/updateCard', (req, res) => {
             console.log(err);
         } else {
             res.sendStatus(200);
-        } 
+        }
     });
-
+ } else {
+   res.sendStatus(403);
+ }
 });
 
 router.post('/updateEmail', (req, res) => {
+  if (req.isAuthenticated()){
+
     let customer = req.body;
     stripe.customers.update(customer.id, {
         email: customer.email,
@@ -192,14 +226,22 @@ router.post('/updateEmail', (req, res) => {
             console.log(err);
         } else {
             res.sendStatus(200);
-        } 
+        }
     });
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 router.post('/unsubscribe', (req, res) => {
+  if (req.isAuthenticated()){
+
     let subscription_id = req.body.id;
     stripe.subscriptions.del(subscription_id);
     res.sendStatus(200);
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 module.exports = router;
