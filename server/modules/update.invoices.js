@@ -1,16 +1,15 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const pool = require('./pool');
 
-// console.log('IN UPDATE INVOICES MODULE!');
-
-// getUsersFromOurDB();
+function updateInvoicesTableInOurDB () {
+    getUsersFromOurDB()
+}
 
 function getUsersFromOurDB () {
     const sqlText = `SELECT * FROM users ORDER BY id;`;
     pool.query(sqlText, [])
     .then(response => {
-        console.log('RESPONSE ------ ', response);
-        
+        // console.log('RESPONSE ------ ', response);
         response.rows.forEach(user => getStripeCustomerInfoFor(user));
     }).catch(err => {
         console.log(err);
@@ -41,23 +40,23 @@ function getInvoicesFor (subscription) {
     })
 }
 
-function getInvoicesFromDBAndCheckAgainstThese (invoices) {
+function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
     const sqlText = `SELECT * FROM invoices;`;
     pool.query(sqlText, [])
     .then(response => {
-        let invoicesInOurDB = response.rows;
-        if(invoicesInOurDB.length > 0){
-            invoicesInOurDB.forEach(ours  => {
-                invoices.forEach(stripes => {
-                    if (ours.invoice_id != stripes.id) {
-                        insertIntoOurDB(stripes);
-                    } else if (ours.invoice_id == stripes.id) {
-                        updateOurDBWith(stripes);
-                    }
-                });
+        if(response.rows[0]){
+            let ourInvoiceIds = response.rows.map(invoice => invoice.invoice_id);
+            // console.log('THIS IS WHAT ourInvoiceIds IS =+-+-+333:', ourInvoiceIds);
+            stripeInvoices.forEach(stripeInvoice => {
+                // console.log('THIS IS WHAT stripeInvoice IS::::::::::::', stripeInvoice);
+                if(ourInvoiceIds.indexOf(stripeInvoice.id) != -1){
+                    updateOurDBWith(stripeInvoice);
+                } else {
+                    insertIntoOurDB(stripeInvoice);
+                }
             });
         } else {
-            invoices.forEach(invoice => insertIntoOurDB(invoice));
+            stripeInvoices.forEach(stripeInvoice => insertIntoOurDB(stripeInvoice));
         }  
     })
     .catch(err => {
@@ -119,4 +118,4 @@ function insertIntoOurDB (invoice) {
     });
 }
 
-module.exports = getUsersFromOurDB;
+module.exports = updateInvoicesTableInOurDB;
