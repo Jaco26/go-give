@@ -1,6 +1,18 @@
 myApp.service('UserService', ['$http', '$location', '$window', '$route', function($http, $location, $window, $route) {
   let self = this;
-  self.user = {
+  // self.user = {
+  //   stripeCustomerInfo: {
+  //     customerObject: {},
+  //     forReports: {
+  //       invoicesByOrg: [], // for subscriptions
+  //       chargesByOrg: [], // for onetime donations
+  //     }
+  //   },
+  //   fromOurDB: {}
+  // };
+  self.userArray = {};
+  self.callbackResponse = '';
+  self.userObject = {
     stripeCustomerInfo: {
       customerObject: {},
       forReports: {
@@ -10,20 +22,12 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
     },
     fromOurDB: {}
   };
-  self.userArray = {};
-  self.callbackResponse = '';
-  self.userObject = {};
 
   console.log(self.userObject, 'user in service');
 
   self.getInitialLocation = function(){
-    console.log('UserService -- getuser');
-    if(self.userObject.fromOurDB.customer_id){
-      self.getStripeCustomerInfo();
-      self.getUsersCharges();
-      self.getUsersInvoices();
-      self.getUsersOneTimeDonationsFromDB(self.user.fromOurDB.id);
-    }
+    console.log('UserService -- getuser', self.userObject);
+
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getUser');
         if(response.data.name) {
@@ -42,18 +46,26 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
   self.getUser = function(){
     console.log('UserService -- getuser');
+    console.log(self.userObject, 'userobj in get user');
+
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getUser');
         if(response.data.name) {
             // user has a curret session on the server
-            self.userObject.name = response.data.name;
-            self.userObject.fb_id = response.data.fb_id;
-            self.userObject.role = response.data.role;
-            self.userObject.first_name = response.data.first_name;
-            self.userObject.last_name = response.data.last_name;
-            self.userObject.id = response.data.id;
-            self.userObject.stripe_id = response.data.stripe_id;
+            self.userObject.fromOurDB.name = response.data.name;
+            self.userObject.fromOurDB.fb_id = response.data.fb_id;
+            self.userObject.fromOurDB.role = response.data.role;
+            self.userObject.fromOurDB.first_name = response.data.first_name;
+            self.userObject.fromOurDB.last_name = response.data.last_name;
+            self.userObject.fromOurDB.id = response.data.id;
+            self.userObject.fromOurDB.customer_id = response.data.customer_id;
             console.log('UserService -- getuser -- User Data: ', self.userObject);
+            if(self.userObject.fromOurDB.customer_id){
+              self.getStripeCustomerInfo();
+              // self.getUsersCharges();
+              // self.getUsersInvoices();
+              self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+            }
         } else {
             console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
@@ -68,17 +80,24 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
   self.getAdmin = function() {
     console.log('UserService -- getAdmin');
+
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getAdmin');
       if(response.data.role == 1) {
         console.log('admin is logged in', response.data.role);
-        self.userObject.name = response.data.name;
-        self.userObject.fb_id = response.data.fb_id;
-        self.userObject.role = response.data.role;
-        self.userObject.first_name = response.data.first_name;
-        self.userObject.last_name = response.data.last_name;
-        self.userObject.id = response.data.id;
-        self.userObject.stripe_id = response.data.stripe_id;
+        self.userObject.fromOurDB.name = response.data.name;
+        self.userObject.fromOurDB.fb_id = response.data.fb_id;
+        self.userObject.fromOurDB.role = response.data.role;
+        self.userObject.fromOurDB.first_name = response.data.first_name;
+        self.userObject.fromOurDB.last_name = response.data.last_name;
+        self.userObject.fromOurDB.id = response.data.id;
+        self.userObject.fromOurDB.customer_id = response.data.customer_id;
+        if(self.userObject.fromOurDB.customer_id){
+          self.getStripeCustomerInfo();
+          // self.getUsersCharges();
+          // self.getUsersInvoices();
+          self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+        }
       } else {
         console.log('UserService -- getAdmin -- failure');
         // user in not admin, bounce them back to the login page
@@ -248,16 +267,18 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   };
 
   self.getStripeCustomerInfo = function () {
+    console.log(self.userObject.fromOurDB.customer_id, 'customer_id in getstripecustinfo');
     $http.get(`/stripe/customer/${self.userObject.fromOurDB.customer_id}`)
     .then(response => {
-      self.user.stripeCustomerInfo.customerObject = response.data;
-      console.log('CUSTOMER:', self.user.stripeCustomerInfo);
+      self.userObject.stripeCustomerInfo.customerObject = response.data;
+      console.log('CUSTOMER:', self.userObject.stripeCustomerInfo);
     }).catch(err => {
         console.log(err);
     });
   }
 
   self.checkStripeRegistration = function() {
+    console.log(self.userObject.fromOurDB.customer_id, 'customer_id in check stripe registration');
     if (self.userObject.fromOurDB.customer_id){
       $location.path("/payment");
     } else {
@@ -267,10 +288,10 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
     // get a list of all stripe charges
   self.getUsersCharges = function () {
-    $http.get(`/stripe/charges/${self.user.fromOurDB.customer_id}`)
+    $http.get(`/stripe/charges/${self.userObject.fromOurDB.customer_id}`)
         .then(response => {
             // console.log('USER\'S CHARGES:', response.data);
-            self.user.stripeCustomerInfo.forReports.chargesByOrg = response.data;
+            self.userObject.stripeCustomerInfo.forReports.chargesByOrg = response.data;
             console.log('AFTER GET USERS CHARGES', self.user);
 
         }).catch(err => {
@@ -280,10 +301,10 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
   // get a list of all invoices
   self.getUsersInvoices = function () {
-      $http.get(`/stripe/invoices/${self.user.fromOurDB.customer_id}`)
+      $http.get(`/stripe/invoices/${self.userObject.fromOurDB.customer_id}`)
       .then(response => {
           // console.log('USER\'S INVOICES:', response.data);
-          self.user.stripeCustomerInfo.forReports.invoicesByOrg = response.data;
+          self.userObject.stripeCustomerInfo.forReports.invoicesByOrg = response.data;
         console.log('AFTER GET USERS INVOICES', self.user);
       }).catch(err => {
           console.log(err);
@@ -331,9 +352,9 @@ self.fbLogout = function () {
 
 self.plan;
 self.subscribeToThisPlan = function (charity, planId) {
-  if(self.user.stripeCustomerInfo){
-    if (self.user.stripeCustomerInfo.customerObject.subscriptions.data.length > 0){
-      for (subscription of self.user.stripeCustomerInfo.customerObject.subscriptions.data){
+  if(self.userObject.stripeCustomerInfo){
+    if (self.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0){
+      for (subscription of self.userObject.stripeCustomerInfo.customerObject.subscriptions.data){
           if (charity.product_id == subscription.plan.product){
               console.log('already subscribed to this charity');
               //unsubscribe customer to old subscription
@@ -349,7 +370,7 @@ self.subscribeToThisPlan = function (charity, planId) {
           }
       }
       //subscribe customer to new subscription
-      let data = { planId: planId, customerId: self.user.fromOurDB.customer_id };
+      let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
               self.plan = ''
@@ -359,7 +380,7 @@ self.subscribeToThisPlan = function (charity, planId) {
           });
   }
   else {
-      let data = { planId: planId, customerId: self.user.fromOurDB.customer_id };
+      let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
               self.plan = ''
@@ -377,7 +398,7 @@ self.subscribeToThisPlan = function (charity, planId) {
 self.oneTimeAmount;
 self.oneTimeDonate = function(product, amount) {
   let donation = {}
-  donation.customer = self.user.fromOurDB.customer_id;
+  donation.customer = self.userObject.fromOurDB.customer_id;
   donation.product = product;
   donation.amount = amount;
     $http({

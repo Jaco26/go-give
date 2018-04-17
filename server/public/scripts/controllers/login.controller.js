@@ -12,8 +12,8 @@ myApp.controller('LoginController', [ 'UserService', '$window', '$location', '$r
     self.fbLogout = UserService.fbLogout;
     // self.testAPI = UserService.testAPI;
     self.register = UserService.register;
-    self.callbackResponse = UserService.callbackResponse;
-    self.redirectAfterLogin = UserService.redirectAfterLogin;
+    // self.callbackResponse = UserService.callbackResponse;
+    // self.redirectAfterLogin = UserService.redirectAfterLogin;
     //self.redirectAfterLogin(self.userObject);
 
     // // This is called with the results from from FB.getLoginStatus().

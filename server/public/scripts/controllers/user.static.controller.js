@@ -5,6 +5,7 @@ myApp.controller('UserStaticController', ['UserService', 'FeedService', 'Nonprof
 
     self.fbLogout = UserService.fbLogout;
     self.userObject = UserService.userObject;
+    self.checkStripeRegistration = UserService.checkStripeRegistration;
     // // This is called with the results from from FB.getLoginStatus().
     // statusChangeCallback = function(response) {
     //   console.log(response, 'in statusChangeCallback');

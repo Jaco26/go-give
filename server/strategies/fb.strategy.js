@@ -59,7 +59,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('called deserializeUser - pg');
+  // console.log('called deserializeUser - pg');
 
     pool.query("SELECT * FROM users WHERE id = $1", [id], function(err, result) {
 
@@ -76,7 +76,7 @@ passport.deserializeUser(function(id, done) {
           return done(null, false, {message: 'Incorrect credentials.'});
       } else {
         // user found
-        console.log('User row ', user);
+        // console.log('User row ', user);
         done(null, user);
       }
 

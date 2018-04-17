@@ -4,6 +4,8 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
 
     self.userObject = UserService.userObject;
     self.UserService = UserService;
+    self.getAdmin = UserService.getAdmin;
+    self.getUser = UserService.getUser;
     // // This is called with the results from from FB.getLoginStatus().
     // statusChangeCallback = function(response) {
     //   console.log(response, 'in statusChangeCallback');
@@ -179,8 +181,12 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         $http.post('/stripe/register', newCustomerData)
         .then(response => {
             console.log(response);
-            // self.UserService.checkForRegistration(self.UserService.user);
-            self.getStripeCustomerInfo();
+            if (self.userObject.fromOurDB.role === 1){
+              self.getAdmin();
+            } else {
+              self.getUser();
+            }
+            // self.getStripeCustomerInfo();
             $location.path('/payment');
         }).catch(err => {
             console.log(err);
