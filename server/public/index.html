@@ -21,6 +21,8 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles/custom.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    
     <!-- Custom JS -->
     <script src="scripts/client.js"></script>
 
@@ -42,13 +44,15 @@
 
 </head>
 <body ng-app="myApp">
+  <a href="/auth/facebook">Login with Facebook</a>
     <main ng-view>
 
     </main>
       <!-- the status id is where fb messages go, this can be changed in the login view
       this needs to be seperate from the view, otherwise we get errors-->
-      <div id="status"></div>
-      <div id="pic"></div>
+      <!-- <div id="status"></div>
+      <div id="pic"></div> -->
+
 
 
 </body>
