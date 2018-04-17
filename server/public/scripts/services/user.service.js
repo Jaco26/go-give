@@ -40,6 +40,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
             self.userObject.first_name = response.data.first_name;
             self.userObject.last_name = response.data.last_name;
             self.userObject.id = response.data.id;
+            self.userObject.stripe_id = response.data.stripe_id;
             console.log('UserService -- getuser -- User Data: ', self.userObject);
         } else {
             console.log('UserService -- getuser -- failure');
@@ -64,6 +65,8 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
         self.userObject.role = response.data.role;
         self.userObject.first_name = response.data.first_name;
         self.userObject.last_name = response.data.last_name;
+        self.userObject.id = response.data.id;
+        self.userObject.stripe_id = response.data.stripe_id;
       } else {
         console.log('UserService -- getAdmin -- failure');
         // user in not admin, bounce them back to the login page
