@@ -22,6 +22,8 @@ router.post('/', (request, response) => {
 //end POST new user
 
   router.get('/:id', (request, response) => {
+    console.log(req.isAuthenticated(), 'req.isAuth');
+
     console.log('in get check for register', request.params.id);
     pool.query('SELECT * FROM users WHERE fb_id = $1;', [request.params.id])
     .then((result) => {
