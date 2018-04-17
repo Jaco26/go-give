@@ -14,12 +14,12 @@ function filterOneTimeDonations(donations, response){
         }
     }
 
-    //create singular 'charges' property for each nonprofit object
+    //add charges together
     for (let i = 0; i < userDonatedNonprofits.length; i ++){
-        userDonatedNonprofits[i].charges = [];
+        userDonatedNonprofits[i].totalCharged = 0;
         for (let j = 0; j < donations.length; j ++){
             if (userDonatedNonprofits[i].name == donations[j].name){
-                userDonatedNonprofits[i].charges.push( donations[j].amount_charged );
+                userDonatedNonprofits[i].totalCharged += donations[j].amount_charged ;
             }
         }
     }
