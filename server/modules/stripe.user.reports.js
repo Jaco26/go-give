@@ -7,7 +7,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 function filterDataForUserReportOnOnetimeDonations(charges, res) {
     // filterChargesByUser(charges, customerId, res);
-    console.log('FILTER BY CHARGE', charges);
+    // console.log('FILTER BY CHARGE', charges);
     
     getUniqueProductIdsFromUserCharges(charges.data, res)
 }
