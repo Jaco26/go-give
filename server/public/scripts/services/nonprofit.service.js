@@ -17,7 +17,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
             url:'/nonprofit',
             data: newNonprofit
         }).then(function(response){
-            console.log('success in post', response);
+            // console.log('success in post', response);
             self.newNonprofit = {}
             $route.reload();
         }).catch(function(error){
@@ -31,7 +31,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         method: 'GET',
         url: '/nonprofit'
       }).then(function(response){
-        console.log('success in get all', response);
+        // console.log('success in get all', response);
         self.allNonprofits.list = response.data.rows
         console.log(self.allNonprofits.list, 'list of all nonprofits');
       }).catch(function(error){
@@ -51,7 +51,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         method: 'DELETE',
         url: `/nonprofit/${id}`
       }).then(function(response) {
-        console.log('success in delete nonprofit', response);
+        // console.log('success in delete nonprofit', response);
         self.getAllNonprofit();
       }).catch(function(error) {
         console.log('error in delete nonprofit', error);
@@ -98,7 +98,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       console.log('in displaySoloNonprofit', id);
       self.getSoloNonprofit(id)
         .then(function(){
-          console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
+          // console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
           self.nonprofitToDisplay.solo = self.soloNonprofit;
         })
     }
@@ -110,7 +110,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         method: 'GET',
         url: `/nonprofit/${id}`
       }).then(function(response) {
-        console.log('success in get solo nonprofit', response);
+        // console.log('success in get solo nonprofit', response);
         self.soloNonprofit = response.data.rows[0];
       }).catch(function(error) {
         console.log('error in populate edit fields', error);

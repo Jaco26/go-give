@@ -13,7 +13,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
             url: '/feed',
             data: newFeedItem
         }).then(function(response){
-            console.log('success in feed item', response);
+            // console.log('success in feed item', response);
             self.newFeedItem = {}
             $route.reload();
             self.getFeedItems();
@@ -29,7 +29,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
       method:'GET',
       url: '/feed'
     }).then(function(response){
-      console.log('success in feed item get', response);
+      // console.log('success in feed item get', response);
       self.allFeedItems.list = response.data.rows;
     }).catch(function(error){
       console.log('error in getting all feed items', error);
@@ -53,7 +53,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 // end deleteFeedItem
 
   self.displayFeedItem = function(id){
-    console.log('in display feed');
+    // console.log('in display feed');
     $http({
       method:'GET',
       url:`/feed/${id}`

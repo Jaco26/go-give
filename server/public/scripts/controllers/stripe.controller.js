@@ -86,7 +86,7 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
     let elements = stripe.elements({
         fonts: [
             {
-                cssSrc: 'https://fonts.googleapis.com/css?family=Roboto',
+                cssSrc: 'https://fonts.googleapis.com/css?family=Nunito',
             },
         ],
         // Stripe's examples are localized to specific languages, but if
@@ -110,10 +110,10 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         iconStyle: 'solid',
         style: {
             base: {
-                iconColor: '#c4f0ff',
+                iconColor: '#d8f1fe',
                 color: '#fff',
                 fontWeight: 500,
-                fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+                fontFamily: 'Nunito, sans-serif',
                 fontSize: '16px',
                 fontSmoothing: 'antialiased',
 
@@ -161,9 +161,6 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         });
     });
 
-    console.log('user id', UserService.userObject);
-
-
     function stripeSourceHandler(source) {
         // Insert the source ID into the form so it gets submitted to the server
         let form = document.getElementById('register-form');
@@ -176,7 +173,7 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
             name: form.elements[5].defaultValue,
             email: form.elements[6].defaultValue,
             stripeSource: form.elements[7].defaultValue,
-            userId: UserService.userObject.id,
+            userId: UserService.userObject.fromOurDB.id,
         };
         console.log(newCustomerData, 'newCustomerData in stripe cont');
         $http.post('/stripe/register', newCustomerData)
@@ -262,62 +259,6 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
 
     self.plan;
 
-    self.subscribeToThisPlan = function (charity, planId) {
-        if (UserService.stripeCustomerInfo.subscriptions.data.length > 0){
-            for (subscription of UserService.stripeCustomerInfo.subscriptions.data){
-                if (charity.product_id == subscription.plan.product){
-                    console.log('already subscribed to this charity');
-                    //unsubscribe customer to old subscription
-                    $http({
-                        method: 'POST',
-                        url: '/stripe/unsubscribe',
-                        data: {id: subscription.id}
-                    }).then(response => {
-                        UserService.getStripeCustomerInfo();
-                    }).catch(err => {
-                        console.log(err);
-                    })
-                }
-            }
-            //subscribe customer to new subscription
-            let data = { planId: planId, customerId: UserService.userObject.customer_id };
-            $http.post('/stripe/subscribe_to_plan', data)
-                .then(response => {
-                    self.plan = ''
-                    UserService.getStripeCustomerInfo();
-                }).catch(err => {
-                    console.log(err);
-                });
-        }
-        else {
-            let data = { planId: planId, customerId: UserService.userObject.customer_id };
-            $http.post('/stripe/subscribe_to_plan', data)
-                .then(response => {
-                    self.plan = ''
-                    UserService.getStripeCustomerInfo();
-                }).catch(err => {
-                    console.log(err);
-                });
-        }
-    }
 
-    // self.getNonprofits();
-
-    self.oneTimeDonation = { customer: UserService.userObject.customer_id }
-
-    self.oneTimeDonate = function(charity) {
-        self.oneTimeDonation.product = charity;
-        $http({
-            method: 'POST',
-            url: '/stripe/oneTimeDonate',
-            data: self.oneTimeDonation
-        })
-        .then(response => {
-            console.log(response);
-            self.oneTimeDonation = { customer: UserService.userObject.customer_id }
-        }).catch(err => {
-            console.log(err);
-        })
-    }
 
 }]);

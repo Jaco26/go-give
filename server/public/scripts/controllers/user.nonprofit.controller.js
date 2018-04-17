@@ -1,5 +1,5 @@
-myApp.controller('UserNonprofitProfileController',['UserService', '$routeParams', 'NonprofitService', '$window',
-                  function(UserService, $routeParams, NonprofitService, $window){
+myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService', '$routeParams', 'NonprofitService', '$window',
+                  function(UserService, StripeService, $routeParams, NonprofitService, $window){
     const self = this;
 
     self.UserService = UserService;
@@ -83,7 +83,10 @@ myApp.controller('UserNonprofitProfileController',['UserService', '$routeParams'
 
     NonprofitService.displaySoloNonprofit($routeParams.id)
 
+    self.plan = UserService.plan;
+    self.subscribeToThisPlan = UserService.subscribeToThisPlan;
 
-
+    self.oneTimeAmount = UserService.oneTimeAmount;
+    self.oneTimeDonate = UserService.oneTimeDonate;
 
 }]);
