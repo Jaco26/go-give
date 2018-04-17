@@ -217,6 +217,10 @@ li a:hover {
   max-width: 300px;
 }
 
+.feed_image {
+  max-width: 250px;
+}
+
 .nonprofit_logo {
   border-radius: 50%;
   max-width: 75px;

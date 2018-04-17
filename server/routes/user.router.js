@@ -61,7 +61,7 @@ router.post('/', (request, response) => {
   })
 
 router.get('/donations/:id', (request, response) => {
-  pool.query(`SELECT onetime_donations.amount_charged, nonprofit.name, nonprofit.logo_url FROM onetime_donations 
+  pool.query(`SELECT onetime_donations.amount_charged, nonprofit.name, nonprofit.logo_url, nonprofit.id FROM onetime_donations 
       JOIN nonprofit ON nonprofit.id = onetime_donations.nonprofit_id 
       WHERE user_id=$1`, [request.params.id])
   .then((result) => {
