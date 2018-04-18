@@ -199,7 +199,7 @@ self.fbLogout = function () {
 
 ///// WE BROUGHT THIS IN FROM THE STRIPE.SERVICE
 
-self.plan;
+self.plan = {};
 self.subscribeToThisPlan = function (nonprofit, planId) {
   if (planId == 5){
     planId = nonprofit.plan_id_five;
@@ -230,7 +230,7 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
       let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
-              self.plan = ''
+              self.plan.id = undefined;
               self.getStripeCustomerInfo();
           }).catch(err => {
               console.log(err);
@@ -240,7 +240,7 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
       let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
-              self.plan = ''
+              self.plan.id = undefined;
               self.getStripeCustomerInfo();
           }).catch(err => {
               console.log(err);
@@ -249,10 +249,9 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
   } else {
     alert('Please register for Stripe');
   }
-
 }
 
-self.oneTimeAmount;
+self.oneTimeDonation = {};
 self.oneTimeDonate = function(product, amount) {
   let donation = {}
   donation.customer = self.userObject.fromOurDB.customer_id;
@@ -265,7 +264,7 @@ self.oneTimeDonate = function(product, amount) {
     })
     .then(response => {
         console.log(response);
-        self.oneTimeAmount = '';
+        self.oneTimeDonation.amount = '';
         alert('thanks for donating', amount)
     }).catch(err => {
         console.log(err);
@@ -293,7 +292,7 @@ self.getDonationHistoryFromOurDB = function () {
   $http.get(`/user/donation-history/${self.userObject.fromOurDB.id}`)
   .then(response => {
     console.log(' ********** USERS DONATION HISTORY OBJECT:', response);
-    self.fromOurDB.donationHistory = response.data;
+    self.userObject.fromOurDB.donationHistory = response.data;
   }).catch(err => {
     console.log(err);
     
