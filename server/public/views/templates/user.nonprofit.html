@@ -13,20 +13,20 @@
 
   <md-input-container flex>
       <label>$/month</label>
-      <md-select name="type" ng-model="vm.plan">
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_five}}>$5/month</md-option>
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_ten}}>$10/month</md-option>
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_twenty}}>$20/month</md-option>
+      <md-select name="type" ng-model="vm.plan.id">
+          <md-option value=5>$5/month</md-option>
+          <md-option value=10>$10/month</md-option>
+          <md-option value=20>$20/month</md-option>
       </md-select>
   </md-input-container>
-  <md-button ng-click="vm.subscribeToThisPlan(vm.nonprofitToDisplay.solo, vm.plan)" class="md-raised md-primary">Subscribe</md-button>
+  <md-button ng-click="vm.subscribeToThisPlan(vm.nonprofitToDisplay.solo, vm.plan.id)" class="md-raised md-primary">Subscribe</md-button>
 
   <div layout="row" flex>
       <md-input-container md-no-float class="md-block title" flex="20">
-          <input ng-model="vm.oneTimeAmount" placeholder="$">
+          <input ng-model="vm.oneTimeDonation.amount" placeholder="$">
       </md-input-container>
       <div>
-          <md-button class="md-raised md-warn" ng-click="vm.oneTimeDonate(vm.nonprofitToDisplay.solo.product_id, vm.oneTimeAmount)">Donate</md-button>
+          <md-button class="md-raised md-warn" ng-click="vm.oneTimeDonate(vm.nonprofitToDisplay.solo.product_id, vm.oneTimeDonation.amount)">Donate</md-button>
       </div>
   </div>
 

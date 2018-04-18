@@ -11,8 +11,11 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
         chargesByOrg: [], // for onetime donations
       }
     },
-    fromOurDB: {}
+    fromOurDB: {
+      donationHistory: []
+    }
   };
+
 
   console.log(self.userObject, 'user in service');
 
@@ -57,7 +60,9 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
               self.getStripeCustomerInfo();
               // self.getUsersCharges();
               // self.getUsersInvoices();
-              self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+              // self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+              // JACOB TEST Init for getDonationHistoryFromOurDB
+              self.getDonationHistoryFromOurDB();
             }
         } else {
             console.log('UserService -- getuser -- failure');
@@ -89,7 +94,9 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
           self.getStripeCustomerInfo();
           // self.getUsersCharges();
           // self.getUsersInvoices();
-          self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+          // self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+          // JACOB TEST Init for getDonationHistoryFromOurDB
+          self.getDonationHistoryFromOurDB();
         }
       } else {
         console.log('UserService -- getAdmin -- failure');
@@ -194,13 +201,21 @@ self.fbLogout = function () {
 
 ///// WE BROUGHT THIS IN FROM THE STRIPE.SERVICE
 
-self.plan;
-self.subscribeToThisPlan = function (charity, planId) {
+self.plan = {};
+self.subscribeToThisPlan = function (nonprofit, planId) {
+  if (planId == 5){
+    planId = nonprofit.plan_id_five;
+  } else if (planId == 10){
+    planId = nonprofit.plan_id_ten;
+  } else if (planId == 20){
+    planId = nonprofit.plan_id_twenty;
+  }
+
   if(self.userObject.stripeCustomerInfo){
     if (self.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0){
       for (subscription of self.userObject.stripeCustomerInfo.customerObject.subscriptions.data){
-          if (charity.product_id == subscription.plan.product){
-              console.log('already subscribed to this charity');
+          if (nonprofit.product_id == subscription.plan.product){
+              console.log('already subscribed to this nonprofit');
               //unsubscribe customer to old subscription
               $http({
                   method: 'POST',
@@ -217,7 +232,7 @@ self.subscribeToThisPlan = function (charity, planId) {
       let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
-              self.plan = ''
+              self.plan.id = undefined;
               self.getStripeCustomerInfo();
           }).catch(err => {
               console.log(err);
@@ -227,7 +242,7 @@ self.subscribeToThisPlan = function (charity, planId) {
       let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
-              self.plan = ''
+              self.plan.id = undefined;
               self.getStripeCustomerInfo();
           }).catch(err => {
               console.log(err);
@@ -236,10 +251,9 @@ self.subscribeToThisPlan = function (charity, planId) {
   } else {
     alert('Please register for Stripe');
   }
-
 }
 
-self.oneTimeAmount;
+self.oneTimeDonation = {};
 self.oneTimeDonate = function(product, amount) {
   let donation = {}
   donation.customer = self.userObject.fromOurDB.customer_id;
@@ -252,25 +266,43 @@ self.oneTimeDonate = function(product, amount) {
     })
     .then(response => {
         console.log(response);
-        self.oneTimeAmount = '';
+        self.oneTimeDonation.amount = '';
+        alert('thanks for donating', amount)
     }).catch(err => {
         console.log(err);
     })
 }
 
 
-self.oneTimeDonations = [];
-self.getUsersOneTimeDonationsFromDB = function(id){
-  $http({
-    method: 'GET',
-    url:`/user/donations/${id}`
-  })
+// OLD GET ONE TIME DONATIONS
+
+// self.oneTimeDonations = [];
+// self.getUsersOneTimeDonationsFromDB = function(id){
+//   $http({
+//     method: 'GET',
+//     url:`/user/donations/${id}`
+//   })
+//   .then(response => {
+//     self.oneTimeDonations = response.data;
+//   }).catch(err => {
+//     console.log(err);
+//   })
+// }
+
+self.getDonationHistoryFromOurDB = function () {
+  $http.get(`/user/donation-history/${self.userObject.fromOurDB.id}`)
   .then(response => {
-    self.oneTimeDonations = response.data;
+    console.log(' ********** USERS DONATION HISTORY OBJECT:', response);
+    self.userObject.fromOurDB.donationHistory = response.data;
   }).catch(err => {
     console.log(err);
-  })
+    
+  });
 }
+
+// // JACOB TEST Init for getDonationHistoryFromOurDB
+// self.getDonationHistoryFromOurDB();
+
 
 
 

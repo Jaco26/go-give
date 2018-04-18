@@ -4,6 +4,7 @@ myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService
 
     self.UserService = UserService;
     self.nonprofitToDisplay = NonprofitService.nonprofitToDisplay;
+    self.checkStripeRegistration = UserService.checkStripeRegistration
 
     self.fbLogout = UserService.fbLogout;
 
