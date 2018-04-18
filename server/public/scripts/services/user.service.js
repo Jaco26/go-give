@@ -259,6 +259,7 @@ self.oneTimeDonate = function(product, amount) {
     .then(response => {
         console.log(response);
         self.oneTimeAmount = '';
+        alert('thanks for donating', amount)
     }).catch(err => {
         console.log(err);
     })
