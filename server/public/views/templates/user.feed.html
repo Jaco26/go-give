@@ -1,14 +1,22 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
 <div class="content">
-<h1>Feed</h1>
+  <h1>Today</h1>
 
-<div>
-  <ul  ng-repeat="item in vm.allFeedItems.list">
-    name:<a href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a><br>
-    <li>title: {{item.title}}</li><br>
-    <li>text: {{item.feed_text}}</li><br>
-    <li><img ng-src="{{item.feed_img_url}}" width="100px"/></li><br><br><br><br>
-    <li>video url: {{item.feed_video_url}}</li><br>
-    <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
-  </ul>
+  <div ng-repeat="item in vm.allFeedItems.list">
+    <div layout="row">
+      <div flex="30">
+        <a href='/#!/nonprofit-profile/{{item.nonprofit_id}}'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
+      </div>
+      <div flex>
+        <br>
+        <br>
+        {{item.feed_text}}
+      </div>
+    </div>
+    <div layout="row">
+      <div flex-offset="25">
+        <img class="feed_image" ng-if="item.feed_img_url" ng-src="{{item.feed_img_url}}" alt="">
+      </div>
+    </div>
+  </div>
 </div>
