@@ -42,8 +42,17 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
       return 'https://www.youtube.com/embed/' + videoId;
     };
 
+    self.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +
+     'MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI ' +
+     'WY').split(' ').map(function(state) {
+         return {abbrev: state};
+       });
+
 
 }])
-.config(function($sceDelegateProvider){
-  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://www.youtube.com/**']);
+.config(function($sceDelegateProvider, $mdThemingProvider){
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://www.youtube.com/**']),
+  $mdThemingProvider.theme('docs-dark', 'default')
+  .primaryPalette('yellow')
+  .dark();
 });
