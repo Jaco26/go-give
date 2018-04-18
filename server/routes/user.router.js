@@ -80,18 +80,18 @@ router.post('/', (request, response) => {
 
 // SELENA WROTE THIS FUNCTION, (Comment by Jacob)
 // Get onetime donation info from database
-router.get('/donations/:id', (request, response) => {
-  pool.query(`SELECT onetime_donations.amount_charged, nonprofit.name, nonprofit.logo_url, nonprofit.id FROM onetime_donations
-      JOIN nonprofit ON nonprofit.id = onetime_donations.nonprofit_id
-      WHERE user_id=$1`, [request.params.id])
-  .then((result) => {
-    userReportsDB(result.rows, response)
-  })
-  .catch((err) => {
-    console.log(err);
-    response.sendStatus(500);
-  });
-});
+// router.get('/donations/:id', (request, response) => {
+//   pool.query(`SELECT onetime_donations.amount_charged, nonprofit.name, nonprofit.logo_url, nonprofit.id FROM onetime_donations
+//       JOIN nonprofit ON nonprofit.id = onetime_donations.nonprofit_id
+//       WHERE user_id=$1`, [request.params.id])
+//   .then((result) => {
+//     userReportsDB(result.rows, response)
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//     response.sendStatus(500);
+//   });
+// });
 
 // JACOB WROTE THIS FUNCTION
 router.get('/donation-history/:userId', (req, res) => {

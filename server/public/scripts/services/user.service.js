@@ -11,8 +11,11 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
         chargesByOrg: [], // for onetime donations
       }
     },
-    fromOurDB: {}
+    fromOurDB: {
+      donationHistory: []
+    }
   };
+
 
   console.log(self.userObject, 'user in service');
 
@@ -55,7 +58,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
               self.getStripeCustomerInfo();
               // self.getUsersCharges();
               // self.getUsersInvoices();
-              self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+              // self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
               // JACOB TEST Init for getDonationHistoryFromOurDB
               self.getDonationHistoryFromOurDB();
             }
@@ -89,7 +92,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
           self.getStripeCustomerInfo();
           // self.getUsersCharges();
           // self.getUsersInvoices();
-          self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+          // self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
           // JACOB TEST Init for getDonationHistoryFromOurDB
           self.getDonationHistoryFromOurDB();
         }
@@ -271,24 +274,26 @@ self.oneTimeDonate = function(product, amount) {
 
 self.currentPath = $location.path();
 
-self.oneTimeDonations = [];
-self.getUsersOneTimeDonationsFromDB = function(id){
-  $http({
-    method: 'GET',
-    url:`/user/donations/${id}`
-  })
-  .then(response => {
-    self.oneTimeDonations = response.data;
-  }).catch(err => {
-    console.log(err);
-  })
-}
+// OLD GET ONE TIME DONATIONS
+
+// self.oneTimeDonations = [];
+// self.getUsersOneTimeDonationsFromDB = function(id){
+//   $http({
+//     method: 'GET',
+//     url:`/user/donations/${id}`
+//   })
+//   .then(response => {
+//     self.oneTimeDonations = response.data;
+//   }).catch(err => {
+//     console.log(err);
+//   })
+// }
 
 self.getDonationHistoryFromOurDB = function () {
   $http.get(`/user/donation-history/${self.userObject.fromOurDB.id}`)
   .then(response => {
     console.log(' ********** USERS DONATION HISTORY OBJECT:', response);
-    
+    self.fromOurDB.donationHistory = response.data;
   }).catch(err => {
     console.log(err);
     
