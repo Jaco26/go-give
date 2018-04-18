@@ -10,12 +10,19 @@
       <div flex>
         <br>
         <br>
+        {{item.name}}<br>
         {{item.feed_text}}
       </div>
     </div>
     <div layout="row">
       <div flex-offset="25">
         <img class="feed_image" ng-if="item.feed_img_url" ng-src="{{item.feed_img_url}}" alt="">
+      </div>
+    </div>
+    <div layout="row">
+      <div flex-offset="25">
+        <iframe  class="feed_video" ng-if="item.feed_video_url" width="240" height="120"
+            ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div>
     </div>
   </div>

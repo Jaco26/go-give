@@ -8,9 +8,11 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 
     self.addFeedItem = function(newFeedItem){
         console.log('added to feed', newFeedItem);
-        let indexToCut = newFeedItem.feed_video.lastIndexOf('=');
-        newFeedItem.feed_video = newFeedItem.feed_video.substring(indexToCut+1);
-        console.log(newFeedItem.feed_video); 
+        if (newFeedItem.feed_video){
+          let indexToCut = newFeedItem.feed_video.lastIndexOf('=');
+          newFeedItem.feed_video = newFeedItem.feed_video.substring(indexToCut+1);
+          console.log(newFeedItem.feed_video);
+        }
         $http({
             method: 'POST',
             url: '/feed',
@@ -34,6 +36,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     }).then(function(response){
       // console.log('success in feed item get', response);
       self.allFeedItems.list = response.data.rows;
+      console.log(self.allFeedItems.list, 'feed items');
     }).catch(function(error){
       console.log('error in getting all feed items', error);
     })
