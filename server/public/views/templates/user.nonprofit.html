@@ -6,8 +6,15 @@
             <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
         </div>
         <div flex>
-        <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
-        {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
+            <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
+            {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
+            <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
+                <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
+                    <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
+                    You are donating {{subscription.plan.amount / 100 | currency}}/month
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
