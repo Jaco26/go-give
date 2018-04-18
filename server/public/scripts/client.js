@@ -85,15 +85,6 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
         }
       }
   })
-  .when('/admin-csv', {
-    templateUrl: '/views/templates/admin.csv.html',
-    controller: 'AdminController as vm',
-    resolve: {
-        getuser : function(UserService){
-          return UserService.getAdmin();
-        }
-      }
-  })
   .when('/admin-feed', {
     templateUrl: '/views/templates/admin.feed.html',
     controller: 'AdminController as vm',
