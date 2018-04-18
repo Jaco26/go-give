@@ -1,4 +1,4 @@
-myApp.controller('StripeController', ['UserService', '$location', '$window', '$http', function(UserService, $location, $window, $http){
+myApp.controller('StripeController', ['UserService', '$location', '$window', '$http', '$mdDialog', function(UserService, $location, $window, $http, $mdDialog){
     const self = this;
 
 
@@ -159,6 +159,19 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
             console.log(err);
         })
     }
+
+    self.confirmUnsubscribe = function(id, ev) {
+        let confirm = $mdDialog.confirm()
+            .title('Are you sure you want to unsubscribe?')
+            .targetEvent(ev)
+            .ok('UNSUBSCRIBE')
+            .cancel('CANCEL');
+        $mdDialog.show(confirm).then(function() {
+            self.unsubscribe(id);
+        }, function() {
+            console.log('cancel unsubscribe');
+        });
+    };
 
     self.unsubscribe = function(id){
         $http({

@@ -1,4 +1,4 @@
-myApp.service('UserService', ['$http', '$location', '$window', '$route', function($http, $location, $window, $route) {
+myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDialog', function($http, $location, $window, $route, $mdDialog) {
   let self = this;
 
   self.userArray = {};
@@ -187,6 +187,19 @@ self.deleteUser = function (id){
   });
 }
 
+self.confirmLogout = function(ev) {
+  let confirm = $mdDialog.confirm()
+    .title('Are you sure you want to log out?')
+    .targetEvent(ev)
+    .ok('LOGOUT')
+    .cancel('CANCEL');
+  $mdDialog.show(confirm).then(function() {
+    self.fbLogout();
+  }, function() {
+    console.log('cancel logout');
+  });
+};
+
 self.fbLogout = function () {
   console.log('in logout');
   $http({
@@ -200,6 +213,20 @@ self.fbLogout = function () {
 //end logout
 
 ///// WE BROUGHT THIS IN FROM THE STRIPE.SERVICE
+
+self.confirmSubscribe = function(nonprofit, planId, ev) {
+  let confirm = $mdDialog.confirm()
+    .title('Are you sure you want to subscribe?')
+    .textContent('Your card will be charged immediately and billed monthly thereafter.')
+    .targetEvent(ev)
+    .ok('SUBSCRIBE')
+    .cancel('CANCEL');
+  $mdDialog.show(confirm).then(function() {
+    self.subscribeToThisPlan(nonprofit, planId);
+  }, function() {
+    console.log('cancel subscribe');
+  });
+};
 
 self.plan = {};
 self.subscribeToThisPlan = function (nonprofit, planId) {
@@ -253,6 +280,20 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
   }
 }
 
+self.confirmOneTimeDonate = function(product, amount, ev) {
+  let confirm = $mdDialog.confirm()
+    .title(`Are you sure you want to donate $${amount}.00?`)
+    .textContent('Your card will be charged immediately.')
+    .targetEvent(ev)
+    .ok('DONATE')
+    .cancel('CANCEL');
+  $mdDialog.show(confirm).then(function() {
+    self.oneTimeDonate(product, amount);
+  }, function() {
+    console.log('cancel subscribe');
+  });
+};
+
 self.oneTimeDonation = {};
 self.oneTimeDonate = function(product, amount) {
   let donation = {}
@@ -267,7 +308,6 @@ self.oneTimeDonate = function(product, amount) {
     .then(response => {
         console.log(response);
         self.oneTimeDonation.amount = '';
-        alert('thanks for donating', amount)
     }).catch(err => {
         console.log(err);
     })

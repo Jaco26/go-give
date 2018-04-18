@@ -55,7 +55,7 @@
         <br>
         Start Date: {{ subscription.start * 1000 | date}}
         <br>
-        <md-button ng-click="vm.unsubscribe(subscription.id)" class="md-raised md-warn">Unsubscribe</md-button>
+        <md-button ng-click="vm.confirmUnsubscribe(subscription.id, $event)" class="md-raised md-warn">Unsubscribe</md-button>
         <br>
         <br>
     </div>
