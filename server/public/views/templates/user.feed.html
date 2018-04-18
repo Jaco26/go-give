@@ -4,8 +4,11 @@
   <br>
   <div ng-repeat="item in vm.allFeedItems.list">
     <div layout="row">
-      <div flex="30">
+      <div flex="30" ng-hide="(item.name == 'co-Giv')">
         <a href='/#!/nonprofit-profile/{{item.nonprofit_id}}'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
+      </div>
+      <div flex="30" ng-show="(item.name == 'co-Giv')">
+        <a href='/#!/support'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
       </div>
       <div flex>
         <br>
