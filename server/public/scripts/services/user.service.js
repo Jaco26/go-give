@@ -16,6 +16,8 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
 
   console.log(self.userObject, 'user in service');
 
+
+
   self.getInitialLocation = function(){
     console.log('UserService -- getuser', self.userObject);
 
@@ -38,6 +40,8 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   self.getUser = function(){
     console.log('UserService -- getuser');
     console.log(self.userObject, 'userobj in get user');
+    self.currentPath = $location.path();
+    console.log($location.path(), 'self.current path in user service*****************');
 
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getUser');
@@ -256,7 +260,6 @@ self.oneTimeDonate = function(product, amount) {
     })
 }
 
-self.currentPath = $location.path();
 
 self.oneTimeDonations = [];
 self.getUsersOneTimeDonationsFromDB = function(id){

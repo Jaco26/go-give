@@ -73,6 +73,8 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         self.newNonprofit.picture_url = self.soloNonprofit.picture_url;
         self.newNonprofit.logo_url = self.soloNonprofit.logo_url;
         self.newNonprofit.id = self.soloNonprofit.id;
+        self.newNonprofit.state = self.soloNonprofit.state;
+        self.newNonprofit.city = self.soloNonprofit.city;
       })
     }
     //end populateEditFields

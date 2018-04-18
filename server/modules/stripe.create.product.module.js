@@ -11,11 +11,11 @@ function createStripeProduct (request, response) {
     }, (err, product) => {
         if(err){
             console.log(err);
-            res.sendStatus(500);  
+            res.sendStatus(500);
         } else {
             nonprofit.product_id = product.id
             createFiveDollarPlan(nonprofit.product_id, response);
-        } 
+        }
     });
 }
 
@@ -28,11 +28,11 @@ function createFiveDollarPlan(id, response){
         amount: 500,
     }, (err, plan) => {
         if(err){
-            console.log(err); 
+            console.log(err);
         } else {
             nonprofit.plan_id_five = plan.id
             createTenDollarPlan(id, response);
-        } 
+        }
     });
 } //end createPlans
 
@@ -49,7 +49,7 @@ function createTenDollarPlan(id, response){
         } else {
             nonprofit.plan_id_ten = plan.id
             createTwentyDollarPlan(id, response)
-        } 
+        }
     });
 }
 
@@ -62,11 +62,11 @@ function createTwentyDollarPlan(id, response){
         amount: 2000,
     }, (err, plan) => {
         if(err){
-            console.log(err); 
+            console.log(err);
         } else {
             nonprofit.plan_id_twenty = plan.id
             postNonprofit(nonprofit, response);
-        } 
+        }
     });
 }
 
