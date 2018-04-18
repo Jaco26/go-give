@@ -6,8 +6,11 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     self.allFeedItems = {};
     self.editFeedToggle = {show: false };
 
-    self.addFeedItem = function( newFeedItem){
+    self.addFeedItem = function(newFeedItem){
         console.log('added to feed', newFeedItem);
+        let indexToCut = newFeedItem.feed_video.lastIndexOf('=');
+        newFeedItem.feed_video = newFeedItem.feed_video.substring(indexToCut+1);
+        console.log(newFeedItem.feed_video); 
         $http({
             method: 'POST',
             url: '/feed',

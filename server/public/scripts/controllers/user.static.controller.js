@@ -18,5 +18,11 @@ myApp.controller('UserStaticController', ['UserService', 'FeedService', 'Nonprof
     self.getFeedItems = FeedService.getFeedItems;
     self.getFeedItems();
 
+    self.getIframeSrc = function (videoId) {
+      console.log(videoId);
+      console.log('https://www.youtube.com/embed/' + videoId);
+      return 'https://www.youtube.com/embed/' + videoId;
+    };
+
 
 }]);

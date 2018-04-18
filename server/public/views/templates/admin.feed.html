@@ -45,11 +45,19 @@
         <li>title: {{item.title}}</li><br>
         <li>text: {{item.feed_text}}</li><br>
         <li>img url: {{item.feed_img_url}}</li><br>
-        <li>video url: {{item.feed_video_url}}</li><br>
+
+        <iframe  id="ytplayer" width="240" height="120"
+            ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <!-- this works, but we need to figure out a way to cut the code off of the end of the url string, look at the pattern and have it cut everything before the v= -->
+                <!-- checkout .lastIndexOf() for a way to find the index of the equals sign, then substring() to return everything after that index-->
+        <br>
+        <p>{{item.feed_video_url}}</p>
         <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
         <button type="submit" ng-click="vm.displayFeedItem(item.id)">Edit</button>
         <button type="submit" ng-click="vm.deleteFeedItem(item.id)">Delete</button>
 
         </ul>
         </div>
+        <iframe width="200" height="100" src="https://www.youtube.com/embed/haHT-tz92Lo"
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
