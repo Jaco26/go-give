@@ -6,12 +6,12 @@ const updateInvoices = require('../modules/update.invoices');
 
 console.log('in report router');
 
-// // updateInvoices();
-// // Execute the code block once every MINUTE
-// cron.schedule('* * * * *', function () {
-//     console.log('NODE-CRONNING!!', new Date().toLocaleTimeString());
-//     updateInvoices();
-// });f
+// updateInvoices();
+// Execute the code block once every HOUR
+cron.schedule('1 * * * *', function () {
+    console.log('NODE-CRONNING!!', new Date().toLocaleTimeString());
+    updateInvoices();
+});
 
 
 module.exports = router;

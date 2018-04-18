@@ -56,6 +56,8 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
               // self.getUsersCharges();
               // self.getUsersInvoices();
               self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+              // JACOB TEST Init for getDonationHistoryFromOurDB
+              self.getDonationHistoryFromOurDB();
             }
         } else {
             console.log('UserService -- getuser -- failure');
@@ -88,6 +90,8 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
           // self.getUsersCharges();
           // self.getUsersInvoices();
           self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+          // JACOB TEST Init for getDonationHistoryFromOurDB
+          self.getDonationHistoryFromOurDB();
         }
       } else {
         console.log('UserService -- getAdmin -- failure');
@@ -279,6 +283,21 @@ self.getUsersOneTimeDonationsFromDB = function(id){
     console.log(err);
   })
 }
+
+self.getDonationHistoryFromOurDB = function () {
+  $http.get(`/user/donation-history/${self.userObject.fromOurDB.id}`)
+  .then(response => {
+    console.log(' ********** USERS DONATION HISTORY OBJECT:', response);
+    
+  }).catch(err => {
+    console.log(err);
+    
+  });
+}
+
+// // JACOB TEST Init for getDonationHistoryFromOurDB
+// self.getDonationHistoryFromOurDB();
+
 
 
 
