@@ -68,7 +68,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         self.editNonprofitToggle.show = true;
         self.newNonprofit.name = self.soloNonprofit.name;
         self.newNonprofit.description = self.soloNonprofit.description;
-        self.newNonprofit.goal = self.soloNonprofit.goal_value;
+        self.newNonprofit.goal_value = self.soloNonprofit.goal_value;
         self.newNonprofit.goal_description = self.soloNonprofit.goal_description;
         self.newNonprofit.picture_url = self.soloNonprofit.picture_url;
         self.newNonprofit.logo_url = self.soloNonprofit.logo_url;
