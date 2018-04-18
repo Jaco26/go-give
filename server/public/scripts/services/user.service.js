@@ -193,12 +193,20 @@ self.fbLogout = function () {
 ///// WE BROUGHT THIS IN FROM THE STRIPE.SERVICE
 
 self.plan;
-self.subscribeToThisPlan = function (charity, planId) {
+self.subscribeToThisPlan = function (nonprofit, planId) {
+  if (planId == 5){
+    planId = nonprofit.plan_id_five;
+  } else if (planId == 10){
+    planId = nonprofit.plan_id_ten;
+  } else if (planId == 20){
+    planId = nonprofit.plan_id_twenty;
+  }
+
   if(self.userObject.stripeCustomerInfo){
     if (self.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0){
       for (subscription of self.userObject.stripeCustomerInfo.customerObject.subscriptions.data){
-          if (charity.product_id == subscription.plan.product){
-              console.log('already subscribed to this charity');
+          if (nonprofit.product_id == subscription.plan.product){
+              console.log('already subscribed to this nonprofit');
               //unsubscribe customer to old subscription
               $http({
                   method: 'POST',
