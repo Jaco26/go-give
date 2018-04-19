@@ -292,9 +292,9 @@ self.currentPath = $location.path();
 self.getDonationHistoryFromOurDB = function () {
   $http.get(`/user/donation-history/${self.userObject.fromOurDB.id}`)
   .then(response => {
-    // console.log(' ********** USERS DONATION HISTORY OBJECT:', response.data);
+    console.log(' ********** USERS DONATION HISTORY OBJECT:', response.data);
     self.userObject.fromOurDB.donationHistory = response.data;
-    console.log('USER OBJECT AFTER getDonationHistoryFromOurDB', self.userObject);
+    // console.log('USER OBJECT AFTER getDonationHistoryFromOurDB', self.userObject);
     
   }).catch(err => {
     console.log(err);

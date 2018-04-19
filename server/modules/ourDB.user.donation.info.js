@@ -1,10 +1,45 @@
 const pool = require('./pool');
 
-function getUsersDonationTotals (user_id, res) {
-    getOnetimeTotals(user_id, res);
+function getDetailedDonationHistory (user_id, res) {
+    getUsersOnetimeDonationHistory(user_id, res)
 }
 
-function getOnetimeTotals (user_id, res) {
+function getUsersOnetimeDonationHistory (user_id, res) {
+    const sqlText = `SELECT otd.id, otd.amount_charged, np.name, np.logo_url, np.id 
+    FROM onetime_donations as otd JOIN nonprofit as np ON otd.product_id = np.product_id
+    WHERE user_id = $1;`;
+    pool.query(sqlText, [user_id])
+    .then(response => {
+        let usersDonations = {userId: user_id, onetime: response.rows};
+        getUsersSubscriptionInvoiceHistory(usersDonations, user_id, res);
+    })
+    .catch(err => {
+        console.log(err); 
+        res.sendStatus(500);
+    });
+}
+
+
+function getUsersSubscriptionInvoiceHistory (usersDonations, user_id, res) {
+    const sqlText = `SELECT sid.id, sid.amount_paid, np.name, np.logo_url, np.id 
+    FROM invoices as sid JOIN nonprofit as np ON sid.product_id = np.product_id
+    WHERE user_id = $1;`;
+    pool.query(sqlText, [user_id])
+    .then(response => {
+        usersDonations = {...usersDonations, invoices: response.rows};
+        getUsersDonationTotals(user_id, res, usersDonations);
+    })
+    .catch(err => {
+        console.log(err);
+        res.sendStatus(500);
+    });
+}
+
+function getUsersDonationTotals(user_id, res, detailedHistory) {
+    getOnetimeTotals(user_id, res, detailedHistory);
+}
+
+function getOnetimeTotals(user_id, res, detailedHistory) {
     const sqlText = `SELECT SUM(otd.amount_charged), np.name, np.logo_url, np.id
     FROM onetime_donations as otd JOIN nonprofit as np ON otd.product_id = np.product_id
     WHERE user_id = $1 
@@ -13,11 +48,13 @@ function getOnetimeTotals (user_id, res) {
     .then(response => {
         // console.log('RESPONSE FROM SUM AND GROUP BY ATTEMPT ---------', response.rows);
         let onetimeTotals = response.rows;
-        getSubscriptionTotals(user_id, res, onetimeTotals);
+        getSubscriptionTotals(user_id, res, onetimeTotals, detailedHistory);
     })
 }
 
-function getSubscriptionTotals (user_id, res, onetimeTotals) {
+function getSubscriptionTotals(user_id, res, onetimeTotals, detailedHistory) {
+    console.log('THIS IS THE "DETAILED HISTORY"', detailedHistory);
+    
     const sqlText = `SELECT SUM(sid.amount_paid), np.name, np.logo_url, np.id
     FROM invoices as sid JOIN nonprofit as np ON sid.product_id = np.product_id
     WHERE user_id = $1 
@@ -27,7 +64,8 @@ function getSubscriptionTotals (user_id, res, onetimeTotals) {
         let subscriptionTotals = response.rows;
         let grandTotalsByName = getGrandTotalsByName(onetimeTotals, subscriptionTotals);
         let totalsSummary = {onetimeTotals: onetimeTotals, subscriptionTotals: subscriptionTotals, grandTotals: grandTotalsByName};
-        res.send(totalsSummary);
+        let report = {totalsSummary: totalsSummary, detailedHistory: detailedHistory};
+        res.send(report);
     })
     .catch(err => {
         console.log(err);
@@ -57,4 +95,4 @@ function packageTotals (totalsObject) {
 }
 
 
-module.exports = getUsersDonationTotals;
+module.exports = getDetailedDonationHistory;
