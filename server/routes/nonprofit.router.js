@@ -7,10 +7,10 @@ const getSummaryOfDonationsReveivedFor = require('../modules/ourDB.nonprofit.don
 console.log('in nonprofit router');
 
 // GET DONATION HISTORY BY NONPROFIT ID
-router.get('/donation-history/:nonprofitId', (req, res) => {
-  let nonprofitId = req.params.nonprofitId;
-  getSummaryOfDonationsReveivedFor(nonprofitId, res);
-});
+// router.get('/donation-history/:nonprofitId', (req, res) => {
+//   let nonprofitId = req.params.nonprofitId;
+//   getSummaryOfDonationsReveivedFor(nonprofitId, res);
+// });
 
 
 router.post('/', (request, response) => {
@@ -28,7 +28,8 @@ router.get('/', (request, response) => {
     pool.query('SELECT * FROM nonprofit ORDER BY name')
     .then((result) => {
       console.log('success in get all nonprofits', result.rows);
-      response.send(result)
+      getSummaryOfDonationsReveivedFor(result.rows, response);
+      // response.send(result);
     })
     .catch((err) => {
       console.log('error in get all nonprofits', err);
