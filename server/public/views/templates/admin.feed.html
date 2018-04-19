@@ -28,8 +28,8 @@
                 </md-input-container>
               </div>
               <div>
-                <md-button class="md-warn" ng-click="vm.upload('feedPhoto')">Upload Photo</md-button>
-                <!-- <p ng-if="vm.feedImgUpload" >{{vm.feedImgUpload}}</p> -->
+                <md-button class="md-warn" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
+                <p ng-if="vm.newFeedItem.feed_img_url" >{{vm.newFeedItem.feed_img_url}}</p>
               </div>
               <md-input-container class="md-block">
                 <label>Place Video URL here</label>

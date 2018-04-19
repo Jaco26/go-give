@@ -5,6 +5,8 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     self.newFeedItem = {};
     self.allFeedItems = {};
     self.editFeedToggle = {show: false };
+    self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz");
+
 
     self.addFeedItem = function(newFeed, newFeedImg){
         console.log('added to feed', newFeed, newFeedImg);
@@ -20,16 +22,12 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
                    newFeedImg: newFeedImg}
         }).then(function(response){
             console.log('success in feed item', response);
-            // self.newFeedItem = {};
             self.newFeedItem.name = '';
             self.newFeedItem.title = '';
             self.newFeedItem.feed_text = '';
             self.newFeedItem.feed_video = '';
-            self.feedImgUpload = '';
+            self.newFeedItem.feed_img_url = '';
             self.newFeedItem.id = '';
-            console.log(self.feedImgUpload, 'feedImgU');
-            // console.log(self.newFeedItem.feed_img, " cleared feed img");
-            console.log(self.newFeedItem, '***********************cleared new feed item');
             self.getFeedItems();
             $route.reload();
 
@@ -46,7 +44,6 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
       method:'GET',
       url: '/feed'
     }).then(function(response){
-      // console.log('success in feed item get', response);
       self.allFeedItems.list = response.data.rows;
       console.log(self.allFeedItems.list, 'feed items');
     }).catch(function(error){
@@ -71,7 +68,6 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 // end deleteFeedItem
 
   self.displayFeedItem = function(id){
-    // console.log('in display feed');
     $http({
       method:'GET',
       url:`/feed/${id}`
@@ -81,12 +77,10 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 
         self.editFeedToggle.show = true;
         console.log('self.editFeedToggle', self.editFeedToggle);
-        // $route.reload();
         self.newFeedItem.name = editableFeedItem.name;
-        self.newFeedItem.feed_img = editableFeedItem.feed_img_url;
+        self.newFeedItem.feed_img_url = editableFeedItem.feed_img_url;
         self.newFeedItem.feed_text = editableFeedItem.feed_text;
         self.newFeedItem.feed_video = editableFeedItem.feed_video_url;
-        // self.newFeedItem.feed_date = editableFeedItem.feed_date_posted;
         self.newFeedItem.title = editableFeedItem.title;
         self.newFeedItem.id = editableFeedItem.id;
     }).catch((error) => {
@@ -122,6 +116,20 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     $route.reload();
 
   }
+
+  self.feedPhotoUpload = function(){
+    console.log('in upload');
+    self.client.pick({
+      accept: 'image/*',
+      maxFiles: 1
+    }).then(function(result){
+      console.log(result, 'filestack upload');
+      self.newFeedItem.feed_img_url = result.filesUploaded[0].url;
+      console.log('self.newFeedItem.feed_img_url', self.newFeedItem.feed_img_url);
+    })
+    $route.reload();
+  }
+
 
 
 }]); // end service

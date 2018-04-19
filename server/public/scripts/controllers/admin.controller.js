@@ -22,6 +22,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.getFeedItems();
     self.allFeedItems = FeedService.allFeedItems;
     self.cancelEditFeed = FeedService.cancelEditFeed;
+    self.feedPhotoUpload = FeedService.feedPhotoUpload;
 
     self.editNonprofit = NonprofitService.editNonprofit;
     self.deleteNonprofit = NonprofitService.deleteNonprofit;
