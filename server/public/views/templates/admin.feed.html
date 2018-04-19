@@ -54,7 +54,6 @@
               </md-card-header-text>
             </md-card-header>
             <img ng-show="item.feed_img_url" ng-src="{{item.feed_img_url}}" class="md-card-image" alt="feed picture"/>
-
           <div ng-show="item.feed_video_url" >
             <iframe  width="240" height="120"
                 ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -73,20 +72,4 @@
             </md-card-actions>
           </md-card>
         </div>
-
-        <!-- <div>
-        <ul  ng-repeat="item in vm.allFeedItems.list">
-        <li>name: {{item.name}}</li><br>
-        <li>title: {{item.title}}</li><br>
-        <li>text: {{item.feed_text}}</li><br>
-        <li ng-if="item.feed_img_url">img url: {{item.feed_img_url}}</li><br>
-
-        <iframe  ng-if="item.feed_video_url" width="240" height="120"
-            ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        <br>
-        <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
-        <button type="submit" ng-click="vm.displayFeedItem(item.id)">Edit</button>
-        <button type="submit" ng-click="vm.deleteFeedItem(item.id)">Delete</button>
-        </ul>
-        </div> -->
 </div>
