@@ -6,8 +6,8 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     self.allFeedItems = {};
     self.editFeedToggle = {show: false };
 
-    self.addFeedItem = function(newFeed){
-        console.log('added to feed', newFeed);
+    self.addFeedItem = function(newFeed, newFeedImg){
+        console.log('added to feed', newFeed, newFeedImg);
         if (newFeed.feed_video){
           let indexToCut = newFeed.feed_video.lastIndexOf('=');
           newFeed.feed_video = newFeed.feed_video.substring(indexToCut+1);
@@ -16,17 +16,19 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
         $http({
             method: 'POST',
             url: '/feed',
-            data: newFeed
+            data: {newFeed :newFeed,
+                   newFeedImg: newFeedImg}
         }).then(function(response){
             console.log('success in feed item', response);
-            self.newFeedItem = {};
+            // self.newFeedItem = {};
             self.newFeedItem.name = '';
             self.newFeedItem.title = '';
             self.newFeedItem.feed_text = '';
             self.newFeedItem.feed_video = '';
-            self.newFeedItem.feed_img = '';
+            self.feedImgUpload = '';
             self.newFeedItem.id = '';
-            console.log(self.newFeedItem.feed_img, " cleared feed img");
+            console.log(self.feedImgUpload, 'feedImgU');
+            // console.log(self.newFeedItem.feed_img, " cleared feed img");
             console.log(self.newFeedItem, '***********************cleared new feed item');
             self.getFeedItems();
             $route.reload();
@@ -111,6 +113,15 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     })
   }
   // end updateFeedItem
+
+  self.cancelEditFeed = function(){
+    console.log('in cancelEditFeed');
+    self.newFeedItem = {};
+
+    self.editFeedToggle.show = false;
+    $route.reload();
+
+  }
 
 
 }]); // end service

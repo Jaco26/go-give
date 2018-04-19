@@ -9,6 +9,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     self.nonprofitToDisplay = {};
     self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz");
     self.newFeedItem = {};
+    self.feedImgUpload = '';
 
 
     self.addNonprofit = function (newNonprofit){
@@ -136,10 +137,10 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         self.newNonprofit.logo_url = result.filesUploaded[0].url;
         console.log('self.newNonprofit.logo_url', self.newNonprofit.logo_url);
       } else if (type == 'feedPhoto') {
-        self.newFeedItem.feed_img = result.filesUploaded[0].url;
-        console.log('self.newFeedItem.feed_img', self.newFeedItem.feed_img);
+        self.feedImgUpload = result.filesUploaded[0].url;
+        console.log('self.feedImgUpload', self.feedImgUpload);
       }
-      // $route.reload();
+      $route.reload();
 
       })
     }

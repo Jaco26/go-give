@@ -16,17 +16,19 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.allNonprofits = NonprofitService.allNonprofits;
 
     self.newFeedItem = FeedService.newFeedItem;
-    self.newFeedItem.feed_img = NonprofitService.newFeedItem.feed_img;
+    // self.newFeedItem.feed_img = NonprofitService.newFeedItem.feed_img;
     self.addFeedItem = FeedService.addFeedItem;
     self.getFeedItems = FeedService.getFeedItems;
     self.getFeedItems();
     self.allFeedItems = FeedService.allFeedItems;
+    self.cancelEditFeed = FeedService.cancelEditFeed;
 
     self.editNonprofit = NonprofitService.editNonprofit;
     self.deleteNonprofit = NonprofitService.deleteNonprofit;
     self.submitEditedNonprofit = NonprofitService.submitEditedNonprofit;
     self.editNonprofitToggle = NonprofitService.editNonprofitToggle
     self.upload = NonprofitService.upload;
+    self.feedImgUpload = NonprofitService.feedImgUpload;
 
     self.updateFeedItem = FeedService.updateFeedItem;
     self.deleteFeedItem = FeedService.deleteFeedItem;
