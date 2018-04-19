@@ -2,8 +2,16 @@ const express = require('express');
 const pool = require('../modules/pool.js');
 const router = express.Router();
 const stripeCreateProduct = require('../modules/stripe.create.product.module.js')
+const getSummaryOfDonationsReveivedFor = require('../modules/ourDB.nonprofit.donation.info');
 
 console.log('in nonprofit router');
+
+// GET DONATION HISTORY BY NONPROFIT ID
+router.get('/donation-history/:nonprofitId', (req, res) => {
+  let nonprofitId = req.params.nonprofitId;
+  getSummaryOfDonationsReveivedFor(nonprofitId, res);
+});
+
 
 router.post('/', (request, response) => {
   if (request.isAuthenticated()){
@@ -86,6 +94,8 @@ router.put('/', (request, response) => {
   } else {
     response.sendStatus(403);
   }
-})
+});
+
+
 
 module.exports = router;

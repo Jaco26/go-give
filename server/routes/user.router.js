@@ -93,11 +93,12 @@ router.post('/', (request, response) => {
 //   });
 // });
 
-// JACOB WROTE THIS FUNCTION
+// GET DONATION HISTORY BY USER ID
 router.get('/donation-history/:userId', (req, res) => {
   let userId = req.params.userId
   getUsersDonationHistory(userId, res);
 });
+
 
 
 

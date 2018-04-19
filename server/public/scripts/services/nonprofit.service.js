@@ -3,11 +3,15 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     let self = this;
 
     self.newNonprofit = {};
-    self.allNonprofits = {};
+    self.allNonprofits = {
+      list: [],
+      receivedDonations: [],
+    };
     self.editNonprofitToggle = {show: false};
     self.soloNonprofit = {};
     self.nonprofitToDisplay = {};
     self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz")
+
 
 
     self.addNonprofit = function (newNonprofit){
@@ -32,13 +36,29 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         url: '/nonprofit'
       }).then(function(response){
         // console.log('success in get all', response);
-        self.allNonprofits.list = response.data.rows
+        self.allNonprofits.list = response.data.rows;
+        self.getReceivedDonationsForNonprofits()
+        console.log(self.allNonprofits);
+        
         console.log(self.allNonprofits.list, 'list of all nonprofits');
       }).catch(function(error){
         console.log('error in get all', error);
       })
     }
     //end get allNonprofits
+
+    self.getReceivedDonationsForNonprofits = function () {
+      for (let nonprofit of self.allNonprofits.list) {
+        $http.get(`/nonprofit/donation-history/${nonprofit.id}`)
+        .then(response => {
+          console.log(response.data);
+          self.allNonprofits.receivedDonations.push(response.data)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
+    }
 
     self.editNonprofit = function(id){
       console.log('in edit nonprofit', id);
@@ -120,22 +140,20 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     self.upload = function(type){
       console.log('in upload');
       self.client.pick({
-        accept: 'image/*',
-        maxFiles: 1
-      }).then(function(result){
-        console.log(result, 'filestack upload');
-        $route.reload();
+          accept: 'image/*',
+          maxFiles: 1
+        }).then(function(result){
+          console.log(result, 'filestack upload');
+          $route.reload();
 
-        if (type == 'photo'){
-        self.newNonprofit.picture_url = result.filesUploaded[0].url;
-        console.log('self.newNonprofit.picture_url', self.newNonprofit.picture_url)
-      } else if(type == 'logo') {
-        self.newNonprofit.logo_url = result.filesUploaded[0].url;
-        console.log('self.newNonprofit.logo_url', self.newNonprofit.logo_url)
-      }
-
-
-      })
+          if (type == 'photo'){
+          self.newNonprofit.picture_url = result.filesUploaded[0].url;
+          console.log('self.newNonprofit.picture_url', self.newNonprofit.picture_url)
+        } else if(type == 'logo') {
+          self.newNonprofit.logo_url = result.filesUploaded[0].url;
+          console.log('self.newNonprofit.logo_url', self.newNonprofit.logo_url)
+        }
+      });
     }
 
 
