@@ -6,22 +6,32 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     self.allFeedItems = {};
     self.editFeedToggle = {show: false };
 
-    self.addFeedItem = function(newFeedItem){
-        console.log('added to feed', newFeedItem);
-        if (newFeedItem.feed_video){
-          let indexToCut = newFeedItem.feed_video.lastIndexOf('=');
-          newFeedItem.feed_video = newFeedItem.feed_video.substring(indexToCut+1);
-          console.log(newFeedItem.feed_video);
+    self.addFeedItem = function(newFeed){
+        console.log('added to feed', newFeed);
+        if (newFeed.feed_video){
+          let indexToCut = newFeed.feed_video.lastIndexOf('=');
+          newFeed.feed_video = newFeed.feed_video.substring(indexToCut+1);
+          console.log(newFeed.feed_video, 'truncated video url');
         }
         $http({
             method: 'POST',
             url: '/feed',
-            data: newFeedItem
+            data: newFeed
         }).then(function(response){
-            // console.log('success in feed item', response);
-            self.newFeedItem = {}
-            $route.reload();
+            console.log('success in feed item', response);
+            self.newFeedItem = {};
+            self.newFeedItem.name = '';
+            self.newFeedItem.title = '';
+            self.newFeedItem.feed_text = '';
+            self.newFeedItem.feed_video = '';
+            self.newFeedItem.feed_img = '';
+            self.newFeedItem.id = '';
+            console.log(self.newFeedItem.feed_img, " cleared feed img");
+            console.log(self.newFeedItem, '***********************cleared new feed item');
             self.getFeedItems();
+            $route.reload();
+
+
         }).catch(function(error){
             console.log('error in adding a feed',error)
         })
@@ -69,12 +79,12 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 
         self.editFeedToggle.show = true;
         console.log('self.editFeedToggle', self.editFeedToggle);
-        $route.reload();
+        // $route.reload();
         self.newFeedItem.name = editableFeedItem.name;
         self.newFeedItem.feed_img = editableFeedItem.feed_img_url;
         self.newFeedItem.feed_text = editableFeedItem.feed_text;
         self.newFeedItem.feed_video = editableFeedItem.feed_video_url;
-        self.newFeedItem.feed_date = editableFeedItem.feed_date_posted;
+        // self.newFeedItem.feed_date = editableFeedItem.feed_date_posted;
         self.newFeedItem.title = editableFeedItem.title;
         self.newFeedItem.id = editableFeedItem.id;
     }).catch((error) => {
