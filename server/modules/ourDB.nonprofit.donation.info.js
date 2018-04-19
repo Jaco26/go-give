@@ -6,7 +6,7 @@ async function getTotalGiven (nonprofitIds, res) {
 
 /// --- Ultimately want to do what these two queries do into one. Also, "ANY ('{${nonprofitIds}}')" 
 //      should be fixed to be more secure
-    const sqlText = `SELECT SUM(otd.amount_charged), np.name, np.logo_url, np.id
+    const sqlText = `SELECT SUM(otd.amount_charged), np.name, np.logo_url, np.id 
     FROM onetime_donations as otd JOIN nonprofit as np ON otd.nonprofit_id = np.id
     WHERE nonprofit_id = ANY ('{${nonprofitIds}}')
     GROUP BY np.name, np.logo_url, np.id;`;
@@ -18,6 +18,7 @@ async function getTotalGiven (nonprofitIds, res) {
             console.log(err);
             res.sendStatus(500);
         });
+        
     const sqlText2 = `SELECT SUM(sid.amount_paid), np.name, np.logo_url, np.id
     FROM invoices as sid JOIN nonprofit as np ON sid.nonprofit_id = np.id
     WHERE nonprofit_id = ANY ('{${nonprofitIds}}')
@@ -30,8 +31,13 @@ async function getTotalGiven (nonprofitIds, res) {
             console.log(err);
             res.sendStatus(500);
         });
+    
     let grandTotalsByName = getGrandTotalsByName(onetimeTotals, subscriptionTotals);
-    let totalsSummary = { onetimeTotals: onetimeTotals, subscriptionTotals: subscriptionTotals, grandTotals: grandTotalsByName };
+    let totalsSummary = { 
+        onetimeTotals: onetimeTotals, 
+        subscriptionTotals: subscriptionTotals, 
+        grandTotals: grandTotalsByName 
+    };
     res.send(totalsSummary);
 
 }
@@ -52,7 +58,12 @@ function getGrandTotalsByName(onetimeTotals, subscriptionTotals) {
 function packageTotals(totalsObject) {
     let keys = Object.keys(totalsObject);
     let totalsArray = keys.map(key => {
-        return { name: key, sum: totalsObject[key].sum, logo_url: totalsObject[key].logo_url, id: totalsObject[key].id };
+        return { 
+            name: key, 
+            sum: totalsObject[key].sum, 
+            logo_url: totalsObject[key].logo_url,
+            nonprofit_id: totalsObject[key].id,
+        };
     });
     return totalsArray;
 }
