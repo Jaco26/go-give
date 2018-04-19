@@ -1,10 +1,8 @@
 const pool = require('./pool');
 
 async function getTotalGiven (nonprofitIds, res) {
-    console.log('NONPROFIT IDS NONFRAFSDF &&&***', nonprofitIds);
-    
-    // console.log('NonprofitIDs. join() ***** ', nonprofitIds.join());
-    
+    // console.log('NONPROFIT IDS NONFRAFSDF &&&***', nonprofitIds);
+        
     let onetimeTotals = [];
     let subscriptionTotals = [];
 

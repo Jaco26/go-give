@@ -9,7 +9,7 @@ console.log('in nonprofit router');
 // GET DONATION HISTORY BY NONPROFIT ID
 router.get('/donation-history/:nonprofitIds', (req, res) => {
   let nonprofitIds = req.params.nonprofitIds;
-  // console.log('NONPROFIT IDs IN ROUTER#######', nonprofitIds);
+  console.log('NONPROFIT IDs IN ROUTER#######', nonprofitIds);
   getSummaryOfDonationsReveivedFor(nonprofitIds, res);
 });
 
@@ -29,7 +29,8 @@ router.get('/', (request, response) => {
     pool.query('SELECT * FROM nonprofit ORDER BY name')
     .then((result) => {
       console.log('success in get all nonprofits', result.rows);
-      response.send(result)
+      // getSummaryOfDonationsReveivedFor(result.rows, response);
+      response.send(result);
     })
     .catch((err) => {
       console.log('error in get all nonprofits', err);
