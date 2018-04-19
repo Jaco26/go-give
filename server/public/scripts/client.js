@@ -76,6 +76,15 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
         }
       }
   })
+  .when('/subscriptions', {
+    templateUrl: '/views/templates/user.subscriptions.html',
+    controller: 'UserSubscriptionsController as vm',
+    resolve: {
+        getuser : function(UserService){
+          return UserService.getUser();
+        }
+      }
+  })
   .when('/support', {
     templateUrl: '/views/templates/user.support.html',
     controller: 'UserStaticController as vm',

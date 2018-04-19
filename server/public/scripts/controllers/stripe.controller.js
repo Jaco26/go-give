@@ -1,4 +1,4 @@
-myApp.controller('StripeController', ['UserService', '$location', '$window', '$http', function(UserService, $location, $window, $http){
+myApp.controller('StripeController', ['UserService', '$location', '$window', '$http', '$mdDialog', function(UserService, $location, $window, $http, $mdDialog){
     const self = this;
 
 
@@ -155,19 +155,6 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
             console.log(response);
             self.getStripeCustomerInfo();
             self.editingEmail = false;
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-
-    self.unsubscribe = function(id){
-        $http({
-            method: 'POST',
-            url: '/stripe/unsubscribe',
-            data: {id: id}
-        }).then(response => {
-            console.log(response);
-            self.getStripeCustomerInfo();
         }).catch(err => {
             console.log(err);
         })
