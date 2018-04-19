@@ -38,7 +38,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         // console.log('success in get all', response);
         self.allNonprofits.list = response.data.rows;
         self.getReceivedDonationsForNonprofits()
-        console.log(self.allNonprofits);
+        console.log('ALL NONPROFITS' , self.allNonprofits);
         
         console.log(self.allNonprofits.list, 'list of all nonprofits');
       }).catch(function(error){
@@ -48,16 +48,26 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     //end get allNonprofits
 
     self.getReceivedDonationsForNonprofits = function () {
-      for (let nonprofit of self.allNonprofits.list) {
-        $http.get(`/nonprofit/donation-history/${nonprofit.id}`)
-        .then(response => {
-          console.log(response.data);
-          self.allNonprofits.receivedDonations.push(response.data)
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      }
+      let nonprofitIds = self.allNonprofits.list.map(item => item.id);
+      $http.get(`/nonprofit/donation-history/${nonprofitIds}`)
+          .then(response => {
+            console.log(response.data);
+            self.allNonprofits.receivedDonations.push(response.data)
+          })
+          .catch(err => {
+            console.log(err);
+          });
+   
+      // for (let nonprofit of self.allNonprofits.list) {
+      //   $http.get(`/nonprofit/donation-history/${nonprofit.id}`)
+      //   .then(response => {
+      //     console.log(response.data);
+      //     self.allNonprofits.receivedDonations.push(response.data)
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      // }
     }
 
     self.editNonprofit = function(id){

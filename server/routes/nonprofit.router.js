@@ -7,9 +7,10 @@ const getSummaryOfDonationsReveivedFor = require('../modules/ourDB.nonprofit.don
 console.log('in nonprofit router');
 
 // GET DONATION HISTORY BY NONPROFIT ID
-router.get('/donation-history/:nonprofitId', (req, res) => {
-  let nonprofitId = req.params.nonprofitId;
-  getSummaryOfDonationsReveivedFor(nonprofitId, res);
+router.get('/donation-history/:nonprofitIds', (req, res) => {
+  let nonprofitIds = req.params.nonprofitIds;
+  // console.log('NONPROFIT IDs IN ROUTER#######', nonprofitIds);
+  getSummaryOfDonationsReveivedFor(nonprofitIds, res);
 });
 
 
