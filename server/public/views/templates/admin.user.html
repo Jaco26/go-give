@@ -4,12 +4,10 @@
 
 <div>
   <input type="text" placeholder="Search Username" ng-model="searchBox">
-
     <ul ng-repeat="user in vm.userArray.list | filter: searchBox">
-        <li>Username: {{user.first_name}} {{user.last_name}}</li>
-        <li><button ng-click="vm.deleteUser(user.id)">Delete User</button></li>
+        <li>
+          {{user.first_name}} {{user.last_name}}<md-button ng-click="vm.deleteUser(user.id)">Delete User</md-button>
+        </li>
+
     </ul>
-
-
-
 </div>

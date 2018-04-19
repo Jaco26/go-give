@@ -2,7 +2,7 @@
 <div ng-cloak class="content">
   <h1>Nonprofits</h1>
 
-    <div flex-gt-xs="30"layout="column" ng-cloak class="md-inline-form">
+    <div id="adminNonprofitForm" flex-gt-xs="40"layout="column" ng-cloak class="md-inline-form">
       <md-content md-theme="docs-dark" class="md-block" layout-padding>
         <form name="nonprofitForm">
 
@@ -64,32 +64,32 @@
     <br>
     <br>
 
-
-<div ng-cloak ng-repeat="nonprofit in vm.allNonprofits.list">
-  <md-card flex-gt-xs="20" ng-hide="(nonprofit.name == 'co-Giv')"> <!-- this hides co-giv from the list of nonprofits -->
-    <md-card-header>
-      <md-card-avatar>
-        <img ng-src="{{nonprofit.logo_url}}"/>
-      </md-card-avatar>
-      <md-card-header-text>
-        <span class="md-title">{{nonprofit.name}}</span>
-      </md-card-header-text>
-    </md-card-header>
-    <img ng-src="{{nonprofit.picture_url}}" class="md-card-image" alt="nonprofit picture"/>
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">{{nonprofit.name}}</span>
-      </md-card-title-text>
-    </md-card-title>
-    <!-- <md-card-content>
-      <p ng-show="nonprofit.goal_description">{{nonprofit.goal_description}}</p>
-      <p ng-show="nonprofit.goal_value">{{nonprofit.goal_value}}</p>
-    </md-card-content> -->
-    <md-card-actions>
-      <md-button ng-click="vm.editNonprofit(nonprofit.id)">Edit This Nonprofit</md-button>
-      <md-button ng-click="vm.deleteNonprofit(nonprofit.id)">Delete This Nonprofit</md-button>
-    </md-card-actions>
-  </md-card>
-</div>
-
+  <div class="md-padding" ng-cloak  layout="row" layout-wrap>
+      <!-- the ng-hide hides co-giv from the list of nonprofits, it needs to be isted as a nonprofit in order to post to the feed -->
+          <md-card  ng-repeat="nonprofit in vm.allNonprofits.list" ng-hide="(nonprofit.name == 'co-Giv')" flex="25" flex-sm="80">
+      <md-card-header>
+        <md-card-avatar>
+          <img ng-src="{{nonprofit.logo_url}}"/>
+        </md-card-avatar>
+        <md-card-header-text>
+          <span class="md-title">{{nonprofit.name}}</span>
+        </md-card-header-text>
+      </md-card-header>
+      <img ng-src="{{nonprofit.picture_url}}" class="md-card-image" alt="nonprofit picture"/>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{nonprofit.name}}</span>
+        </md-card-title-text>
+      </md-card-title>
+      <!-- <md-card-content>
+        <p ng-show="nonprofit.goal_description">{{nonprofit.goal_description}}</p>
+        <p ng-show="nonprofit.goal_value">{{nonprofit.goal_value}}</p>
+      </md-card-content> -->
+      <md-card-actions>
+        <md-button class="feedButton" ng-click="vm.editNonprofit(nonprofit.id)">Edit This Nonprofit</md-button>
+        <md-button class="feedButton" ng-click="vm.deleteNonprofit(nonprofit.id)">Delete This Nonprofit</md-button>
+      </md-card-actions>
+    </md-card>
+    <br>
+  </div>
 </div>
