@@ -5,7 +5,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     self.newNonprofit = {};
     self.allNonprofits = {
       list: [],
-      receivedDonations: [],
+      receivedDonations: {},
     };
     self.editNonprofitToggle = {show: false};
     self.soloNonprofit = {};
@@ -19,7 +19,6 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
             url:'/nonprofit',
             data: newNonprofit
         }).then(function(response){
-            // console.log('success in post', response);
             self.newNonprofit = {}
             $route.reload();
         }).catch(function(error){
@@ -33,7 +32,6 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         method: 'GET',
         url: '/nonprofit'
       }).then(function(response){
-        // console.log('success in get all', response);
         self.allNonprofits.list = response.data.rows;
         self.getReceivedDonationsForNonprofits()
       }).catch(function(error){
@@ -46,10 +44,8 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       let nonprofitIds = self.allNonprofits.list.map(item => item.id);      
       $http.get(`/nonprofit/donation-history/${nonprofitIds}`)
           .then(response => {
-            
-            self.allNonprofits.receivedDonations.push(response.data)
-            console.log(self.allNonprofits);
-            
+            self.allNonprofits.receivedDonations = response.data;
+            console.log('',self.allNonprofits);
           })
           .catch(err => {
             console.log(err);
