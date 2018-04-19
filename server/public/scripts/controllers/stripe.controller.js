@@ -160,32 +160,6 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         })
     }
 
-    self.confirmUnsubscribe = function(id, ev) {
-        let confirm = $mdDialog.confirm()
-            .title('Are you sure you want to unsubscribe?')
-            .targetEvent(ev)
-            .ok('UNSUBSCRIBE')
-            .cancel('CANCEL');
-        $mdDialog.show(confirm).then(function() {
-            self.unsubscribe(id);
-        }, function() {
-            console.log('cancel unsubscribe');
-        });
-    };
-
-    self.unsubscribe = function(id){
-        $http({
-            method: 'POST',
-            url: '/stripe/unsubscribe',
-            data: {id: id}
-        }).then(response => {
-            console.log(response);
-            self.getStripeCustomerInfo();
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-
     self.charities = {list: []};
 
     // Hard coded for stripe spike. dynamically filled with info from DB
