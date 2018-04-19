@@ -380,11 +380,12 @@ self.requireGreaterThanFiveDollarsAlert = function(ev){
 self.getDonationHistoryFromOurDB = function () {
   $http.get(`/user/donation-history/${self.userObject.fromOurDB.id}`)
   .then(response => {
-    console.log(' ********** USERS DONATION HISTORY OBJECT:', response);
+    console.log(' ********** USERS DONATION HISTORY OBJECT:', response.data);
     self.userObject.fromOurDB.donationHistory = response.data;
+    // console.log('USER OBJECT AFTER getDonationHistoryFromOurDB', self.userObject);
+
   }).catch(err => {
     console.log(err);
-    
   });
 }
 

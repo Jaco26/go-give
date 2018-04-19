@@ -60,13 +60,13 @@
             <iframe  width="240" height="120"
                 ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
-            <md-card-title>
+            <!-- <md-card-title>
               <md-card-title-text>
                 <span class="md-headline">{{item.title}}</span>
               </md-card-title-text>
-            </md-card-title>
+            </md-card-title> -->
             <md-card-content>
-              <p>{{item.description}}</p>
+              <p>{{item.text}}</p>
             </md-card-content>
             <md-card-actions>
               <md-button ng-click="vm.displayFeedItem(item.id)">Edit This Feed Item</md-button>

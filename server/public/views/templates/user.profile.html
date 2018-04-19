@@ -1,12 +1,11 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
-<div ng-cloak class="content">
-    <h1>{{vm.UserService.userObject.fromOurDB.name}}</h1><br>
-    <img ng-src="https://graph.facebook.com/{{vm.UserService.userObject.fromOurDB.fb_id}}/picture"/>
-    <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.oneTimeDonations">
+<div class="content">
+    <h1>{{vm.UserService.userObject.fromOurDB.name}}</h1>
+    <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
         <a href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt=""></a>
         <br>
         <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
         <br>
-        You've donated ${{nonprofit.totalCharged / 100}}.00
+        You've donated {{nonprofit.sum / 100 | currency}}
     </div>
 </div>

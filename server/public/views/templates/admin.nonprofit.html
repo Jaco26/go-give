@@ -1,5 +1,5 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-<div class="content">
+<div ng-cloak class="content">
   <h1>Nonprofits</h1>
 
     <div flex-gt-xs="30"layout="column" ng-cloak class="md-inline-form">
@@ -43,15 +43,15 @@
               <p>{{vm.newNonprofit.logo_url}}</p>
             </div>
           </md-input-container>
-          <md-input-container class="md-block">
+          <!-- <md-input-container class="md-block">
             <label>Goal Amount</label>
             <input type="text" ng-model="vm.newNonprofit.goal_value">
           </md-input-container>
           <md-input-container class="md-block">
             <label>Goal Description</label>
-            <textarea ng-model="vm.newNonprofit.description" rows="3" md-select-on-focus>
+            <textarea ng-model="vm.newNonprofit.goal_description" rows="3" md-select-on-focus>
             </textarea>
-          </md-input-container>
+          </md-input-container> -->
           <div>
             <md-button ng-click="vm.addNonprofit(vm.newNonprofit)" >Submit Nonprofit</md-button>
           </div>
@@ -65,7 +65,7 @@
     <br>
 
 
-<div ng-repeat="nonprofit in vm.allNonprofits.list">
+<div ng-cloak ng-repeat="nonprofit in vm.allNonprofits.list">
   <md-card flex-gt-xs="20" ng-hide="(nonprofit.name == 'co-Giv')"> <!-- this hides co-giv from the list of nonprofits -->
     <md-card-header>
       <md-card-avatar>
@@ -81,10 +81,10 @@
         <span class="md-headline">{{nonprofit.name}}</span>
       </md-card-title-text>
     </md-card-title>
-    <md-card-content>
+    <!-- <md-card-content>
       <p ng-show="nonprofit.goal_description">{{nonprofit.goal_description}}</p>
       <p ng-show="nonprofit.goal_value">{{nonprofit.goal_value}}</p>
-    </md-card-content>
+    </md-card-content> -->
     <md-card-actions>
       <md-button ng-click="vm.editNonprofit(nonprofit.id)">Edit This Nonprofit</md-button>
       <md-button ng-click="vm.deleteNonprofit(nonprofit.id)">Delete This Nonprofit</md-button>
