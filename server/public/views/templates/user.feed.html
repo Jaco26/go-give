@@ -17,7 +17,7 @@
         <a ng-hide="(item.name === 'co-Giv')" class="nonprofit_link" href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a>
         <a ng-show="(item.name === 'co-Giv')" class="nonprofit_link" href='/#!/support'>{{item.name}}</a>
         <br>
-        {{item.feed_text}}
+        <div>{{item.feed_text}}</div>
         <br>
         <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
       </div>
