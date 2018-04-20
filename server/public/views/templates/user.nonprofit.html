@@ -14,9 +14,9 @@
   <md-input-container flex>
       <label>$/month</label>
       <md-select name="type" ng-model="vm.plan">
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_five}}>$5/month</md-option>
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_ten}}>$10/month</md-option>
-          <md-option value={{vm.nonprofitToDisplay.solo.plan_id_twenty}}>$20/month</md-option>
+          <md-option value=5>$5/month</md-option>
+          <md-option value=10>$10/month</md-option>
+          <md-option value=20>$20/month</md-option>
       </md-select>
   </md-input-container>
   <md-button ng-click="vm.subscribeToThisPlan(vm.nonprofitToDisplay.solo, vm.plan)" class="md-raised md-primary">Subscribe</md-button>

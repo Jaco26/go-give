@@ -7,8 +7,8 @@ const updateInvoices = require('../modules/update.invoices');
 console.log('in report router');
 
 // updateInvoices();
-// Execute the code block once every MINUTE
-cron.schedule('35 * * * *', function () {
+// Execute the code block once every HOUR
+cron.schedule('1 * * * *', function () {
     console.log('NODE-CRONNING!!', new Date().toLocaleTimeString());
     updateInvoices();
 });
