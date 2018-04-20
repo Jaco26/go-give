@@ -55,9 +55,10 @@ CREATE TABLE invoices
     charge_id character varying,
     subscription_id character varying,
     plan_id character varying,
+    date date,
     period_start date,
     period_end date,
-    date_saved timestamp,
+    last_updated timestamp,
     user_id integer REFERENCES users,
     nonprofit_id integer REFERENCES nonprofit ON DELETE CASCADE
 );

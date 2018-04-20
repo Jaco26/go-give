@@ -92,16 +92,17 @@ function insertIntoOurDB (invoice) {
                 charge_id,
                 subscription_id,
                 plan_id,
+                date,
                 period_start,
                 period_end,
-                date_saved,
+                last_updated,
                 user_id,
                 nonprofit_id
             )
             VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9,
-                (SELECT id FROM users WHERE customer_id=$10),
-                (SELECT id FROM nonprofit WHERE product_id=$11)
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
+                (SELECT id FROM users WHERE customer_id=$11),
+                (SELECT id FROM nonprofit WHERE product_id=$12)
             );`;
     pool.query(sqlText, [
         invoice.amount_paid,
@@ -110,6 +111,7 @@ function insertIntoOurDB (invoice) {
         invoice.charge,
         invoice.subscription,
         invoice.lines.data[0].plan.id,
+        new Date(invoice.date * 1000),
         new Date(invoice.lines.data[0].period.start * 1000),
         new Date(invoice.lines.data[0].period.end * 1000),
         new Date(),
