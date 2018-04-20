@@ -289,6 +289,7 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
           .then(response => {
               self.plan.id = undefined;
               self.getStripeCustomerInfo();
+              //animation//
           }).catch(err => {
               console.log(err);
           });
@@ -335,10 +336,12 @@ self.oneTimeDonate = function(product, amount) {
     .then(response => {
         console.log(response);
         self.oneTimeDonation.amount = '';
+        //animation//
     }).catch(err => {
         console.log(err);
     })
 }
+
 
 self.requiredAmountAlert = function(ev){
   $mdDialog.show(
