@@ -1,4 +1,4 @@
-const myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
+const myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'ngSanitize']);
 
 //Routes//
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

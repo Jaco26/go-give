@@ -4,6 +4,8 @@
 
 <div>
   <input type="text" placeholder="Search Username" ng-model="searchBox">
+  <br>
+  <br>
     <ul ng-repeat="user in vm.userArray.list | filter: searchBox">
         <li>
           <img ng-src="https://graph.facebook.com/{{user.fb_id}}/picture"/>

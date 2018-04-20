@@ -1,48 +1,64 @@
-<div ng-include="'views/partials/user.navbar.html'"></div>
+<div class="nonprofit_page" ng-style="{'opacity': vm.UserService.pageOpacity}">
+      <div ng-include="'views/partials/user.navbar.html'"></div>
 
-<div class="content" ng-cloak>
-    <div layout="row">
-        <div flex="30">
-            <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
-        </div>
-        <div flex>
-            <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
-            {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
-            <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
-                <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
-                    <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
-                    You are donating {{subscription.plan.amount / 100 | currency}}/month
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div class="content" ng-cloak>
+          <div layout="row">
+              <div flex="30">
+                  <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
+              </div>
+              <div flex>
+                  <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
+                  {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
+                  <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals">
+                      <div ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
+                          ${{nonprofit.sum / 100}}.00 total donations
+                      </div>
+                  </div>
+                  <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
+                      <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
+                          <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
+                          You are donating {{subscription.plan.amount / 100 | currency}}/month
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <md-input-container flex>
+              <label>$/month</label>
+              <md-select name="type" ng-model="vm.plan.id">
+                  <md-option value=5>$5/month</md-option>
+                  <md-option value=10>$10/month</md-option>
+                  <md-option value=20>$20/month</md-option>
+              </md-select>
+          </md-input-container>
+          <md-button ng-click="vm.UserService.confirmSubscribe(vm.nonprofitToDisplay.solo, vm.plan.id, $event)" class="md-raised md-primary">Subscribe</md-button>
+
+          <div layout="row" flex>
+              <md-input-container md-no-float class="md-block title" flex="20">
+                  <input ng-model="vm.oneTimeDonation.amount" placeholder="$">
+              </md-input-container>
+              <div>
+                  <md-button class="md-raised md-warn" ng-click="vm.UserService.confirmOneTimeDonate(vm.nonprofitToDisplay.solo.product_id, vm.oneTimeDonation.amount, $event)">Donate</md-button>
+              </div>
+          </div>
+
+    <div>
+      <img class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="">
+      <br>
+      <br>
+      <p ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
     </div>
-
-  <md-input-container flex>
-      <label>$/month</label>
-      <md-select name="type" ng-model="vm.plan.id">
-          <md-option value=5>$5/month</md-option>
-          <md-option value=10>$10/month</md-option>
-          <md-option value=20>$20/month</md-option>
-      </md-select>
-  </md-input-container>
-  <md-button ng-click="vm.UserService.confirmSubscribe(vm.nonprofitToDisplay.solo, vm.plan.id, $event)" class="md-raised md-primary">Subscribe</md-button>
-
-  <div layout="row" flex>
-      <md-input-container md-no-float class="md-block title" flex="20">
-          <input ng-model="vm.oneTimeDonation.amount" placeholder="$">
-      </md-input-container>
-      <div>
-          <md-button class="md-raised md-warn" ng-click="vm.UserService.confirmOneTimeDonate(vm.nonprofitToDisplay.solo.product_id, vm.oneTimeDonation.amount, $event)">Donate</md-button>
-      </div>
-  </div>
-
-  <div>
-    <img class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="">
     <br>
     <br>
-    {{vm.nonprofitToDisplay.solo.description}}
   </div>
-  <br>
-  <br>
+</div>
+
+<div class="animation_wrapper" ng-style="{'opacity': vm.UserService.logoOpacity, 'z-index': vm.UserService.logoZIndex}">
+    <div class="logo_hand">
+        <img src="styles/assets/logo_hand.png" alt="">
+    </div>
+    <div class="logo_coin">
+        <img ng-style="{'opacity': vm.UserService.coinOpacity, 'padding-top': vm.UserService.coinPaddingTop}" src="styles/assets/logo_coin.png" alt="">
+    </div>
 </div>

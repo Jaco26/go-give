@@ -2,7 +2,6 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
         function(UserService, NonprofitService, FeedService, $window){
     const self = this;
 
-    // $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://www.youtube.com/**']);
 
     self.UserService = UserService;
     self.userObject = UserService.userObject;
@@ -16,7 +15,6 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.allNonprofits = NonprofitService.allNonprofits;
 
     self.newFeedItem = FeedService.newFeedItem;
-    // self.newFeedItem.feed_img = NonprofitService.newFeedItem.feed_img;
     self.addFeedItem = FeedService.addFeedItem;
     self.getFeedItems = FeedService.getFeedItems;
     self.getFeedItems();

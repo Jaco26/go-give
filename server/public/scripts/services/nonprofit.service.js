@@ -127,7 +127,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       self.getTopDonors(id);
       self.getSoloNonprofit(id)
         .then(function(){
-          // console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
+          console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
           self.nonprofitToDisplay.solo = self.soloNonprofit;
         })
     }

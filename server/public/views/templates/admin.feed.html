@@ -15,12 +15,6 @@
                 </md-input-container>
               </div>
               <div layout-gt-xs="row">
-                <md-input-container>
-                  <label>Title</label>
-                  <input type="text" ng-model="vm.newFeedItem.title">
-                </md-input-container>
-              </div>
-              <div layout-gt-xs="row">
                 <md-input-container class="md-block">
                   <label>Whats going on?</label>
                   <textarea ng-model="vm.newFeedItem.feed_text" rows="3" md-select-on-focus>
@@ -47,6 +41,7 @@
         <br>
         <br>
 
+
         <div ng-repeat="item in vm.allFeedItems.list">
           <!-- flex="30" layout-align="center center" layout="column" -->
           <md-card  style="width:400px;">
@@ -69,7 +64,7 @@
               </md-card-title-text>
             </md-card-title> -->
             <md-card-content>
-              <p>{{item.feed_text}}</p>
+              <p ng-bind-html="item.feed_text">{{item.feed_text}}</p>
               <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
             </md-card-content>
             <md-card-actions>
