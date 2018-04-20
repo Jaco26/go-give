@@ -13,9 +13,10 @@ router.get('/donation-history/:nonprofitIds', (req, res) => {
   getSummaryOfDonationsReveivedFor(nonprofitIds, res);
 });
 
-// GET A LIST OF TOP DONORS
-router.get('/top-donors', (req, res) => {
-  getTopDonors(res);
+// GET A LIST OF TOP DONORS for given nonprofit
+router.get('/top-donors/:nonprofitId', (req, res) => {
+  let nonprofitId = req.params.nonprofitId;
+  getTopDonors(nonprofitId, res);
 });
 
 

@@ -1,31 +1,31 @@
 const pool = require('./pool');
 
-let result = [];
-let nonprofitIds = [1,2,3,4];
-let exitCondition = nonprofitIds.length;
-function getTopDonors (res) {
-    recursive (res)
-}
+// let result = [];
+// let nonprofitIds = [1,2,3,4];
+// let exitCondition = nonprofitIds.length;
+// function getTopDonors (res) {
+//     recursive (res)
+// }
 
-async function recursive (res) {
-    if(result.length == 4){
-        res.send(result)
-        return 
-    }
-    let id = nonprofitIds[0];
-    await getTopDonorsForGivenNonprofit(id)
-    .then(response => {
-        result.push(response);
-        nonprofitIds.shift();
-        recursive(res);
-    })
-    .catch(err => {
-        console.log(err);        
-    });
+// async function recursive (res) {
+//     if(result.length == 4){
+//         res.send(result)
+//         return 
+//     }
+//     let id = nonprofitIds[0];
+//     await getTopDonorsForGivenNonprofit(id)
+//     .then(response => {
+//         result.push(response);
+//         nonprofitIds.shift();
+//         recursive(res);
+//     })
+//     .catch(err => {
+//         console.log(err);        
+//     });
    
-}
+// }
 
-async function getTopDonorsForGivenNonprofit (nonprofitId) {
+async function getTopDonors (nonprofitId, res) {
     let onetimeTopGivers = [];
     let subscriptionTopGivers = [];
 
@@ -64,8 +64,8 @@ async function getTopDonorsForGivenNonprofit (nonprofitId) {
         grandTotalsByUser: getGrandTotalsByUser(onetimeTopGivers, subscriptionTopGivers)
     };
 
-    return topGiversSummary;
-    // res.send(topGiversSummary);
+    // return topGiversSummary;
+    res.send(topGiversSummary);
 }
 
 function getGrandTotalsByUser (onetimeTopGivers, subscriptionTopGivers) {

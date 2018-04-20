@@ -6,7 +6,7 @@
     <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
         <a href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt=""></a>
         <br>
-        <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
+        <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}' ng-click="">{{nonprofit.name}}</a>
         <br>
         You've donated {{nonprofit.sum / 100 | currency}}
     </div>
