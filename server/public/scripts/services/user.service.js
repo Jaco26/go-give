@@ -342,6 +342,7 @@ self.oneTimeDonate = function(product, amount) {
     })
 }
 
+
 self.requiredAmountAlert = function(ev){
   $mdDialog.show(
     $mdDialog.alert()
@@ -384,7 +385,7 @@ self.getDonationHistoryFromOurDB = function () {
   .then(response => {
     console.log(' ********** USERS DONATION HISTORY OBJECT:', response.data);
     self.userObject.fromOurDB.donationHistory = response.data;
-    // console.log('USER OBJECT AFTER getDonationHistoryFromOurDB', self.userObject);
+    console.log('USER OBJECT AFTER getDonationHistoryFromOurDB', self.userObject);
 
   }).catch(err => {
     console.log(err);

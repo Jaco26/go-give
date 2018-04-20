@@ -2,8 +2,22 @@ const express = require('express');
 const pool = require('../modules/pool.js');
 const router = express.Router();
 const stripeCreateProduct = require('../modules/stripe.create.product.module.js')
+const getSummaryOfDonationsReveivedFor = require('../modules/ourDB.nonprofit.donation.info');
+const getTopDonors = require('../modules/top.donors');
 
 console.log('in nonprofit router');
+
+// GET DONATION HISTORY BY NONPROFIT ID
+router.get('/donation-history/:nonprofitIds', (req, res) => {
+  let nonprofitIds = req.params.nonprofitIds;
+  getSummaryOfDonationsReveivedFor(nonprofitIds, res);
+});
+
+// GET A LIST OF TOP DONORS
+// router.get('/top-donors', (req, res) => {
+//   getTopDonors(res);
+// });
+
 
 router.post('/', (request, response) => {
   if (request.isAuthenticated()){
@@ -20,7 +34,8 @@ router.get('/', (request, response) => {
     pool.query('SELECT * FROM nonprofit ORDER BY name')
     .then((result) => {
       console.log('success in get all nonprofits', result.rows);
-      response.send(result)
+      // getSummaryOfDonationsReveivedFor(result.rows, response);
+      response.send(result);
     })
     .catch((err) => {
       console.log('error in get all nonprofits', err);
@@ -86,6 +101,8 @@ router.put('/', (request, response) => {
   } else {
     response.sendStatus(403);
   }
-})
+});
+
+
 
 module.exports = router;

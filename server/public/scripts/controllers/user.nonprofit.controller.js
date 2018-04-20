@@ -3,6 +3,7 @@ myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService
     const self = this;
 
     self.UserService = UserService;
+    self.NonprofitService = NonprofitService;
     self.nonprofitToDisplay = NonprofitService.nonprofitToDisplay;
     self.checkStripeRegistration = UserService.checkStripeRegistration
 
@@ -16,5 +17,7 @@ myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService
     self.oneTimeDonation = UserService.oneTimeDonation;
     self.oneTimeDonate = UserService.oneTimeDonate;
     self.oneTimeDonation = UserService.oneTimeDonation;
+
+    NonprofitService.getAllNonprofit();
 
 }]);

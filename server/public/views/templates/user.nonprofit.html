@@ -8,6 +8,11 @@
         <div flex>
             <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
             {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
+            <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals">
+                <div ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
+                    ${{nonprofit.sum / 100}}.00 total donations
+                </div>
+            </div>
             <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
                 <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
                     <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
@@ -45,10 +50,12 @@
   </div>
   <br>
   <br>
-  <div class="logo_hand">
-      <img src="styles/assets/logo_hand.png" alt="">
-      <div class="logo_coin">
+  <!-- <div class="animation_wrapper">
+    <div class="logo_hand">
+        <img src="styles/assets/logo_hand.png" alt="">
+    </div>
+    <div class="logo_coin">
         <img src="styles/assets/logo_coin.png" alt="">
-      </div>
-  </div>
+    </div>
+  </div> -->
 </div>
