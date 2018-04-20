@@ -443,3 +443,11 @@ h3 {
 #dropMenu{
   z-index: 9000;
 }
+
+.animation_wrapper {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin: -100px 0 0 -100px;
+  /* z-index: -1; */
+}
