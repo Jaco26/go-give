@@ -35,12 +35,16 @@ function getUsersSubscriptionInvoiceHistory (usersDonations, user_id, res) {
     });
 }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ ///  ///
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 function getUsersDonationTotals(user_id, res, detailedHistory) {
     getOnetimeTotals(user_id, res, detailedHistory);
 }
 
 function getOnetimeTotals(user_id, res, detailedHistory) {
-    const sqlText = `SELECT SUM(otd.amount_charged), np.name, np.logo_url, np.id
+    const sqlText = `SELECT SUM(otd.amount_charged), np.name, np.logo_url, np.id 
     FROM onetime_donations as otd JOIN nonprofit as np ON otd.nonprofit_id = np.id
     WHERE user_id = $1 
     GROUP BY np.name, np.logo_url, np.id;`;
@@ -55,7 +59,7 @@ function getOnetimeTotals(user_id, res, detailedHistory) {
 function getSubscriptionTotals(user_id, res, onetimeTotals, detailedHistory) {
     // console.log('THIS IS THE "DETAILED HISTORY"', detailedHistory);
     
-    const sqlText = `SELECT SUM(sid.amount_paid), np.name, np.logo_url, np.id
+    const sqlText = `SELECT SUM(sid.amount_paid), np.name, np.logo_url, np.id 
     FROM invoices as sid JOIN nonprofit as np ON sid.nonprofit_id = np.id
     WHERE user_id = $1 
     GROUP BY np.name, np.logo_url, np.id;`;
