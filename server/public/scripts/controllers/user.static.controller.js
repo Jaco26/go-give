@@ -18,5 +18,12 @@ myApp.controller('UserStaticController', ['UserService', 'FeedService', 'Nonprof
     self.getFeedItems = FeedService.getFeedItems;
     self.getFeedItems();
 
+    self.getIframeSrc = function (videoId) {
+      return 'https://www.youtube.com/embed/' + videoId;
+    };
 
-}]);
+
+}])
+.config(function($sceDelegateProvider){
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://www.youtube.com/**']);
+});

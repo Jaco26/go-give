@@ -6,9 +6,12 @@
             <md-button class="menu" ng-click="vm.UserService.openMenu($mdMenu, $event)">
               <i class="material-icons">menu</i>
             </md-button>
-            <md-menu-content width="4">
+            <md-menu-content class="dropMenu" width="4">
               <md-menu-item>
                 <md-button ng-click="vm.checkStripeRegistration()">Payment Info</md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button ng-href="#!subscriptions">My Subscriptions</md-button>
               </md-menu-item>
               <md-menu-item>
                 <md-button ng-href="#!support">Support</md-button>
@@ -17,7 +20,7 @@
                 <md-button ng-href="#!admin">Admin View</md-button>
               </md-menu-item>
               <md-menu-item>
-                <md-button ng-click="vm.fbLogout()">Log Out</md-button>
+                <md-button ng-click="vm.UserService.confirmLogout()">Log Out</md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>

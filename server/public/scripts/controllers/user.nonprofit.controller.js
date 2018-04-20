@@ -13,7 +13,8 @@ myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService
     self.plan = UserService.plan;
     self.subscribeToThisPlan = UserService.subscribeToThisPlan;
 
-    self.oneTimeAmount = UserService.oneTimeAmount;
+    self.oneTimeDonation = UserService.oneTimeDonation;
     self.oneTimeDonate = UserService.oneTimeDonate;
+    self.oneTimeDonation = UserService.oneTimeDonation;
 
 }]);

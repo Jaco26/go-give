@@ -7,8 +7,8 @@ console.log('in feed router');
 router.post('/', (request, response)=>{
   if (request.isAuthenticated()){
     console.log('in post new feed item', request.body);
-    pool.query(`INSERT INTO feed (nonprofit_id, title, feed_text, feed_img_url, feed_video_url, feed_date_posted) VALUES ($1, $2, $3, $4, $5, $6);`,
-                [request.body.id, request.body.title, request.body.feed_text, request.body.feed_img, request.body.feed_video, request.body.feed_date])
+    pool.query(`INSERT INTO feed (nonprofit_id, title, feed_text, feed_img_url, feed_video_url) VALUES ($1, $2, $3, $4, $5);`,
+                [request.body.newFeed.id, request.body.newFeed.title, request.body.newFeed.feed_text, request.body.newFeed.feed_img_url, request.body.newFeed.feed_video])
                 .then((result) => {
                     console.log('registered new feed');
                     response.sendStatus(201);

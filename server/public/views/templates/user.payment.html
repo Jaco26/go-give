@@ -1,6 +1,7 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
-<div class="content">
+<div ng-cloak class="content">
     <h1>Payment Info</h1>
+    <br>
     <div>
         <md-card class="creditCard">
             <h3>{{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.brand.toUpperCase()}}</h3>
@@ -9,10 +10,7 @@
         </md-card>
         <br>
         <div ng-hide="vm.editingCard == true">
-            <br>
-            <br>
-            <br>
-            <md-button ng-click="vm.editingCard = true" class="md-primary md-raised">Edit</md-button>
+            <md-button ng-click="vm.editingCard = true" class="md-primary md-raised">Edit Card</md-button>
         </div>
     </div>
     <div ng-show="vm.editingCard == true">
@@ -29,33 +27,27 @@
         <md-button ng-click="vm.updateCard(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
     </div>
     <br>
-    <br>
     <div ng-hide="vm.editingEmail == true">
         {{vm.UserService.userObject.stripeCustomerInfo.customerObject.email}}
         <br>
         <br>
-        <md-button ng-click="vm.editingEmail = true" class="md-primary md-raised">Edit</md-button>
+        <md-button ng-click="vm.editingEmail = true" class="md-primary md-raised">Edit Email</md-button>
     </div>
 
     <div ng-show="vm.editingEmail == true">
-        <input type="text" ng-value="vm.UserService.userObject.stripeCustomerInfo.customerObject.email" ng-model="vm.updatedEmail">
-        <br>
-        <br>
+        <div class="cell example example1">
+            <form id="register-form">
+                <fieldset>
+                    <div class="row">
+                        <label for="email" data-tid="elements_examples.form.email_label">Email</label>
+                        <input id="email" ng-value="vm.UserService.userObject.stripeCustomerInfo.customerObject.email" ng-model="vm.updatedEmail" data-tid="elements_examples.form.email_placeholder" type="email">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
         <md-button ng-click="vm.editingEmail = false; updateEmail(vm.updatedEmail)" class="md-raised">Cancel</md-button>
         <md-button ng-click="vm.updateEmail(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
     </div>
     <br>
     <br>
-    <h4>Your subscriptions</h4>
-    <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
-        Charity : {{subscription.plan.product}}
-        <br>
-        Plan {{subscription.plan.amount / 100 | currency}} per {{subscription.plan.interval}}
-        <br>
-        Start Date: {{ subscription.start * 1000 | date}}
-        <br>
-        <md-button ng-click="vm.unsubscribe(subscription.id)" class="md-raised md-warn">Unsubscribe</md-button>
-        <br>
-        <br>
-    </div>
 </div>
