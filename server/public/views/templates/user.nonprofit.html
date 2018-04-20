@@ -47,14 +47,11 @@
             <img class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="">
             <br>
             <br>
-            {{vm.nonprofitToDisplay.solo.description}}
+            <p ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
         </div>
         <br>
         <br>
-        <br>
-        <br>
     </div>
-
 </div>
 <div class="animation_wrapper" ng-style="{'opacity': vm.UserService.logoOpacity, 'z-index': vm.UserService.logoZIndex}">
     <div class="logo_hand">
@@ -64,4 +61,3 @@
         <img ng-style="{'opacity': vm.UserService.coinOpacity, 'padding-top': vm.UserService.coinPaddingTop}" src="styles/assets/logo_coin.png" alt="">
     </div>
 </div>
-    

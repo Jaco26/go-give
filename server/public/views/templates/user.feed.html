@@ -16,6 +16,7 @@
         <!-- the show and hide are here to direct users to the co-Giv support page instead of the 'profile view' for co-Giv -->
         <a ng-hide="(item.name === 'co-Giv')" class="nonprofit_link" href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a>
         <a ng-show="(item.name === 'co-Giv')" class="nonprofit_link" href='/#!/support'>{{item.name}}</a>
+
       </div>
     </div>
     <div layout="row">
@@ -28,12 +29,12 @@
         <iframe  class="feed_video" ng-if="item.feed_video_url" width="100%"
             ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div>
-      <div flex>
+    </div>
+      <div flex style="margin-left: 20px;">
         <br>
-        {{item.feed_text}}
-        <br>
-        <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
+          <p ng-bind-html="item.feed_text">{{item.feed_text}}</p>        <br>
+          <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
       </div>
+      <br><br>
     </div>
   </div>
-</div>
