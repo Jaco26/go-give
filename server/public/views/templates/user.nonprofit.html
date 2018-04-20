@@ -46,7 +46,7 @@
     <img class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="">
     <br>
     <br>
-    {{vm.nonprofitToDisplay.solo.description}}
+    <p ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
   </div>
   <br>
   <br>
