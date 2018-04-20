@@ -1,4 +1,4 @@
-myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDialog', function($http, $location, $window, $route, $mdDialog) {
+myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDialog', '$timeout', function($http, $location, $window, $route, $mdDialog, $timeout) {
   let self = this;
 
   self.userArray = {};
@@ -16,10 +16,44 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
     }
   };
 
+  self.coinOpacity = 1
+  self.coinPaddingTop = '0px'
+  self.pageOpacity = 1;
+  self.logoOpacity = 0;
+  self.logoZIndex = -1;
+
+  self.animateCoin = function(){
+
+    self.coinOpacity -= .01;
+
+    self.coinPaddingTop.toString();
+    let removedPixelPadding = Number(self.coinPaddingTop.slice(0, self.coinPaddingTop.length - 2)) + 3;
+    self.coinPaddingTop = removedPixelPadding.toString() + 'px'
+  }
+
+  self.animateScreen = function(){
+    $timeout(function (){
+      if (self.coinOpacity > 0){
+        self.animateCoin();
+        self.animateScreen();
+      } else {
+        self.pageOpacity = 1;
+        self.logoOpacity = 0;
+        self.logoZIndex = -1;
+        self.coinOpacity = 1
+        self.coinPaddingTop = '0px'
+      }
+    }, 10)
+  } 
+
+  self.animatePage = function(){
+    self.logoZIndex = 1000;
+    self.pageOpacity = 0;
+    self.logoOpacity = 1;
+    self.animateScreen();
+  }
 
   console.log(self.userObject, 'user in service');
-
-
 
   self.getInitialLocation = function(){
     console.log('UserService -- getuser', self.userObject);
@@ -236,6 +270,7 @@ self.confirmSubscribe = function(nonprofit, planId, ev) {
           .ok('SUBSCRIBE')
           .cancel('CANCEL');
       $mdDialog.show(confirm).then(function() {
+        self.animatePage();
         self.subscribeToThisPlan(nonprofit, planId);
       }, function() {
         console.log('cancel subscribe');
@@ -307,6 +342,7 @@ self.confirmOneTimeDonate = function(product, amount, ev) {
             .ok('DONATE')
             .cancel('CANCEL');
         $mdDialog.show(confirm).then(function() {
+          self.animatePage();
           self.oneTimeDonate(product, amount);
         }, function() {
           console.log('cancel subscribe');
@@ -341,6 +377,8 @@ self.oneTimeDonate = function(product, amount) {
         console.log(err);
     })
 }
+
+
 
 
 self.requiredAmountAlert = function(ev){
