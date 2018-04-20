@@ -34,6 +34,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       }).then(function(response){
         self.allNonprofits.list = response.data.rows;
         self.getReceivedDonationsForNonprofits()
+        self.getTopDonors();
       }).catch(function(error){
         console.log('error in get all', error);
       })
@@ -50,6 +51,17 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
           .catch(err => {
             console.log(err);
           });
+    }
+
+    self.getTopDonors = function () {
+      $http.get('/nonprofit/top-donors')
+      .then(response => {
+        console.log('TOP DONORS RESPONSE ******', response.data);
+        
+      })
+      .catch(err => {
+        console.log(err);
+      });
     }
 
     self.editNonprofit = function(id){

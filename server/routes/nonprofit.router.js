@@ -3,14 +3,19 @@ const pool = require('../modules/pool.js');
 const router = express.Router();
 const stripeCreateProduct = require('../modules/stripe.create.product.module.js')
 const getSummaryOfDonationsReveivedFor = require('../modules/ourDB.nonprofit.donation.info');
+const getTopDonors = require('../modules/top.donors');
 
 console.log('in nonprofit router');
 
 // GET DONATION HISTORY BY NONPROFIT ID
 router.get('/donation-history/:nonprofitIds', (req, res) => {
   let nonprofitIds = req.params.nonprofitIds;
-  console.log('NONPROFIT IDs IN ROUTER#######', nonprofitIds);
   getSummaryOfDonationsReveivedFor(nonprofitIds, res);
+});
+
+// GET A LIST OF TOP DONORS
+router.get('/top-donors', (req, res) => {
+  getTopDonors(res);
 });
 
 
