@@ -1,5 +1,6 @@
-myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService', '$routeParams', 'NonprofitService', '$window',
-                  function(UserService, StripeService, $routeParams, NonprofitService, $window){
+myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService', '$routeParams', 'NonprofitService', '$window', '$mdDialog',
+    function(UserService, StripeService, $routeParams, NonprofitService, $window, $mdDialog){
+    
     const self = this;
 
     self.UserService = UserService;
@@ -19,5 +20,18 @@ myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService
     self.oneTimeDonation = UserService.oneTimeDonation;
 
     NonprofitService.getAllNonprofit();
+
+    self.blabla = "bla bla bla"
+
+    self.showDonationDialog = function ($event) {
+        console.log('HEYEYEYEYEYYY');
+        
+        $mdDialog.show({
+         
+            parent: angular.element(document.body),
+            targetEvent: $event,
+            templateUrl: '../views/dialogs/make.donation.dialog.html', 
+        })
+    }
 
 }]);

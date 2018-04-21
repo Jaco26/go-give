@@ -1,0 +1,24 @@
+<md-content layout>
+    <md-input-container md-no-float class="md-block title" flex="20">
+        <input ng-model="vm.oneTimeDonation.amount" placeholder="$">
+    </md-input-container>
+    <div>
+        <md-button class="md-raised md-warn" ng-click="vm.UserService.confirmOneTimeDonate(vm.nonprofitToDisplay.solo.product_id, vm.oneTimeDonation.amount, $event)">Donate</md-button>
+    </div>
+
+    <md-input-container flex>
+        <label>$/month</label>
+        <md-select name="type" ng-model="vm.plan.id">
+            <md-option value=5>$5/month</md-option>
+            <md-option value=10>$10/month</md-option>
+            <md-option value=20>$20/month</md-option>
+        </md-select>
+    </md-input-container>
+    <div>
+        <md-button ng-click="vm.UserService.confirmSubscribe(vm.nonprofitToDisplay.solo, vm.plan.id, $event)" class="md-raised md-primary">Subscribe</md-button>
+    </div>
+
+    <span flex></span>
+
+
+</md-content>
