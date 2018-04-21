@@ -73,7 +73,7 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
 function updateOurDBWith (invoice) {
     const sqlText = `UPDATE invoices SET
             amount_paid=$1,
-            date_saved=$2
+            last_updated=$2
         WHERE invoice_id=$3;`;
     pool.query(sqlText, [invoice.amount_paid, new Date(), invoice.id])
     .then(response => {

@@ -73,5 +73,3 @@ CREATE TABLE feed
     feed_date_posted timestamp default now()
 );
 
-INSERT into nonprofit (id, name, picture_url, logo_url, description)
-VALUES ('co-giv', '../styles/assets/logo.png', '../styles/assets/logo_mobile.png', 'Site-wide information comes from here');
