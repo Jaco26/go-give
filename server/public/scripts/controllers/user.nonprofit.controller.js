@@ -26,7 +26,7 @@ myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService
             targetEvent: $event,
             templateUrl: '../views/dialogs/make.donation.dialog.html', 
             controller: DonationController,
-        })
+        });
     }
 
     function DonationController ($scope, UserService, NonprofitService) {

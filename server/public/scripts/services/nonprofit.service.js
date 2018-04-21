@@ -9,7 +9,10 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     };
     self.editNonprofitToggle = {show: false};
     self.soloNonprofit = {};
-    self.nonprofitToDisplay = {};
+    self.nonprofitToDisplay = {
+      solo: {},
+      topDonors: {}
+    };
     self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz");
 
     self.addNonprofit = function (newNonprofit){
@@ -60,6 +63,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       $http.get(`/nonprofit/top-donors/${nonprofitId}`)
       .then(response => {
         console.log('TOP DONORS RESPONSE ******', response.data);
+        self.nonprofitToDisplay.topDonors = response.data;
       })
       .catch(err => {
         console.log(err);
@@ -129,7 +133,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         .then(function(){
           console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
           self.nonprofitToDisplay.solo = self.soloNonprofit;
-          console.log('self.nonprofitToDisplay', self.nonprofitToDisplay);
+          console.log('self.nonprofitToDisplay##@@@###@@@###', self.nonprofitToDisplay);
           
         })
     }

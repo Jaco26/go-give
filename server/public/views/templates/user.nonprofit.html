@@ -9,6 +9,17 @@
                 <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="logo hi hi">
                 <p ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
             </md-content>
+            <!-- END content -->
+
+
+          
+
+            <!-- <md-content layout-gt-xs="row" layout-xs="column">
+                <div flex>
+                    <h1>Our supporters</h1>
+
+                </div>
+            </md-content> -->
 
             <md-content layout-gt-xs="row" layout-xs="column" style="background-color: rgb(200, 243, 237);">
                 <div flex="30">
@@ -34,9 +45,21 @@
                     </div>
                 </div>
             </md-content>
-            <!-- END header row -->
+            <!-- END row -->
 
-          
+            <md-content>
+                <h3>Top donors</h3>
+                <md-list>
+                    <md-list-item ng-repeat="donor in vm.nonprofitToDisplay.topDonors.grandTotalsByUser" md-on-demand>
+                        {{donor.username}}
+                    </md-list-item>
+                </md-list>
+                <h3>Monthly givers</h3>
+                    <md-list-item>
+                        
+                    </md-list-item>
+                
+            </md-content>
 
             <!-- <md-content layout>
                 <md-input-container md-no-float class="md-block title" flex="20">
