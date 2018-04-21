@@ -6,7 +6,7 @@
         <md-content layout-padding>
 
             <md-content>
-                <img class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="">
+                <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="logo hi hi">
                 <p ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
             </md-content>
 

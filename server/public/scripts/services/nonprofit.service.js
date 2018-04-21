@@ -129,6 +129,8 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         .then(function(){
           console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
           self.nonprofitToDisplay.solo = self.soloNonprofit;
+          console.log('self.nonprofitToDisplay', self.nonprofitToDisplay);
+          
         })
     }
 
