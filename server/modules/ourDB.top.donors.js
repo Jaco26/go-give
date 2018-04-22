@@ -59,10 +59,10 @@ async function getTopDonors (nonprofitId, res) {
             res.sendStatus(500);
         });
     
-    const monthlyGiversSqlText = `SELECT DISTINCT users.id as user_id, users.name as user_name 
+    const monthlyGiversSqlText = `SELECT DISTINCT users.id as user_id, users.name as username, users.fb_id 
     FROM users JOIN invoices as sid ON users.id = sid.user_id
     JOIN nonprofit as np ON sid.nonprofit_id = np.id
-    WHERE np.id = $1;`;
+    WHERE np.id = $1 AND sid.subscription_status = 'active';`;
     await pool.query(monthlyGiversSqlText, [nonprofitId])
         .then(response => {
             allMonthlyGivers = response.rows;

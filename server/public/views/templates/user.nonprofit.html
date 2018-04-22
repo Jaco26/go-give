@@ -12,15 +12,6 @@
             <!-- END content -->
 
 
-          
-
-            <!-- <md-content layout-gt-xs="row" layout-xs="column">
-                <div flex>
-                    <h1>Our supporters</h1>
-
-                </div>
-            </md-content> -->
-
             <md-content layout-gt-xs="row" layout-xs="column" style="background-color: rgb(200, 243, 237);">
                 <div flex="30">
                     <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
@@ -48,48 +39,22 @@
             <!-- END row -->
 
             <md-content>
-                <h3>Top donors</h3>
+                <h3>Monthly givers</h3>
                 <md-list>
-                    <md-list-item ng-repeat="donor in vm.nonprofitToDisplay.topDonors.grandTotalsByUser" md-on-demand>
+                    <md-list-item ng-repeat="donor in vm.nonprofitToDisplay.topDonors.allMonthlyGivers">
+                        <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{donor.fb_id}}/picture" alt="">
                         {{donor.username}}
                     </md-list-item>
                 </md-list>
-                <h3>Monthly givers</h3>
-                    <md-list-item>
-                        
-                    </md-list-item>
                 
             </md-content>
 
-            <!-- <md-content layout>
-                <md-input-container md-no-float class="md-block title" flex="20">
-                    <input ng-model="vm.oneTimeDonation.amount" placeholder="$">
-                </md-input-container>
-                <div>
-                    <md-button class="md-raised md-warn" ng-click="vm.UserService.confirmOneTimeDonate(vm.nonprofitToDisplay.solo.product_id, vm.oneTimeDonation.amount, $event)">Donate</md-button>
-                </div>
-
-                <md-input-container flex>
-                    <label>$/month</label>
-                    <md-select name="type" ng-model="vm.plan.id">
-                        <md-option value=5>$5/month</md-option>
-                        <md-option value=10>$10/month</md-option>
-                        <md-option value=20>$20/month</md-option>
-                    </md-select>
-                </md-input-container>
-                <div>
-                    <md-button ng-click="vm.UserService.confirmSubscribe(vm.nonprofitToDisplay.solo, vm.plan.id, $event)" class="md-raised md-primary">Subscribe</md-button>
-                </div>
-
-                <span flex></span>
-                
-              
-            </md-content> -->
+         
 
 
            
             
-           
+    
             <br>
             <br>
             </div>
