@@ -63,13 +63,14 @@ CREATE TABLE invoices
     nonprofit_id integer REFERENCES nonprofit ON DELETE CASCADE
 );
 
-CREATE TABLE feed
+CREATE TABLE feed 
 (
     id SERIAL PRIMARY KEY,
-    nonprofit_id integer REFERENCES nonprofit(id) ON DELETE CASCADE,
+    nonprofit_id integer REFERENCES nonprofit(id),
+    title character varying,
     feed_text character varying,
     feed_img_url character varying,
     feed_video_url character varying,
-    feed_date_posted timestamp default now()
+    feed_date_posted timestamptz default now()
 );
 

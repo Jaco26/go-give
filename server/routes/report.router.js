@@ -8,7 +8,7 @@ console.log('in report router');
 
 // updateInvoices();
 // Execute the code block once every HOUR
-cron.schedule('00 * * * *', function () {
+cron.schedule('1 * * * *', function () {
     console.log('NODE-CRONNING!!', new Date().toLocaleTimeString());
     updateInvoices();
 });
