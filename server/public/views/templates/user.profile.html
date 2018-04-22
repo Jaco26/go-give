@@ -1,18 +1,64 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
-<div class="content">
-    <div layout="row">
-        <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{vm.UserService.userObject.fromOurDB.fb_id}}/picture"/>
-        <h1 style="margin-left: 15px;">{{vm.UserService.userObject.fromOurDB.name}}</h1>
-        <span flex></span>
-    </div>
+
+<div layout-fill>
+    <md-content style="padding-top: 20px;" flex>
+        <div class="content">
+            <div layout="row">
+                <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{vm.UserService.userObject.fromOurDB.fb_id}}/picture"
+                />
+                <h1 style="margin-left: 15px;">{{vm.UserService.userObject.fromOurDB.name}}</h1>
+                <span flex></span>
+            </div>
 
 
-    <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
-        <a href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt=""></a>
-        <br>
-        <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}' ng-click="">{{nonprofit.name}}</a>
-        <br>
-        You've donated {{nonprofit.sum / 100 | currency}}
-        <br>
-    </div>
+            <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
+                <a href='/#!/nonprofit-profile/{{nonprofit.id}}'>
+                    <img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt="">
+                </a>
+                <br>
+                <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}' ng-click="">{{nonprofit.name}}</a>
+                <br> You've donated {{nonprofit.sum / 100 | currency}}
+                <br>
+            </div>
+        </div>
+
+    </md-content>
 </div>
+
+
+
+
+
+
+<!-- 
+
+<md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" 
+    md-row-height-gt-md="1:1" 
+    md-row-height="3:2"
+    md-gutter="12px" md-gutter-gt-sm="8px"
+    layout layout-padding>
+
+    <md-grid-tile 
+    ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals"
+    md-rowspan="1"  
+    md-rowspan-gt-xs="2" 
+    md-colspan="1" >
+
+        <md-grid-tile-header layout layout-padding>
+            <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}' ng-click="">{{nonprofit.name}}</a>
+        </md-grid-tile-header>
+
+        <a href='/#!/nonprofit-profile/{{nonprofit.id}}'>
+            <img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt="">
+        </a>
+
+        <md-grid-tile-footer layout layout-padding>
+             You've donated {{nonprofit.sum / 100 | currency}}
+        </md-grid-tile-footer>
+      
+    </md-grid-tile>
+
+
+</md-grid-list> 
+
+-->

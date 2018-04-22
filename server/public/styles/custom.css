@@ -11,6 +11,7 @@ html {
   background-color: white;
 }
 
+
 .navbar {
     width: 100%;
     border-radius: 0px;
@@ -349,6 +350,7 @@ li a:hover {
   padding-right: 30px;
 }
 
+
 .nonprofit_image {
   width: 100%;
 }
@@ -443,6 +445,10 @@ h3 {
 
 #dropMenu{
   z-index: 9000;
+}
+
+md-content {
+  height: 100%;
 }
 
 .animation_wrapper {

@@ -18,19 +18,29 @@
   </div> 
 -->
 
-<md-content>
-  <h1 layout-margin>Discover</h1>
-  <md-card ng-repeat="nonprofit in vm.allNonprofits.list">
-    <md-card-header>
-      <div ng-hide="nonprofit.name == 'co-giv'">
+<md-content layout-xs="column" layout-gt-xs="row">
+
+  <div layout layout-align="start start" layout-margin>
+    <h1>Discover</h1>
+  </div>
+  <md-card ng-hide="nonprofit.name == 'co-giv'" ng-repeat="nonprofit in vm.allNonprofits.list">
+    <md-card-header ng-hide="nonprofit.name == 'co-giv'">
+      <div>
+        <!-- Nonprofit image / anchor -->
         <a layout="column" layout-align="start center" href='/#!/nonprofit-profile/{{nonprofit.id}}'>
           <img class="nonprofit_image" ng-src="{{nonprofit.picture_url}}" alt="nonprofit">
         </a>
         <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
-        <div layout="row">
-          <p ng-bind-html="nonprofit.description">{{nonprofit.description}}</p>
-        </div>
       </div>
     </md-card-header>
+    <md-divider></md-divider>
+    <!-- Nonprofit Description -->
+    <md-card-content >
+      <div layout="row">
+        <p ng-bind-html="nonprofit.description">{{nonprofit.description}}</p>
+      </div>
+    </md-card-content>
+      
+  
   </md-card>
 </md-content>
