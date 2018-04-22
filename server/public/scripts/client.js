@@ -1,8 +1,12 @@
 const myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'ngSanitize']);
 
 //Routes//
-myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+myApp.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', function($routeProvider, $locationProvider, $mdThemingProvider) {
   console.log('myApp -- config');
+  $mdThemingProvider.theme('default')
+    .primaryPalette('pink')
+    .accentPalette('orange');
+
   $routeProvider
   .when('/', {
     templateUrl: '/views/templates/login.html',

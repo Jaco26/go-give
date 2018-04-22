@@ -76,11 +76,12 @@
         </div>
       </div>
     <!-- Photo -->
-      <div layout="row">
-        <div flex-offset="25">
+        <!-- <div flex-offset="25"> -->
+        <div layout="column" layout-align="start center">
           <img class="feed_image" ng-if="item.feed_img_url" ng-src="{{item.feed_img_url}}" alt="">
         </div>
-      </div>
+      
+     <md-divider ></md-divider>
     <!-- Text -->
       <div layout="row">
         <p ng-bind-html="item.feed_text">{{item.feed_text}}</p>

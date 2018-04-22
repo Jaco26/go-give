@@ -350,11 +350,12 @@ li a:hover {
 }
 
 .nonprofit_image {
-  max-width: 300px;
+  width: 100%;
 }
 
 .feed_image {
-  max-width: 240px;
+  /* max-width: 240px; */
+  width: 100%;
 }
 
 .nonprofit_logo {
