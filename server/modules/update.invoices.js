@@ -105,10 +105,12 @@ function checkSubscriptionStatusOf(invoice, ourInvoiceIds) {
 function updateOurDBWith (modifiedInvoice) {
     let invoice = modifiedInvoice.invoice;
     let subscriptionStatus = modifiedInvoice.subscription_status;
+    console.log('SUBSCRIPTION STATUS ***###***###***###***###', subscriptionStatus);
+    
     const sqlText = `UPDATE invoices SET
             amount_paid=$1,
             last_updated=$2,
-            date=$3
+            date=$3,
             subscription_status=$4
         WHERE invoice_id=$5;`;
     pool.query(sqlText, [invoice.amount_paid, new Date(), new Date(invoice.date * 1000), subscriptionStatus, invoice.id])
@@ -140,7 +142,7 @@ function insertIntoOurDB(modifiedInvoice) {
                 nonprofit_id
             )
             VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
                 (SELECT id FROM users WHERE customer_id=$12),
                 (SELECT id FROM nonprofit WHERE product_id=$13)
             );`;
