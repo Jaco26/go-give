@@ -1,15 +1,13 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
 
-<div layout-fill>
-    <md-content style="padding-top: 20px;" flex>
+<div layout flex >
+    <div style="padding-top: 20px;" flex>
         <div class="content">
             <div layout="row">
-                <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{vm.UserService.userObject.fromOurDB.fb_id}}/picture"
-                />
+                <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{vm.UserService.userObject.fromOurDB.fb_id}}/picture" />
                 <h1 style="margin-left: 15px;">{{vm.UserService.userObject.fromOurDB.name}}</h1>
                 <span flex></span>
             </div>
-
 
             <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
                 <a href='/#!/nonprofit-profile/{{nonprofit.id}}'>
@@ -21,9 +19,11 @@
                 <br>
             </div>
         </div>
-
-    </md-content>
+    </div>
 </div>
+
+
+
 
 
 

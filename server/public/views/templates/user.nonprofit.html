@@ -1,76 +1,78 @@
-<div class="nonprofit_page" ng-style="{'opacity': vm.UserService.pageOpacity}">
-      <div ng-include="'views/partials/user.navbar.html'"></div>
+<!-- <div class="nonprofit_page" ng-style="{'opacity': vm.UserService.pageOpacity}"> -->
+    <div ng-include="'views/partials/user.navbar.html'"></div>
 
-      <div class="content" ng-cloak>
+        <!-- <div class="content" ng-cloak> -->
 
-        <md-content layout-padding>
+        <!-- <md-content> -->
+
 
             <md-content>
-                <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}} alt="logo hi hi">
-                <p ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
-            </md-content>
-            <!-- END content -->
-
-
-            <md-content layout-gt-xs="row" layout-xs="column" style="background-color: rgb(200, 243, 237);">
-                <div flex="30">
-                    <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
-                </div>
-                <div flex>
-                    <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
-                    {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
-                    <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals">
-                        <div ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
-                            {{nonprofit.sum / 100 | currency}} total donations
-                        </div>
+                <md-card style="margin-top: 40px;">
+                    <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}}
+                        alt="logo hi hi">
+                    <p ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
+                </md-card>
+                <!-- END content -->
+                
+                
+                <md-card layout-gt-xs="row" layout-xs="column">
+                    <div flex="30">
+                        <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
                     </div>
-                    <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
-                        <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
-                            <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
-                                You are donating {{subscription.plan.amount / 100 | currency}}/month
+                    <div flex>
+                        <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
+                        {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
+                        <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals">
+                            <div ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
+                                {{nonprofit.sum / 100 | currency}} total donations
                             </div>
                         </div>
+                        <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
+                            <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
+                                <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
+                                    You are donating {{subscription.plan.amount / 100 | currency}}/month
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <md-button ng-click="vm.showDonationDialog($event)">Donate</md-button>
+                        </div>
                     </div>
-                    <div>
-                        <md-button ng-click="vm.showDonationDialog($event)">Donate</md-button>
-                    </div>
-                </div>
-            </md-content>
-            <!-- END row -->
-
-            <md-content>
-                <h3>Monthly givers</h3>
-                <md-list>
-                    <md-list-item ng-repeat="donor in vm.nonprofitToDisplay.topDonors.allMonthlyGivers">
-                        <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{donor.fb_id}}/picture" alt="">
-                        {{donor.username}}
-                    </md-list-item>
-                </md-list>
+                </md-card>
+                <!-- END row -->
                 
+                
+                <md-card>
+                    <md-card-header>
+                        <h3>Monthly givers</h3>
+                    </md-card-header>
+                
+                    <md-list>
+                        <md-list-item ng-repeat="donor in vm.nonprofitToDisplay.topDonors.allMonthlyGivers">
+                            <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{donor.fb_id}}/picture" alt=""> {{donor.username}}
+                        </md-list-item>
+                    </md-list>
+                </md-card>
+               
             </md-content>
 
-         
 
 
-           
-            
-    
-            <br>
-            <br>
-            </div>
-            </div>
-            
-            <div class="animation_wrapper" ng-style="{'opacity': vm.UserService.logoOpacity, 'z-index': vm.UserService.logoZIndex}">
-                <div class="logo_hand">
-                    <img src="styles/assets/logo_hand.png" alt="">
-                </div>
-                <div class="logo_coin">
-                    <img ng-style="{'opacity': vm.UserService.coinOpacity, 'padding-top': vm.UserService.coinPaddingTop}" src="styles/assets/logo_coin.png"
-                        alt="">
-                </div>
-            </div>
 
 
-        </md-content>
+        
+  
+    <div class="animation_wrapper" ng-style="{'opacity': vm.UserService.logoOpacity, 'z-index': vm.UserService.logoZIndex}">
+        <div class="logo_hand">
+            <img src="styles/assets/logo_hand.png" alt="">
+        </div>
+        <div class="logo_coin">
+            <img ng-style="{'opacity': vm.UserService.coinOpacity, 'padding-top': vm.UserService.coinPaddingTop}" src="styles/assets/logo_coin.png"
+                alt="">
+        </div>
+    </div>
+
+
+        <!-- </md-content> -->
 
           
