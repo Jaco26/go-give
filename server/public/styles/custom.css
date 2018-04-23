@@ -453,8 +453,8 @@ md-content {
 
 .animation_wrapper {
   position: absolute;
-  top: 20%;
-  left: 50%;
+  top: 45%;
+  left: 55%;
   margin: -100px 0 0 -100px;
   /* z-index: -1; */
 }

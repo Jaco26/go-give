@@ -49,7 +49,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
 
   self.animatePage = function(){
     self.logoZIndex = 1000;
-    self.pageOpacity = 0;
+    self.pageOpacity = .5;
     self.logoOpacity = 1;
     self.animateScreen();
   }
