@@ -67,8 +67,8 @@
   <input style="margin-left: 20px;" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox">
 
   <div class="md-padding" ng-cloak  layout="row" layout-wrap>
-      <!-- the ng-hide hides co-giv from the list of nonprofits, it needs to be isted as a nonprofit in order to post to the feed -->
-    <md-card  ng-repeat="nonprofit in vm.allNonprofits.list | filter: nonprofitSearchBox" ng-hide="(nonprofit.name == 'co-giv')" flex="25" flex-sm="80">
+      <!-- the ng-hide hides cogiv from the list of nonprofits, it needs to be isted as a nonprofit in order to post to the feed -->
+    <md-card  ng-repeat="nonprofit in vm.allNonprofits.list | filter: nonprofitSearchBox" ng-hide="(nonprofit.name == 'cogiv')" flex="25" flex-sm="80">
       <md-card-header>
         <md-card-avatar>
           <img ng-src="{{nonprofit.logo_url}}"/>

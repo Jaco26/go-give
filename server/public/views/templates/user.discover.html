@@ -3,7 +3,7 @@
   <h1>Discover</h1>
   <br>
 <div ng-repeat="nonprofit in vm.allNonprofits.list">
-  <div ng-hide="(nonprofit.name === 'co-giv')">
+  <div ng-hide="(nonprofit.name === 'cogiv')">
     <a href='/#!/nonprofit-profile/{{nonprofit.id}}'> <img class="nonprofit_image" ng-src="{{nonprofit.picture_url}}" alt="nonprofit"></a>
     <br>
     <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>

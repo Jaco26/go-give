@@ -4,18 +4,18 @@
   <br>
   <div ng-repeat="item in vm.allFeedItems.list">
     <div layout="row">
-      <!-- the show and hide are here to direct users to the co-Giv support page instead of the 'profile view' for co-Giv -->
-      <div flex="25" ng-hide="(item.name === 'co-Giv')">
+      <!-- the show and hide are here to direct users to the cogiv support page instead of the 'profile view' for cogiv -->
+      <div flex="25" ng-hide="(item.name === 'cogiv')">
         <a href='/#!/nonprofit-profile/{{item.nonprofit_id}}'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
       </div>
-      <div flex="25" ng-show="(item.name === 'co-Giv')">
+      <div flex="25" ng-show="(item.name === 'cogiv')">
         <a href='/#!/support'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
       </div>
       <div flex>
         <br>
-        <!-- the show and hide are here to direct users to the co-Giv support page instead of the 'profile view' for co-Giv -->
-        <a ng-hide="(item.name === 'co-Giv')" class="nonprofit_link" href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a>
-        <a ng-show="(item.name === 'co-Giv')" class="nonprofit_link" href='/#!/support'>{{item.name}}</a>
+        <!-- the show and hide are here to direct users to the cogiv support page instead of the 'profile view' for cogiv -->
+        <a ng-hide="(item.name === 'cogiv')" class="nonprofit_link" href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a>
+        <a ng-show="(item.name === 'cogiv')" class="nonprofit_link" href='/#!/support'>{{item.name}}</a>
 
       </div>
     </div>

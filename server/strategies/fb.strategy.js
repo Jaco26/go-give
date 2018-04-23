@@ -22,7 +22,7 @@ passport.use(new FacebookStrategy({
           .then((result) => {
             console.log('registered new user');
             pool.query(`INSERT INTO feed (nonprofit_id, feed_text) VALUES ($1, $2);`,
-                        [1, `Please welcome ${profile.displayName} to the co-Giv app!` ]);
+                        [1, `Please welcome ${profile.displayName} to the cogiv app!` ]);
 
             pool.query('SELECT * FROM users WHERE fb_id = $1;', [profile.id]).then((result) => {
               if(result.rows.length === 0) {
