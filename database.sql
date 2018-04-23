@@ -1,5 +1,4 @@
 -- default value for role is 2, it is the user role.  ADMIN role is 1
-
 CREATE TABLE users
 (
     id SERIAL PRIMARY KEY,
@@ -13,6 +12,7 @@ CREATE TABLE users
     created Date,
     customer_id character varying
 );
+
 
 CREATE TABLE nonprofit
 (
@@ -43,8 +43,9 @@ CREATE TABLE onetime_donations
     captured BOOLEAN default false,
     date timestamp,
     user_id integer REFERENCES users,
-    nonprofit_id integer REFERENCES nonprofit ON DELETE CASCADE
+    nonprofit_id integer REFERENCES nonprofit
 );
+
 
 CREATE TABLE invoices
 (
@@ -55,15 +56,17 @@ CREATE TABLE invoices
     charge_id character varying,
     subscription_id character varying,
     plan_id character varying,
-    date date,
     period_start date,
     period_end date,
+    created date,
     last_updated timestamp,
     user_id integer REFERENCES users,
-    nonprofit_id integer REFERENCES nonprofit ON DELETE CASCADE
+    nonprofit_id integer REFERENCES nonprofit
 );
 
-CREATE TABLE feed 
+
+
+CREATE TABLE feed
 (
     id SERIAL PRIMARY KEY,
     nonprofit_id integer REFERENCES nonprofit(id),
