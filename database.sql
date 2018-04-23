@@ -42,8 +42,8 @@ CREATE TABLE onetime_donations
     transaction_id character varying,
     captured BOOLEAN default false,
     date timestamp,
-    user_id integer REFERENCES users,
-    nonprofit_id integer REFERENCES nonprofit
+    user_id integer REFERENCES users ON DELETE CASCADE,
+    nonprofit_id integer REFERENCES nonprofit ON DELETE CASCADE
 );
 
 
@@ -55,13 +55,14 @@ CREATE TABLE invoices
     product_id character varying,
     charge_id character varying,
     subscription_id character varying,
+    subscription_status character varying,
     plan_id character varying,
     period_start date,
     period_end date,
     date date,
     last_updated timestamp,
-    user_id integer REFERENCES users,
-    nonprofit_id integer REFERENCES nonprofit
+    user_id integer REFERENCES users ON DELETE CASCADE,
+    nonprofit_id integer REFERENCES nonprofit ON DELETE CASCADE
 );
 
 
@@ -69,7 +70,7 @@ CREATE TABLE invoices
 CREATE TABLE feed
 (
     id SERIAL PRIMARY KEY,
-    nonprofit_id integer REFERENCES nonprofit(id),
+    nonprofit_id integer REFERENCES nonprofit(id) ON DELETE CASCADE,
     title character varying,
     feed_text character varying,
     feed_img_url character varying,
@@ -77,5 +78,5 @@ CREATE TABLE feed
     feed_date_posted timestamptz default now()
 );
 
-INSERT into nonprofit (id, name, picture_url, logo_url, description)
+INSERT into nonprofit (name, picture_url, logo_url, description)
 VALUES ('cogiv', '../styles/assets/logo.png', '../styles/assets/logo_mobile.png', 'Site-wide information comes from here');
