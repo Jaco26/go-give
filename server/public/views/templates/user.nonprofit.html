@@ -7,21 +7,45 @@
 
 
             <md-content>
-                <md-card style="margin-top: 40px;">
+                <md-card style="margin-top: 20px;">
                     <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}}
                         alt="logo hi hi">
-                    <p ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
                 </md-card>
                 <!-- END content -->
                 
                 
-                <md-card layout-gt-xs="row" layout-xs="column">
-                    <div flex="30">
+                <md-card layout-padding layout-gt-xs="row" layout-xs="column">
+                    <md-card-header>
                         <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
-                    </div>
-                    <div flex>
+                        <span flex></span>
                         <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
-                        {{vm.nonprofitToDisplay.solo.city}}, {{vm.nonprofitToDisplay.solo.state}}
+                    </md-card-header>
+                    
+                    <md-card-content>
+                        <p layout-padding ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
+                        <md-button ng-click="vm.showDonationDialog($event)">Donate</md-button>
+
+                    </md-card-content>
+
+                    <md-card-footer>
+                        <p>
+                             Total donations: &nbsp;
+                            <span ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
+                                {{nonprofit.sum / 100 | currency}}
+                            </span>
+                        </p> 
+                        <p>
+                            <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
+                                <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
+                                    <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
+                                        You are donating {{subscription.plan.amount / 100 | currency}}/month
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
+                    </md-card-footer>
+                    
+                    <!-- <div flex>
                         <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals">
                             <div ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
                                 {{nonprofit.sum / 100 | currency}} total donations
@@ -35,9 +59,8 @@
                             </div>
                         </div>
                         <div>
-                            <md-button ng-click="vm.showDonationDialog($event)">Donate</md-button>
                         </div>
-                    </div>
+                    </div> -->
                 </md-card>
                 <!-- END row -->
                 
