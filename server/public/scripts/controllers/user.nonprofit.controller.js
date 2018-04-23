@@ -33,6 +33,7 @@ myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService
         $scope.UserService = UserService;
         $scope.plan = UserService.plan;
         $scope.oneTimeDonation = UserService.oneTimeDonation;
+        
         $scope.nonprofitToDisplay = NonprofitService.nonprofitToDisplay;
         $scope.closeDialog = function() {
             $mdDialog.hide();
