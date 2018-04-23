@@ -58,7 +58,7 @@ CREATE TABLE invoices
     plan_id character varying,
     period_start date,
     period_end date,
-    created date,
+    date date,
     last_updated timestamp,
     user_id integer REFERENCES users,
     nonprofit_id integer REFERENCES nonprofit
