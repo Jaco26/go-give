@@ -2,7 +2,7 @@
 
 
 
-
+        <div class="page" ng-style="{'opacity': vm.UserService.pageOpacity, 'z-index': vm.UserService.logoZIndex}">
             <md-content>
                 <md-card style="margin-top: 20px;">
                     <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}}
@@ -43,7 +43,7 @@
                         </p>
                     </md-card-footer>
                 </md-card>
-                <!-- END row -->
+            <!-- END row -->
 
 
                 <md-card>
@@ -59,7 +59,7 @@
                 </md-card>
 
             </md-content>
-
+        </div>
 
 
 
