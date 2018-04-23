@@ -13,6 +13,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.getAllNonprofit = NonprofitService.getAllNonprofit;
     self.getAllNonprofit();
     self.allNonprofits = NonprofitService.allNonprofits;
+    console.log(self.allNonprofits, 'all nonprofits in admin controller');
 
     self.newFeedItem = FeedService.newFeedItem;
     self.addFeedItem = FeedService.addFeedItem;

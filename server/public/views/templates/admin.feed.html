@@ -23,7 +23,9 @@
               </div>
               <div>
                 <md-button class="md-warn" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
-                <p ng-if="vm.newFeedItem.feed_img_url" >{{vm.newFeedItem.feed_img_url}}</p>
+              </div>
+              <div>
+                <img style="width: 100px;" ng-src="{{vm.newFeedItem.feed_img_url}}"/>
               </div>
               <md-input-container class="md-block">
                 <label>Place Video URL here</label>

@@ -126,8 +126,9 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
       console.log(result, 'filestack upload');
       self.newFeedItem.feed_img_url = result.filesUploaded[0].url;
       console.log('self.newFeedItem.feed_img_url', self.newFeedItem.feed_img_url);
+      $route.reload();
+
     })
-    $route.reload();
   }
 
 
