@@ -67,7 +67,13 @@ function getSubscriptionTotals(user_id, res, onetimeTotals, detailedHistory) {
     .then(response => {
         let subscriptionTotals = response.rows;
         let grandTotalsByName = getGrandTotalsByName(onetimeTotals, subscriptionTotals);
-        let totalsSummary = {onetimeTotals: onetimeTotals, subscriptionTotals: subscriptionTotals, grandTotals: grandTotalsByName};
+        let allTimeTotal = calculateAlltimeTotals(grandTotalsByName);
+        let totalsSummary = {
+            onetimeTotals: onetimeTotals, 
+            subscriptionTotals: subscriptionTotals, 
+            grandTotals: grandTotalsByName,
+            allTimeTotal: allTimeTotal,
+        };
         let report = {totalsSummary: totalsSummary, detailedHistory: detailedHistory};
         res.send(report);
     })
@@ -96,6 +102,13 @@ function packageTotals (totalsObject) {
         return {name: key, sum: totalsObject[key].sum, logo_url: totalsObject[key].logo_url, id: totalsObject[key].id};
     });
     return totalsArray
+}
+
+function calculateAlltimeTotals (grandTotalsByName) {
+    let allTimeTotal = grandTotalsByName.reduce( (a, b) => {
+        return a + b.sum;
+    }, 0)    
+    return allTimeTotal; 
 }
 
 

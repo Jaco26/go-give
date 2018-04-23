@@ -11,6 +11,7 @@ html {
   background-color: white;
 }
 
+
 .navbar {
     width: 100%;
     border-radius: 0px;
@@ -349,12 +350,14 @@ li a:hover {
   padding-right: 30px;
 }
 
+
 .nonprofit_image {
-  max-width: 300px;
+  width: 100%;
 }
 
 .feed_image {
-  max-width: 240px;
+  /* max-width: 240px; */
+  width: 100%;
 }
 
 .nonprofit_logo {
@@ -444,10 +447,18 @@ h3 {
   z-index: 9000;
 }
 
+md-content {
+  height: 100%;
+}
+
 .animation_wrapper {
   position: absolute;
   top: 20%;
   left: 50%;
   margin: -100px 0 0 -100px;
   /* z-index: -1; */
+}
+
+.donation-dialog {
+  z-index: 900;
 }

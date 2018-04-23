@@ -30,7 +30,7 @@ myApp.controller('UserSubscriptionsController', ['UserService', 'NonprofitServic
             url: '/stripe/unsubscribe',
             data: {id: id}
         }).then(response => {
-            console.log(response);
+            console.log('CONFIRMATION OBJECT FROM STRIPE FOR UNSUBSCRIBE****', response);
             self.UserService.getStripeCustomerInfo();
         }).catch(err => {
             console.log(err);

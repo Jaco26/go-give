@@ -101,8 +101,7 @@ router.put('/', (request, response) => {
   } else{
     response.sendStatus(403);
   }
-})
-
+});
 
 
 module.exports = router;

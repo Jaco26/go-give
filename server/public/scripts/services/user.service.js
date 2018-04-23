@@ -12,7 +12,8 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
       }
     },
     fromOurDB: {
-      donationHistory: []
+      donationHistory: [],
+      totalGiven: 0,
     }
   };
 

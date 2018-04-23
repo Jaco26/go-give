@@ -3,7 +3,7 @@ const pool = require('../modules/pool.js');
 const router = express.Router();
 const stripeCreateProduct = require('../modules/stripe.create.product.module.js')
 const getSummaryOfDonationsReveivedFor = require('../modules/ourDB.nonprofit.donation.info');
-const getTopDonors = require('../modules/top.donors');
+const getTopDonors = require('../modules/ourDB.top.donors');
 
 console.log('in nonprofit router');
 
@@ -13,10 +13,11 @@ router.get('/donation-history/:nonprofitIds', (req, res) => {
   getSummaryOfDonationsReveivedFor(nonprofitIds, res);
 });
 
-// GET A LIST OF TOP DONORS
-// router.get('/top-donors', (req, res) => {
-//   getTopDonors(res);
-// });
+// GET A LIST OF TOP DONORS for given nonprofit
+router.get('/top-donors/:nonprofitId', (req, res) => {
+  let nonprofitId = req.params.nonprofitId;
+  getTopDonors(nonprofitId, res);
+});
 
 
 router.post('/', (request, response) => {

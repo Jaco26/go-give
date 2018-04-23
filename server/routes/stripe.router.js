@@ -5,6 +5,8 @@ const router = express.Router();
 // Helpful Modules
 const userReports = require('../modules/stripe.user.reports');
 const insertIntoOnetime_Donations = require('../modules/save.onetime.donation');
+const updateSubscriptionStatus = require('../modules/ourDB.update.subscription.status');
+
 console.log('in stripe router', process.env.STRIPE_SECRET_KEY);
 
 // Get all transactions on Whyatt's account
@@ -235,10 +237,17 @@ router.post('/updateEmail', (req, res) => {
 
 router.post('/unsubscribe', (req, res) => {
   if (req.isAuthenticated()){
-
     let subscription_id = req.body.id;
-    stripe.subscriptions.del(subscription_id);
-    res.sendStatus(200);
+    stripe.subscriptions.del(subscription_id, 
+        (err, confirmation) => {
+        if(err){
+            console.log(err);
+            res.sendStatus(500)
+        } else {
+            // console.log('CONFIRMATION ******* CONFIRMATION SUB DEL *******', confirmation);
+            updateSubscriptionStatus(confirmation, res);
+        }
+    });
   } else {
     res.sendStatus(403);
   }
