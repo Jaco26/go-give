@@ -1,9 +1,6 @@
-<!-- <div class="nonprofit_page" ng-style="{'opacity': vm.UserService.pageOpacity}"> -->
     <div ng-include="'views/partials/user.navbar.html'"></div>
 
-        <!-- <div class="content" ng-cloak> -->
 
-        <!-- <md-content> -->
 
 
             <md-content>
@@ -11,14 +8,13 @@
                     <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}}
                         alt="logo hi hi">
                 </md-card>
-                <!-- END content -->
 
 
                 <md-card layout-padding layout-gt-xs="row" layout-xs="column">
                     <md-card-header>
                       <md-card-avatar>
                         <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
-                      </md-card-avatar>  
+                      </md-card-avatar>
                         <span flex></span>
                         <h1>{{vm.nonprofitToDisplay.solo.name}}</h1>
                     </md-card-header>
@@ -46,23 +42,6 @@
                             </div>
                         </p>
                     </md-card-footer>
-
-                    <!-- <div flex>
-                        <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals">
-                            <div ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
-                                {{nonprofit.sum / 100 | currency}} total donations
-                            </div>
-                        </div>
-                        <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
-                            <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
-                                <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
-                                    You are donating {{subscription.plan.amount / 100 | currency}}/month
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                        </div>
-                    </div> -->
                 </md-card>
                 <!-- END row -->
 
@@ -96,6 +75,3 @@
                 alt="">
         </div>
     </div>
-
-
-        <!-- </md-content> -->

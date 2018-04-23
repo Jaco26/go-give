@@ -58,11 +58,7 @@
             <iframe  width="100%"
                 ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
-            <!-- <md-card-title>
-              <md-card-title-text>
-                <span class="md-headline">{{item.title}}</span>
-              </md-card-title-text>
-            </md-card-title> -->
+
             <md-card-content>
               <p ng-bind-html="item.feed_text">{{item.feed_text}}</p>
               <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>

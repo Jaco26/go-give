@@ -45,7 +45,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
         self.coinPaddingTop = '0px'
       }
     }, 10)
-  } 
+  }
 
   self.animatePage = function(){
     self.logoZIndex = 1000;
@@ -403,21 +403,6 @@ self.requireGreaterThanFiveDollarsAlert = function(ev){
         .targetEvent(ev)
   );
 }
-
-// OLD GET ONE TIME DONATIONS
-
-// self.oneTimeDonations = [];
-// self.getUsersOneTimeDonationsFromDB = function(id){
-//   $http({
-//     method: 'GET',
-//     url:`/user/donations/${id}`
-//   })
-//   .then(response => {
-//     self.oneTimeDonations = response.data;
-//   }).catch(err => {
-//     console.log(err);
-//   })
-// }
 
 self.getDonationHistoryFromOurDB = function () {
   $http.get(`/user/donation-history/${self.userObject.fromOurDB.id}`)

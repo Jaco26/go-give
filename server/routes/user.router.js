@@ -6,25 +6,6 @@ const getUsersDonationHistory = require('../modules/ourDB.user.donation.info');
 console.log('in user router');
 
 
-// router.post('/', (request, response) => {
-//   if (request.isAuthenticated()){
-//   console.log('in POST fb', request.body);
-//   pool.query('INSERT INTO users (name, img_url, fb_id, first_name, last_name) VALUES ($1, $2, $3, $4, $5);',
-//               [request.body.name, request.body.url, request.body.fbid, request.body.first_name, request.body.last_name])
-//     .then((result) => {
-//       console.log('**********************registered new user');
-//       response.sendStatus(201);
-//     })
-//     .catch((err) => {
-//       console.log('error in new user post', err);
-//       response.sendStatus(500);
-//     })
-//   } else {
-//     response.sendStatus(403);
-//   }
-// })
-// //end POST new user
-
   router.get('/:id', (request, response) => {
     if (request.isAuthenticated()){
       console.log('in get check for register', request.params.id);
