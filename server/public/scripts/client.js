@@ -4,8 +4,9 @@ const myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'ngSanitize']);
 myApp.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', function($routeProvider, $locationProvider, $mdThemingProvider) {
   console.log('myApp -- config');
   $mdThemingProvider.theme('default')
-    .primaryPalette('pink')
-    .accentPalette('orange');
+    .primaryPalette('blue')
+    .accentPalette('orange')
+    .backgroundPalette('grey');
 
   $routeProvider
   .when('/', {

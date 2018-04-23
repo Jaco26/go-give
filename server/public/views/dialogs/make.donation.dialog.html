@@ -1,11 +1,62 @@
-<md-dialog layout="column" layout-padding>
+<md-dialog class="donation-dialog" layout="column" layout-padding>
+<!-- 
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Hey thanks!</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px;max-height:810px; ">
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="Monthly">
+                    <md-content class="md-padding">
+                        <h2 class="md-display-2">Monthly</h2>
+                        <p>This is what is gonna happen with your donation!</p>
+                    </md-content>
+                </md-tab>
+                <md-tab label="Once">
+                    <md-content class="md-padding">
+                        <h2 class="md-display-2">Onetime</h2>
+                        <p>Onetime donations are great! We just require a {{5 | currency}} minimum </p>
+                    </md-content>
+                </md-tab>
+                <md-tab label="FAQs">
+                    <md-content class="md-padding">
+                        <h2 class="md-display-2">FAQs</h2>
+                        <h4>Sure but will my credit card information be secure??</h4>
+                        <p>You bet! We use Stripe to safely and securly handle all electronic transactions</p>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+    
+        <md-dialog-actions layout="row">
+            <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+                More on Wikipedia
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="answer('not useful')">
+                Not Useful
+            </md-button>
+            <md-button ng-click="answer('useful')" style="margin-right:20px;">
+                Useful
+            </md-button>
+        </md-dialog-actions>
+    </form>
+-->
 
     <div layout>
         <md-input-container md-no-float class="md-block title" flex-xs="60" flex-gt-xs="20">
             <input ng-model="oneTimeDonation.amount" placeholder="$">
-        </md-input-container>
+        </md-input-container> 
+
         <!-- <span flex></span> -->
-        <div flex>
+
+            <div flex>
             <md-button class="md-raised md-warn" ng-click="UserService.confirmOneTimeDonate(nonprofitToDisplay.solo.product_id, oneTimeDonation.amount, $event)">Donate</md-button>
         </div>
     </div>
@@ -26,8 +77,6 @@
     <div layout>
         <span flex></span>
         <md-button ng-click="closeDialog()">Nevermind</md-button>
-    </div>
-
-
+    </div> 
 
 </md-dialog>
