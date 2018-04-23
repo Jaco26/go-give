@@ -9,6 +9,10 @@
                 <span flex></span>
             </div>
 
+            <div layout>
+                Your total impact: {{vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal / 100 | currency}}
+            </div>
+
             <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
                 <a href='/#!/nonprofit-profile/{{nonprofit.id}}'>
                     <img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt="">
