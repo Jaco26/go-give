@@ -1,12 +1,10 @@
 myApp.service('FeedService', ['$http', '$location', '$route', function($http, $location, $route) {
-
     let self = this;
 
     self.newFeedItem = {};
-    self.allFeedItems = {};
+    self.allFeedItems = {list: []};
     self.editFeedToggle = {show: false };
     self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz");
-
 
     self.addFeedItem = function(newFeed, newFeedImg){
         console.log('added to feed', newFeed, newFeedImg);
@@ -18,8 +16,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
         $http({
             method: 'POST',
             url: '/feed',
-            data: {newFeed :newFeed,
-                   newFeedImg: newFeedImg}
+            data: {newFeed :newFeed, newFeedImg: newFeedImg}
         }).then(function(response){
             console.log('success in feed item', response);
             self.newFeedItem.name = '';
@@ -30,8 +27,6 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
             self.newFeedItem.id = '';
             self.getFeedItems();
             $route.reload();
-
-
         }).catch(function(error){
             console.log('error in adding a feed',error)
         })

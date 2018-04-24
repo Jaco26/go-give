@@ -1,5 +1,5 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-<div ng-cloak class="content" layout-align="center center" layout="column" >
+<md-content ng-cloak class="content" layout-align="center center" layout="column" >
         <h1>Feed</h1>
         <div id="adminFeedForm" flex-gt-xs="30" layout="column" ng-cloak class="md-inline-form">
           <md-content md-theme="docs-dark" class="md-block" layout-padding>
@@ -64,10 +64,11 @@
               <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
             </md-card-content>
             <md-card-actions>
-              <md-button class="feedButton" ng-click="vm.displayFeedItem(item.id)">Edit This Feed Item</md-button>
+              <!-- <md-button class="feedButton" ng-click="vm.displayFeedItem(item.id)">Edit This Feed Item</md-button> -->
+              <md-button class="feedButton" ng-click="vm.showEditDialog($event, item.id)">Edit This Feed Item</md-button>
               <md-button class="feedButton" ng-click="vm.deleteFeedItem(item.id)">Delete This Feed Item</md-button>
             </md-card-actions>
           </md-card>
           <br>
         </div>
-</div>
+</md-content>

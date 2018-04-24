@@ -1,7 +1,9 @@
-myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService', '$window',
-        function(UserService, NonprofitService, FeedService, $window){
+myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService', '$window', '$mdDialog', '$scope',
+        function(UserService, NonprofitService, FeedService, $window, $mdDialog, $scope){
     const self = this;
-
+    
+    // This is the Id of the feed item to be edited upon calling self.showEditDialog
+    self.feedItemToBeUpdated;
 
     self.UserService = UserService;
     self.userObject = UserService.userObject;
@@ -12,7 +14,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.addNonprofit = NonprofitService.addNonprofit;
     self.getAllNonprofit = NonprofitService.getAllNonprofit;
     self.getAllNonprofit();
-    self.allNonprofits = NonprofitService.allNonprofits;
+    self.allNonprofits = NonprofitService.allNonprofits;    
 
     self.newFeedItem = FeedService.newFeedItem;
     self.addFeedItem = FeedService.addFeedItem;
@@ -50,6 +52,38 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
        });
 
 
+    self.showEditDialog = function ($event, feedItemId) {
+      self.idOfFeedItemToBeUpdated = feedItemId;
+      $mdDialog.show({
+        parent: angular.element(document.body),
+        clickOutsideToClose: true,
+        targetEvent: $event,
+        templateUrl: '../views/dialogs/edit.feed.item.html',
+        controller: feedEditController,
+      });
+     
+    }
+
+
+    function feedEditController($scope, FeedService) {
+      $scope.feedItemToBeUpdated = FeedService.allFeedItems.list.filter(item => item.id == self.idOfFeedItemToBeUpdated)[0];
+      $scope.feedItem = {
+        feed_date_posted: $scope.feedItemToBeUpdated.feed_date_posted,
+        feed_img_url: $scope.feedItemToBeUpdated.feed_img_url,
+        feed_text: $scope.feedItemToBeUpdated.feed_text,
+        feed_video_url: $scope.feedItemToBeUpdated.feed_video_url,
+        id: $scope.feedItemToBeUpdated.id,
+        logo_url: $scope.feedItemToBeUpdated.logo_url,
+        name: $scope.feedItemToBeUpdated.name,
+        nonprofit_id: $scope.feedItemToBeUpdated.nonprofit_id,
+      };
+      
+
+
+    }
+  
+  
+
 }])
 .config(function($sceDelegateProvider, $mdThemingProvider){
   $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://www.youtube.com/**']),
@@ -57,3 +91,17 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
   .primaryPalette('yellow')
   .dark();
 });
+
+
+
+
+
+
+
+
+// // mdDialogController for showEditDialog from above
+// myApp.controller('feedEditController', ['$scope', 'FeedService', 'feedItemId', function($scope, FeedService, feedItemId){
+//   let self = this;
+//   console.log(feedItemId);
+  
+// }]);
