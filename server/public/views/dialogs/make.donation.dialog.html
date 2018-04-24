@@ -1,0 +1,34 @@
+<md-dialog class="donation-dialog" layout="column" layout-padding>
+
+
+    <div layout>
+        <md-input-container md-no-float class="md-block title" flex-xs="60" flex-gt-xs="20">
+            <input ng-model="oneTimeDonation.amount" placeholder="$">
+        </md-input-container>
+
+        <!-- <span flex></span> -->
+
+            <div flex>
+            <md-button style="float: right" class="md-raised md-primary" ng-click="UserService.confirmOneTimeDonate(nonprofitToDisplay.solo.product_id, oneTimeDonation.amount, $event)">Donate</md-button>
+        </div>
+    </div>
+
+    <div layout>
+        <md-input-container flex>
+            <label>$/month</label>
+            <md-select name="type" ng-model="plan.id">
+                <md-option value=5>$5/month</md-option>
+                <md-option value=10>$10/month</md-option>
+                <md-option value=20>$20/month</md-option>
+            </md-select>
+        </md-input-container>
+        <div>
+            <md-button ng-click="UserService.confirmSubscribe(nonprofitToDisplay.solo, plan.id, $event)" class="md-raised md-primary">Subscribe</md-button>
+        </div>
+    </div>
+    <div layout>
+        <span flex></span>
+        <md-button ng-click="closeDialog()">Nevermind</md-button>
+    </div>
+
+</md-dialog>

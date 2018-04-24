@@ -1,8 +1,13 @@
-const myApp = angular.module('myApp', ['ngRoute', 'ngMaterial']);
+const myApp = angular.module('myApp', ['ngRoute', 'ngMaterial', 'ngSanitize']);
 
 //Routes//
-myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+myApp.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', function($routeProvider, $locationProvider, $mdThemingProvider) {
   console.log('myApp -- config');
+  $mdThemingProvider.theme('default')
+    .primaryPalette('blue')
+    .accentPalette('orange')
+    .backgroundPalette('grey');
+
   $routeProvider
   .when('/', {
     templateUrl: '/views/templates/login.html',
@@ -76,21 +81,21 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
         }
       }
   })
-  .when('/support', {
-    templateUrl: '/views/templates/user.support.html',
-    controller: 'UserStaticController as vm',
+  .when('/subscriptions', {
+    templateUrl: '/views/templates/user.subscriptions.html',
+    controller: 'UserSubscriptionsController as vm',
     resolve: {
         getuser : function(UserService){
           return UserService.getUser();
         }
       }
   })
-  .when('/admin-csv', {
-    templateUrl: '/views/templates/admin.csv.html',
-    controller: 'AdminController as vm',
+  .when('/support', {
+    templateUrl: '/views/templates/user.support.html',
+    controller: 'UserStaticController as vm',
     resolve: {
         getuser : function(UserService){
-          return UserService.getAdmin();
+          return UserService.getUser();
         }
       }
   })

@@ -2,7 +2,7 @@
     <div class="container nav">
         <ul>
             <li class="nav-link">
-                <md-menu>
+                <md-menu >
                     <md-button class="navBtn" ng-click="vm.UserService.openMenu($mdMenu, $event)">
                     <i class="material-icons">menu</i>
                     </md-button>
@@ -11,12 +11,11 @@
                         <md-button ng-href="#!feed">User View</md-button>
                     </md-menu-item>
                     <md-menu-item>
-                        <md-button ng-click="vm.fbLogout()">Log Out</md-button>
+                        <md-button ng-click="vm.UserService.confirmLogout()">Log Out</md-button>
                     </md-menu-item>
                     </md-menu-content>
                 </md-menu>
             </li>
-            <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-csv">CSV</md-button></li>
             <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-feed">Feed</md-button></li>
             <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-nonprofits">Nonprofits</md-button></li>
             <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-users">Users</md-button></li>

@@ -1,15 +1,16 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
 <div class="content">
-    <h1>Users</h1>
+    <h1>Users</h1><br><br>
 
 <div>
   <input type="text" placeholder="Search Username" ng-model="searchBox">
-
+  <br>
+  <br>
     <ul ng-repeat="user in vm.userArray.list | filter: searchBox">
-        <li>Username: {{user.first_name}} {{user.last_name}}</li>
-        <li><button ng-click="vm.deleteUser(user.id)">Delete User</button></li>
+        <li>
+          <img ng-src="https://graph.facebook.com/{{user.fb_id}}/picture"/>
+          {{user.first_name}} {{user.last_name}}<md-button ng-click="vm.deleteUser(user.id)">Delete User</md-button>
+        </li>
+
     </ul>
-
-
-
 </div>

@@ -1,4 +1,4 @@
-myApp.service('UserService', ['$http', '$location', '$window', '$route', function($http, $location, $window, $route) {
+myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDialog', '$timeout', function($http, $location, $window, $route, $mdDialog, $timeout) {
   let self = this;
 
   self.userArray = {};
@@ -11,8 +11,49 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
         chargesByOrg: [], // for onetime donations
       }
     },
-    fromOurDB: {}
+    fromOurDB: {
+      donationHistory: [],
+      totalGiven: 0,
+    }
   };
+
+
+  self.coinOpacity = 1
+  self.coinPaddingTop = '0px'
+  self.pageOpacity = 1;
+  self.logoOpacity = 0;
+  self.logoZIndex = -1;
+
+  self.animateCoin = function(){
+
+    self.coinOpacity -= .01;
+
+    self.coinPaddingTop.toString();
+    let removedPixelPadding = Number(self.coinPaddingTop.slice(0, self.coinPaddingTop.length - 2)) + 3;
+    self.coinPaddingTop = removedPixelPadding.toString() + 'px'
+  }
+
+  self.animateScreen = function(){
+    $timeout(function (){
+      if (self.coinOpacity > 0){
+        self.animateCoin();
+        self.animateScreen();
+      } else {
+        self.pageOpacity = 1;
+        self.logoOpacity = 0;
+        self.logoZIndex = -1;
+        self.coinOpacity = 1
+        self.coinPaddingTop = '0px'
+      }
+    }, 10)
+  }
+
+  self.animatePage = function(){
+    self.logoZIndex = 1000;
+    self.pageOpacity = .5;
+    self.logoOpacity = 1;
+    self.animateScreen();
+  }
 
   console.log(self.userObject, 'user in service');
 
@@ -38,7 +79,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
   self.getUser = function(){
     console.log('UserService -- getuser');
     console.log(self.userObject, 'userobj in get user');
-
+    self.currentPath = $location.path();
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getUser');
         if(response.data.name) {
@@ -55,7 +96,9 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
               self.getStripeCustomerInfo();
               // self.getUsersCharges();
               // self.getUsersInvoices();
-              self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+              // self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+              // JACOB TEST Init for getDonationHistoryFromOurDB
+              self.getDonationHistoryFromOurDB();
             }
         } else {
             console.log('UserService -- getuser -- failure');
@@ -87,7 +130,9 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', functio
           self.getStripeCustomerInfo();
           // self.getUsersCharges();
           // self.getUsersInvoices();
-          self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+          // self.getUsersOneTimeDonationsFromDB(self.userObject.fromOurDB.id);
+          // JACOB TEST Init for getDonationHistoryFromOurDB
+          self.getDonationHistoryFromOurDB();
         }
       } else {
         console.log('UserService -- getAdmin -- failure');
@@ -178,6 +223,19 @@ self.deleteUser = function (id){
   });
 }
 
+self.confirmLogout = function(ev) {
+  let confirm = $mdDialog.confirm()
+    .title('Are you sure you want to log out?')
+    .targetEvent(ev)
+    .ok('LOGOUT')
+    .cancel('CANCEL');
+  $mdDialog.show(confirm).then(function() {
+    self.fbLogout();
+  }, function() {
+    console.log('cancel logout');
+  });
+};
+
 self.fbLogout = function () {
   console.log('in logout');
   $http({
@@ -191,53 +249,121 @@ self.fbLogout = function () {
 //end logout
 
 ///// WE BROUGHT THIS IN FROM THE STRIPE.SERVICE
+self.requireStripeRegistrationAlert = function(ev){
+  let confirm = $mdDialog.confirm()
+        .title(`You must enter payment information to donate.`)
+        .targetEvent(ev)
+        .ok('ENTER INFO')
+        .cancel('CANCEL')
+        self.oneTimeDonation.amount = '';
 
-self.plan;
-self.subscribeToThisPlan = function (charity, planId) {
-  if(self.userObject.stripeCustomerInfo){
-    if (self.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0){
-      for (subscription of self.userObject.stripeCustomerInfo.customerObject.subscriptions.data){
-          if (charity.product_id == subscription.plan.product){
-              console.log('already subscribed to this charity');
-              //unsubscribe customer to old subscription
-              $http({
-                  method: 'POST',
-                  url: '/stripe/unsubscribe',
-                  data: {id: subscription.id}
-              }).then(response => {
-                  self.getStripeCustomerInfo();
-              }).catch(err => {
-                  console.log(err);
-              })
-          }
-      }
-      //subscribe customer to new subscription
-      let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
-      $http.post('/stripe/subscribe_to_plan', data)
-          .then(response => {
-              self.plan = ''
-              self.getStripeCustomerInfo();
-          }).catch(err => {
-              console.log(err);
-          });
+  $mdDialog.show(confirm).then(function() {
+    $location.path("/register");
+  }, function() {
+    console.log('cancel payment');
+  });
+}
+
+self.confirmSubscribe = function(nonprofit, planId, ev) {
+  if(self.userObject.fromOurDB.customer_id){
+    if(self.plan.id){
+      let confirm = $mdDialog.confirm()
+          .title(`Are you sure you want to subscribe to ${nonprofit.name}?`)
+          .textContent(`Your card will be charged $${planId}.00 immediately and billed monthly thereafter.`)
+          .targetEvent(ev)
+          .ok('SUBSCRIBE')
+          .cancel('CANCEL');
+      $mdDialog.show(confirm).then(function() {
+        self.animatePage();
+        self.subscribeToThisPlan(nonprofit, planId);
+      }, function() {
+        console.log('cancel subscribe');
+      });
+    } else {
+      self.requiredAmountAlert();
+    }
+  } else {
+    self.requireStripeRegistrationAlert();
+    self.plan.id = '';
+  }
+};
+
+self.plan = {};
+self.subscribeToThisPlan = function (nonprofit, planId) {
+  if (planId == 5){
+    planId = nonprofit.plan_id_five;
+  } else if (planId == 10){
+    planId = nonprofit.plan_id_ten;
+  } else if (planId == 20){
+    planId = nonprofit.plan_id_twenty;
+  }
+  if (self.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0){
+    for (subscription of self.userObject.stripeCustomerInfo.customerObject.subscriptions.data){
+        if (nonprofit.product_id == subscription.plan.product){
+            console.log('already subscribed to this nonprofit');
+            //unsubscribe customer to old subscription
+            $http({
+                method: 'POST',
+                url: '/stripe/unsubscribe',
+                data: {id: subscription.id}
+            }).then(response => {
+                self.getStripeCustomerInfo();
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    }
+    //subscribe customer to new subscription
+    let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
+    $http.post('/stripe/subscribe_to_plan', data)
+        .then(response => {
+            self.plan.id = undefined;
+            self.getStripeCustomerInfo();
+        }).catch(err => {
+            console.log(err);
+        });
   }
   else {
       let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
-              self.plan = ''
+              self.plan.id = undefined;
               self.getStripeCustomerInfo();
+              //animation//
           }).catch(err => {
               console.log(err);
           });
   }
-  } else {
-    alert('Please register for Stripe');
-  }
-
 }
 
-self.oneTimeAmount;
+self.confirmOneTimeDonate = function(product, amount, ev) {
+  if(self.userObject.fromOurDB.customer_id){
+    if(self.oneTimeDonation.amount){
+      if(self.oneTimeDonation.amount >= 5){
+        let confirm = $mdDialog.confirm()
+            .title(`Are you sure you want to donate?`)
+            .textContent(`Your card will be charged $${amount}.00 immediately.`)
+            .targetEvent(ev)
+            .ok('DONATE')
+            .cancel('CANCEL');
+        $mdDialog.show(confirm).then(function() {
+          self.animatePage();
+          self.oneTimeDonate(product, amount);
+        }, function() {
+          console.log('cancel subscribe');
+        });
+      } else {
+        self.requireGreaterThanFiveDollarsAlert();
+      }
+    } else {
+      self.requiredAmountAlert();
+    }
+  } else {
+    self.requireStripeRegistrationAlert();
+  }
+};
+
+self.oneTimeDonation = {};
 self.oneTimeDonate = function(product, amount) {
   let donation = {}
   donation.customer = self.userObject.fromOurDB.customer_id;
@@ -250,26 +376,55 @@ self.oneTimeDonate = function(product, amount) {
     })
     .then(response => {
         console.log(response);
-        self.oneTimeAmount = '';
+        self.oneTimeDonation.amount = '';
+        //animation//
     }).catch(err => {
         console.log(err);
     })
 }
 
-self.currentPath = $location.path();
 
-self.oneTimeDonations = [];
-self.getUsersOneTimeDonationsFromDB = function(id){
-  $http({
-    method: 'GET',
-    url:`/user/donations/${id}`
-  })
+
+
+self.requiredAmountAlert = function(ev){
+  $mdDialog.show(
+    $mdDialog.alert()
+        .parent(angular.element(document.querySelector('#popupContainer')))
+        .clickOutsideToClose(true)
+        .title('Please enter an amount.')
+        .ok('OK')
+        .targetEvent(ev)
+  );
+}
+
+self.requireGreaterThanFiveDollarsAlert = function(ev){
+  $mdDialog.show(
+    $mdDialog.alert()
+        .parent(angular.element(document.querySelector('#popupContainer')))
+        .clickOutsideToClose(true)
+        .title('One-time donations must be at least $5.00.')
+        .ok('OK')
+        .targetEvent(ev)
+  );
+}
+
+self.getDonationHistoryFromOurDB = function () {
+  $http.get(`/user/donation-history/${self.userObject.fromOurDB.id}`)
   .then(response => {
-    self.oneTimeDonations = response.data;
+    console.log(' ********** USERS DONATION HISTORY OBJECT:', response.data);
+    self.userObject.fromOurDB.donationHistory = response.data;
+    console.log('USER OBJECT AFTER getDonationHistoryFromOurDB', self.userObject);
+
   }).catch(err => {
     console.log(err);
-  })
+  });
 }
+
+$window.scrollTo(0, 0);
+
+// // JACOB TEST Init for getDonationHistoryFromOurDB
+// self.getDonationHistoryFromOurDB();
+
 
 
 
