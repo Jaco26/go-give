@@ -6,6 +6,8 @@ const router = express.Router();
 const userReports = require('../modules/stripe.user.reports');
 const insertIntoOnetime_Donations = require('../modules/save.onetime.donation');
 const updateSubscriptionStatus = require('../modules/ourDB.update.subscription.status');
+// FOR PRESENTATION TO IMEDIATLY INSERT NEW SUBSCRIPTION INVOICE TO DB
+const updateInvoices = require('../modules/update.invoices');
 
 console.log('in stripe router', process.env.STRIPE_SECRET_KEY);
 
@@ -139,6 +141,7 @@ router.post('/subscribe_to_plan', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         } else {
+            updateInvoices();
             res.send(subscription);
         }
     })
