@@ -79,4 +79,4 @@ CREATE TABLE feed
 );
 
 INSERT into nonprofit (name, picture_url, logo_url, description)
-VALUES ('cogiv', '../styles/assets/logo.png', '../styles/assets/logo_mobile.png', 'Site-wide information comes from here');
+VALUES ('cogiv', '../styles/assets/logo.png', '../styles/assets/logo_for_db_160.png', 'Site-wide information comes from here');
