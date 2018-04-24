@@ -462,3 +462,12 @@ md-content {
 .donation-dialog {
   z-index: 900;
 }
+
+md-content .md-button{
+  background-color: none;
+
+}
+
+md-content .md-button.feedButton:not([disabled]):hover{
+  background-color: grey;
+}

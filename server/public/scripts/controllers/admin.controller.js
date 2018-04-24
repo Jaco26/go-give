@@ -13,7 +13,6 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.getAllNonprofit = NonprofitService.getAllNonprofit;
     self.getAllNonprofit();
     self.allNonprofits = NonprofitService.allNonprofits;
-    console.log(self.allNonprofits, 'all nonprofits in admin controller');
 
     self.newFeedItem = FeedService.newFeedItem;
     self.addFeedItem = FeedService.addFeedItem;
@@ -53,8 +52,18 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
 
 }])
 .config(function($sceDelegateProvider, $mdThemingProvider){
+  let backgroundColor = $mdThemingProvider.extendPalette('red', {
+    '400': '#b7b7b7',
+    'contrastDefaultColor': 'dark'
+  });
   $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://www.youtube.com/**']),
+  $mdThemingProvider.definePalette('red', backgroundColor)
   $mdThemingProvider.theme('docs-dark', 'default')
-  .primaryPalette('yellow')
-  .dark();
+  .primaryPalette('blue')
+  .backgroundPalette('red', {
+    'default': '400'
+  })
+  .accentPalette('grey');
+
+
 });
