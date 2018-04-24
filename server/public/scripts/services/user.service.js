@@ -377,6 +377,7 @@ self.oneTimeDonate = function(product, amount) {
     .then(response => {
         console.log(response);
         self.oneTimeDonation.amount = '';
+        self.getDonationHistoryFromOurDB()
         //animation//
     }).catch(err => {
         console.log(err);

@@ -88,29 +88,9 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
     });
 }
 
-// // For each invoice passed in, check to see if its associated 
-// // Stripe subscription is still active or canceled  
-// function checkSubscriptionStatusOf(invoice, ourInvoiceIds) {
-//     stripe.subscriptions.retrieve(invoice.subscription, (err, subscription) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             let modifiedInvoice = { invoice: invoice, subscription_status: subscription.status };
-//             if(ourInvoiceIds.indexOf(modifiedInvoice.invoice.id) != -1){
-//                 updateOurDBWith(modifiedInvoice);
-//             } else {
-//                 insertIntoOurDB(modifiedInvoice);
-//             }
-//         }
-//     });
-// }
-
-
 
 // Update ourDB with information from the Stripe invoice passed in.
-function updateOurDBWith (invoice) {
-    // console.log('SUBSCRIPTION STATUS ***###***###***###***###', subscriptionStatus);
-    
+function updateOurDBWith (invoice) {    
     const sqlText = `UPDATE invoices SET
             amount_paid=$1,
             last_updated=$2,
@@ -138,7 +118,6 @@ function insertIntoOurDB(invoice) {
                 period_start,
                 period_end,
                 last_updated,
-                subscription_status,
                 user_id,
                 nonprofit_id
             )
