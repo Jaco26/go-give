@@ -1,30 +1,32 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
 
-<div layout flex >
-    <div style="padding-top: 20px;" flex>
-        <div class="content">
-            <div layout="row">
-                <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{vm.UserService.userObject.fromOurDB.fb_id}}/picture" />
-                <h1 style="margin-left: 15px;">{{vm.UserService.userObject.fromOurDB.name}}</h1>
-                <span flex></span>
+    <div layout flex>
+        <div flex>
+            <div class="profile_header">
+                <div layout="row">
+                    <div flex=20>
+                        <img style="border-radius: 50%; width: 75px;" ng-src="https://graph.facebook.com/{{vm.UserService.userObject.fromOurDB.fb_id}}/picture"/> 
+                    </div>
+                    <div flex style="padding-top: 10px; padding-left: 15px;">
+                        <h1>{{vm.UserService.userObject.fromOurDB.name}}</h1>
+                        Your total impact: <span style="font-weight: bolder;">{{vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal / 100 | currency}}</span>
+                    </div>
+                </div>
             </div>
-
-            <div layout>
-                Your total impact: {{vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal / 100 | currency}}
-            </div>
-
-            <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
-                <a href='/#!/nonprofit-profile/{{nonprofit.id}}'>
-                    <img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}">
-                </a>
-                <br>
-                <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
-                <br> You've donated {{nonprofit.sum / 100 | currency}}
-                <br>
-            </div>
+            <br>
+                <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
+                    <a href='/#!/nonprofit-profile/{{nonprofit.id}}'>
+                        <img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}">
+                    </a>
+                    <br>
+                    <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
+                    <br> Your impact: <span style="font-weight: bolder;">{{nonprofit.sum / 100 | currency}}</span> 
+                    <br>
+                    <br>
+                </div>
         </div>
     </div>
-</div>
+
 
 
 

@@ -416,6 +416,8 @@ self.getDonationHistoryFromOurDB = function () {
   });
 }
 
+$window.scrollTo(0, 0);
+
 // // JACOB TEST Init for getDonationHistoryFromOurDB
 // self.getDonationHistoryFromOurDB();
 

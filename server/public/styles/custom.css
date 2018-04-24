@@ -4,7 +4,7 @@ body {
 }
 
 main {
-  margin-top: 100px;
+  margin-top: 60px;
 }
 
 html {
@@ -20,6 +20,8 @@ html {
     position: fixed;
     top: 0;
     z-index: 100;
+    height: 60px;
+    padding-top: 0px;
 }
 
 ul {
@@ -38,7 +40,7 @@ li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 0px 22px;
     text-decoration: none;
 }
 
@@ -60,9 +62,14 @@ li a:hover {
 }
 
 .md-button.menu {
-  margin-top: 10px;
+  margin-top: 2px;
   color: #B7B7B7;
   min-width: 1%;
+}
+
+.md-button.menu:not([disabled]):hover {
+  background-color: transparent;
+  color: #4689DF;
 }
 
 .md-button.login_btn {
@@ -330,7 +337,7 @@ li a:hover {
 }
 
 .material-icons {
-    padding-top: 6px;
+    padding-top: 0px;
 }
 
 .creditCard {
@@ -341,15 +348,6 @@ li a:hover {
   height: 150px;
   background-color: #D8F1FE;
 }
-
-.content {
-  margin-top: 0px;
-  /* padding-top: 0px;
-  padding: 20px; */
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
 
 .nonprofit_image {
   width: 100%;
@@ -449,6 +447,7 @@ h3 {
 
 md-content {
   height: 100%;
+  background-color: white;
 }
 
 .animation_wrapper {
@@ -461,4 +460,21 @@ md-content {
 
 .donation-dialog {
   z-index: 900;
+}
+
+.content {
+  padding-top: 35px;
+  padding-left: 30px;
+}
+
+.header {
+  padding-top: 35px;
+  padding-left: 30px;
+  padding-bottom: 10px;
+}
+
+.profile_header {
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-bottom: 10px;
 }

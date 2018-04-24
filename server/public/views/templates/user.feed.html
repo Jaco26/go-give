@@ -1,10 +1,13 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
 
-<md-content>
 
+<md-content>
+  <div class="header">
+    <h1>Today</h1>
+  </div>
   <md-card ng-repeat="item in vm.allFeedItems.list">
     <md-card-header>
-      <!-- Chairty logo image as link to its profile page -->
+      <!-- Charity logo image as link to its profile page -->
         <md-card-avatar ng-hide="(item.name === 'cogiv')">
           <a href='/#!/nonprofit-profile/{{item.nonprofit_id}}'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
         </md-card-avatar>
@@ -12,8 +15,8 @@
           <a href='/#!/support'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
         </md-card-avatar>
     <!-- Charity Name as link to its profile page -->
-        <a ng-hide="(item.name === 'cogiv')" class="nonprofit_link" href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a>
-        <a ng-show="(item.name === 'cogiv')" class="nonprofit_link" href='/#!/support'>{{item.name}}</a>
+        <a style="padding-top: 5px;" ng-hide="(item.name === 'cogiv')" class="nonprofit_link" href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a>
+        <a style="padding-top: 5px;" ng-show="(item.name === 'cogiv')" class="nonprofit_link" href='/#!/support'>{{item.name}}</a>
 
     </md-card-header>
 
