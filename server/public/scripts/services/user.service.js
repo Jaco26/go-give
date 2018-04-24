@@ -307,18 +307,19 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
                 url: '/stripe/unsubscribe',
                 data: {id: subscription.id}
             }).then(response => {
-                self.getStripeCustomerInfo();
+              self.getStripeCustomerInfo();
             }).catch(err => {
                 console.log(err);
-            })
+            });
         }
     }
     //subscribe customer to new subscription
     let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
     $http.post('/stripe/subscribe_to_plan', data)
         .then(response => {
-            self.plan.id = undefined;
-            self.getStripeCustomerInfo();
+          self.plan.id = undefined;
+          self.getStripeCustomerInfo();
+          self.getDonationHistoryFromOurDB();
         }).catch(err => {
             console.log(err);
         });
@@ -327,9 +328,10 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
       let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
-              self.plan.id = undefined;
-              self.getStripeCustomerInfo();
-              //animation//
+            self.plan.id = undefined;
+            self.getStripeCustomerInfo();
+            self.getDonationHistoryFromOurDB();
+            //animation//
           }).catch(err => {
               console.log(err);
           });
@@ -377,7 +379,7 @@ self.oneTimeDonate = function(product, amount) {
     .then(response => {
         console.log(response);
         self.oneTimeDonation.amount = '';
-        self.getDonationHistoryFromOurDB()
+        self.getDonationHistoryFromOurDB();
         //animation//
     }).catch(err => {
         console.log(err);

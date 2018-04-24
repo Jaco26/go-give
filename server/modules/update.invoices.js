@@ -1,17 +1,20 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const pool = require('./pool');
 
+const updateSubscriptionStatus = require('./ourDB.update.subscription.status');
+
+
 // Call the first function in the function chain.
 // We module.exports this.
-function updateInvoicesTableInOurDB () {
-    getUsersFromOurDB()
+function updateInvoicesTableInOurDB (res) {
+    getUsersFromOurDB(res)
 }
 
 // Get all users from the 'users' column of our database (ourDB).
 // Loop through the response–an array of users–and if a 
 // given user's customer_id property evaluates to 'truthy',
 // get that user's customer information from Stripe
-function getUsersFromOurDB () {
+function getUsersFromOurDB (res) {
     const sqlText = `SELECT * FROM users ORDER BY id;`;
     pool.query(sqlText, [])
     .then(response => {
@@ -19,7 +22,7 @@ function getUsersFromOurDB () {
         // console.log('RESPONSE ------ ', response);
         response.rows.forEach(user => {
           if(user.customer_id){
-            getStripeCustomerInfoFor(user)
+            getStripeCustomerInfoFor(user, res)
           }
         });
     }).catch(err => {
@@ -31,7 +34,7 @@ function getUsersFromOurDB () {
 // Then, loop through the 'subscriptions.data' array in 
 // the response and for each subscription, get all invoices 
 // Stripe invoices associated with it
-function getStripeCustomerInfoFor (user) {
+function getStripeCustomerInfoFor (user, res) {
   console.log(user, '*******************user in getStripeCustomerInfoFor');
     stripe.customers.retrieve(user.customer_id,
         (err, customer) => {
@@ -39,7 +42,7 @@ function getStripeCustomerInfoFor (user) {
                 console.log(err);
             } else {
                 
-                customer.subscriptions.data.forEach(subscription => getInvoicesFor(subscription));
+                customer.subscriptions.data.forEach(subscription => getInvoicesFor(subscription, res));
             }
         });
 }
@@ -48,7 +51,7 @@ function getStripeCustomerInfoFor (user) {
 // Stripe invoices associated with it. Then get the invoice data already 
 // stored in ourDB and compare them with the invoice data returned 
 // from Stripe.
-function getInvoicesFor (subscription) {
+function getInvoicesFor (subscription, res) {
     stripe.invoices.list({
         subscription: subscription.id
     },
@@ -56,7 +59,7 @@ function getInvoicesFor (subscription) {
         if(err) {
             console.log(err);
         } else {
-            getInvoicesFromDBAndCheckAgainstThese(invoices.data)
+            getInvoicesFromDBAndCheckAgainstThese(invoices.data, res)
         }
     })
 }
@@ -66,7 +69,7 @@ function getInvoicesFor (subscription) {
 // we have stored in ourDB. If IDs match, update the invoice from ourDB
 // with the info from the Stripe invoice (this will keep us current with stripe).
 // If there is no match, insert the new Stripe invoice data into ourDB.
-function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
+function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices, res) {
     const sqlText = `SELECT * FROM invoices;`;
     pool.query(sqlText, [])
     .then(response => {
@@ -74,13 +77,13 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
             let ourInvoiceIds = response.rows.map(invoice => invoice.invoice_id);
             stripeInvoices.forEach(stripeInvoice => {
                 if (ourInvoiceIds.indexOf(stripeInvoice.id) != -1) {
-                    updateOurDBWith (stripeInvoice);
+                    updateOurDBWith (stripeInvoice, res);
                 } else {
-                    insertIntoOurDB (stripeInvoice)
+                    insertIntoOurDB (stripeInvoice, res)
                 }
             });
         } else {
-            stripeInvoices.forEach(stripeInvoice => insertIntoOurDB(stripeInvoice));
+            stripeInvoices.forEach(stripeInvoice => insertIntoOurDB(stripeInvoice, res));
         }
     })
     .catch(err => {
@@ -90,7 +93,7 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
 
 
 // Update ourDB with information from the Stripe invoice passed in.
-function updateOurDBWith (invoice) {    
+function updateOurDBWith (invoice, res) {    
     const sqlText = `UPDATE invoices SET
             amount_paid=$1,
             last_updated=$2,
@@ -99,6 +102,7 @@ function updateOurDBWith (invoice) {
     pool.query(sqlText, [invoice.amount_paid, new Date(), new Date(invoice.date * 1000), invoice.id])
     .then(response => {
         console.log('SUCCESS on UPDATE invoices');
+        getSubscriptionWith(invoice.subscription, res);
     })
     .catch(err => {
         console.log('ERROR on UPDATE invoices');
@@ -106,7 +110,7 @@ function updateOurDBWith (invoice) {
 }
 
 // Insert into ourDB, info from the Stripe invoice passed in
-function insertIntoOurDB(invoice) {
+function insertIntoOurDB(invoice, res) {
     const sqlText = `INSERT INTO invoices (
                 amount_paid,
                 invoice_id,
@@ -142,10 +146,27 @@ function insertIntoOurDB(invoice) {
     ])
     .then(response => {
         console.log('SUCCESS on INSERT INTO invoices');
+        getSubscriptionWith(invoice.subscription, res);
     })
     .catch(err => {
         console.log('ERROR on INSERT INTO invoices', err);
     });
 }
 
+
+function getSubscriptionWith (subscriptionId, res) {
+    stripe.subscriptions.retrieve(subscriptionId, 
+    (err, subscription) => {
+        if(err){
+            console.log(err);
+        } else {
+            updateSubscriptionStatus(subscription, res)
+        }
+    });
+}
+
 module.exports = updateInvoicesTableInOurDB;
+
+
+
+// Get the subscription object for each invoice inserted and update subscription status for it

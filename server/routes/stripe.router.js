@@ -141,10 +141,10 @@ router.post('/subscribe_to_plan', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         } else {
-            updateInvoices();
-            res.send(subscription);
+            updateInvoices(res);
+            // updateSubscriptionStatus(subscription, res); // needs to return somthing
         }
-    })
+    });
   } else {
     res.sendStatus(403);
   }
