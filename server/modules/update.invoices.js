@@ -8,7 +8,7 @@ function updateInvoicesTableInOurDB () {
 }
 
 // Get all users from the 'users' column of our database (ourDB).
-// Loop through the response–an array of users–and if a 
+// Loop through the response–an array of users–and if a
 // given user's customer_id property evaluates to 'truthy',
 // get that user's customer information from Stripe
 function getUsersFromOurDB () {
@@ -28,8 +28,8 @@ function getUsersFromOurDB () {
 }
 
 // For the ourDB user object passed in, ask for their Stripe customer info.
-// Then, loop through the 'subscriptions.data' array in 
-// the response and for each subscription, get all invoices 
+// Then, loop through the 'subscriptions.data' array in
+// the response and for each subscription, get all invoices
 // Stripe invoices associated with it
 function getStripeCustomerInfoFor (user) {
   console.log(user, '*******************user in getStripeCustomerInfoFor');
@@ -38,15 +38,15 @@ function getStripeCustomerInfoFor (user) {
             if(err){
                 console.log(err);
             } else {
-                
+
                 customer.subscriptions.data.forEach(subscription => getInvoicesFor(subscription));
             }
         });
 }
 
 // For the Stripe subscription object passed in, list all
-// Stripe invoices associated with it. Then get the invoice data already 
-// stored in ourDB and compare them with the invoice data returned 
+// Stripe invoices associated with it. Then get the invoice data already
+// stored in ourDB and compare them with the invoice data returned
 // from Stripe.
 function getInvoicesFor (subscription) {
     stripe.invoices.list({
@@ -82,8 +82,8 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
     });
 }
 
-// For each invoice passed in, check to see if its associated 
-// Stripe subscription is still active or canceled  
+// For each invoice passed in, check to see if its associated
+// Stripe subscription is still active or canceled
 function checkSubscriptionStatusOf(invoice, ourInvoiceIds) {
     stripe.subscriptions.retrieve(invoice.subscription, (err, subscription) => {
         if (err) {
@@ -106,7 +106,7 @@ function updateOurDBWith (modifiedInvoice) {
     let invoice = modifiedInvoice.invoice;
     let subscriptionStatus = modifiedInvoice.subscription_status;
     console.log('SUBSCRIPTION STATUS ***###***###***###***###', subscriptionStatus);
-    
+
     const sqlText = `UPDATE invoices SET
             amount_paid=$1,
             last_updated=$2,
