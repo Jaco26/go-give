@@ -17,6 +17,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
     }
   };
 
+
   self.coinOpacity = 1
   self.coinPaddingTop = '0px'
   self.pageOpacity = 1;
@@ -253,7 +254,8 @@ self.requireStripeRegistrationAlert = function(ev){
         .title(`You must enter payment information to donate.`)
         .targetEvent(ev)
         .ok('ENTER INFO')
-        .cancel('CANCEL');
+        .cancel('CANCEL')
+        self.oneTimeDonation.amount = '';
   $mdDialog.show(confirm).then(function() {
     $location.path("/register");
   }, function() {

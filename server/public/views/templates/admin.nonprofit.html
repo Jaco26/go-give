@@ -62,12 +62,14 @@
             <md-button ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
           </div>
         </form>
-      </md-content>
+      </md-content><br>
+      <input style="margin-left: 20px; text-align: center" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox">
+
     </div>
     <br>
     <br>
 
-  <input style="margin-left: 20px;" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox">
+  <!-- <input style="margin-left: 20px;" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox"> -->
 
   <div class="md-padding" ng-cloak  layout="row" layout-wrap>
       <!-- the ng-hide hides cogiv from the list of nonprofits, it needs to be isted as a nonprofit in order to post to the feed -->
