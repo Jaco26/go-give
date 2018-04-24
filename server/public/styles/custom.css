@@ -324,7 +324,7 @@ li a:hover {
 
 .form {
   padding: 30px;
-  width: 400px;
+  /* width: 400px; */
   background-color: lightgray;
   margin: 10px;
 }

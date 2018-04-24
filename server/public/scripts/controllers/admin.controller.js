@@ -52,7 +52,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
 
 }])
 .config(function($sceDelegateProvider, $mdThemingProvider){
-  let backgroundColor = $mdThemingProvider.extendPalette('red', {
+  let backgroundColor = $mdThemingProvider.extendPalette('grey', {
     '400': '#b7b7b7',
     'contrastDefaultColor': 'dark'
   });
@@ -60,7 +60,7 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
   $mdThemingProvider.definePalette('red', backgroundColor)
   $mdThemingProvider.theme('docs-dark', 'default')
   .primaryPalette('blue')
-  .backgroundPalette('red', {
+  .backgroundPalette('grey', {
     'default': '400'
   })
   .accentPalette('grey');
