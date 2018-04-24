@@ -1,6 +1,6 @@
 myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedService', '$window', '$mdDialog', '$scope',
         function(UserService, NonprofitService, FeedService, $window, $mdDialog, $scope){
-    const self = this;
+    let self = this;
     
     // This is the Id of the feed item to be edited upon calling self.showEditDialog
     self.feedItemToBeUpdated;
@@ -77,11 +77,8 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
         name: $scope.feedItemToBeUpdated.name,
         nonprofit_id: $scope.feedItemToBeUpdated.nonprofit_id,
       };
-      
-
 
     }
-  
   
 
 }])

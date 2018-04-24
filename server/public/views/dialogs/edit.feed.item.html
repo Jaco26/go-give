@@ -1,12 +1,12 @@
 <md-dialog layout-padding>
     <md-content layout-padding>
+    
+        <h2> {{feedItem.name}} </h2>
+        <div>
+            Date posted: {{feedItem.feed_date_posted | date: 'fullDate'}}
+        </div>
+
         <form id="feedItemEdit">
-            <div layout-gt-xs="row">
-                <md-input-container class="md-block">
-                    <label for="nonprofitName">Nonprofit name</label>
-                    <input type="text" id="nonprofitName" ng-model="feedItem.name">
-                </md-input-container>
-            </div>
             <div layout-gt-xs="row">
                 <div ng-if="feedItem.feed_img_url">
             <!-- If the feedItem.feed_img_url exists -->
@@ -14,27 +14,29 @@
                         <img style="max-width: 300px;" ng-src="{{feedItem.feed_img_url}}" alt="feed image">
                     </div>
                     <md-input-container class="md-block">
-                        <label for="imgLink">Paste a link from the internet</label>
-                        <input type="text" id="imgLink" ng-model="feedItem.feed_img_url">
+                        <label>Paste a link from the internet</label>
+                        <input type="text" ng-model="feedItem.feed_img_url">
                         <br>
                         Or upload a photo yourself
-                        <md-button id="btn" ng-click="feedPhotoUpload()">Upload</md-button>
-                    </md-input-container>
-                    <md-input-container class="block">
-                      
+                        <md-button ng-click="feedPhotoUpload()">Upload</md-button>
                     </md-input-container>
                 </div>
                 <div ng-if="!feedItem.feed_img_url">
-                    OH NO NO IMG
+                    <md-input-container>
+                        Upload a photo
+                        <md-button ng-click="feedPhotoUpload"></md-button>
+                    </md-input-container>
                 </div>
             <!-- If the feedItem.feed_img_url does NOT exist -->
 
                 
-                    
-                
             </div>
+        <!-- END row -->
+
         </form>
-      
-       
+    <!-- END form -->
+
     </md-content>
+<!-- END md-content -->
 </md-dialog>
+<!-- END md-dialog -->
