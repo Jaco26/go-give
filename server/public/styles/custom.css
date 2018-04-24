@@ -431,13 +431,13 @@ h3 {
   min-height: 1%;
 }
 
-#adminFeedForm{
+/* #adminFeedForm{
   margin-top: 100px;
 }
 
 #adminNonprofitForm{
   margin-top: 100px;
-}
+} */
 
 #dropMenu{
   z-index: 9000;
