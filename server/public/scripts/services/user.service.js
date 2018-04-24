@@ -256,6 +256,7 @@ self.requireStripeRegistrationAlert = function(ev){
         .ok('ENTER INFO')
         .cancel('CANCEL')
         self.oneTimeDonation.amount = '';
+
   $mdDialog.show(confirm).then(function() {
     $location.path("/register");
   }, function() {
@@ -283,6 +284,7 @@ self.confirmSubscribe = function(nonprofit, planId, ev) {
     }
   } else {
     self.requireStripeRegistrationAlert();
+    self.plan.id = '';
   }
 };
 
