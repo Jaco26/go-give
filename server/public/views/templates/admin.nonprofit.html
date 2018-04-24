@@ -1,8 +1,8 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-<div ng-cloak class="content">
-  <h1>Nonprofits</h1>
+<div ng-cloak class="content" layout-align="center center">
+    <div id="adminNonprofitForm"  layout-align="center center" flex layout="column"  ng-cloak class="md-inline-form">
+      <h1>Nonprofits</h1>
 
-    <div id="adminNonprofitForm" flex-gt-xs="40"layout="column" ng-cloak class="md-inline-form">
       <md-content md-theme="docs-dark" class="md-block" layout-padding>
         <form name="nonprofitForm">
 
@@ -31,16 +31,20 @@
           </md-input-container>
           <md-input-container class="md-block">
             <div>
-              <md-button class="md-warn" ng-click="vm.upload('photo')">Upload Photo</md-button>
+              <md-button class="md-primary feedButton" ng-click="vm.upload('photo')">Upload Photo</md-button>
             </div>
             <div>
-              <p>{{vm.newNonprofit.picture_url}}</p>
+              <img style="width: 100px;" ng-src="{{vm.newNonprofit.picture_url}}"/>
+            </div>
+          </md-input-container>
+
+            <md-input-container class="md-block">
+
+            <div>
+              <md-button class="md-primary feedButton" ng-click="vm.upload('logo')">Upload Logo</md-button>
             </div>
             <div>
-              <md-button class="md-warn" ng-click="vm.upload('logo')">Upload Logo</md-button>
-            </div>
-            <div>
-              <p>{{vm.newNonprofit.logo_url}}</p>
+              <img style="width: 100px;" ng-src="{{vm.newNonprofit.logo_url}}"/>
             </div>
           </md-input-container>
           <!-- <md-input-container class="md-block">
@@ -53,18 +57,20 @@
             </textarea>
           </md-input-container> -->
           <div>
-            <md-button ng-click="vm.addNonprofit(vm.newNonprofit)" >Submit Nonprofit</md-button>
+            <md-button class="md-primary feedButton" ng-click="vm.addNonprofit(vm.newNonprofit)" >Submit Nonprofit</md-button>
           </div>
           <div>
             <md-button ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
           </div>
         </form>
-      </md-content>
+      </md-content><br>
+      <input style="margin-left: 20px; text-align: center" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox">
+
     </div>
     <br>
     <br>
 
-  <input style="margin-left: 20px;" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox">
+  <!-- <input style="margin-left: 20px;" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox"> -->
 
   <div class="md-padding" ng-cloak  layout="row" layout-wrap>
       <!-- the ng-hide hides cogiv from the list of nonprofits, it needs to be isted as a nonprofit in order to post to the feed -->
