@@ -142,9 +142,9 @@ router.post('/subscribe_to_plan', (req, res) => {
             res.sendStatus(500);
         } else {
             updateInvoices();
-            res.send(subscription);
+            res.send(subscription);  
         }
-    })
+    });
   } else {
     res.sendStatus(403);
   }

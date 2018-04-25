@@ -38,7 +38,6 @@ function getStripeCustomerInfoFor (user) {
             if(err){
                 console.log(err);
             } else {
-                
                 customer.subscriptions.data.forEach(subscription => getInvoicesFor(subscription));
             }
         });
