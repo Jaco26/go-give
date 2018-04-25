@@ -455,6 +455,7 @@ h3 {
 .logo_coin {
   position: relative;
 }
+
 .postedDate {
   font-size: 10px;
   float: right;
@@ -520,4 +521,8 @@ md-content {
 
 .md-button.admin_btn:not([disabled]):hover {
   background-color: transparent;
+}
+
+.edit_btns{
+  float:right;
 }

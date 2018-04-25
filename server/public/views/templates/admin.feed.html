@@ -64,13 +64,11 @@
             <md-card-content>
               <p ng-bind-html="item.feed_text">{{item.feed_text}}</p>
               <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
+              <br>
             </md-card-content>
             <md-card-actions>
-              <md-button style="color: #4689DF;" class="md-primary feedButton admin_btn" ng-click="vm.displayFeedItem(item.id)"><i class="material-icons">mode edit</i></md-button>
-            </md-card-actions>
-            <md-card-actions>
-              <!-- <md-button class="feedButton" ng-click="vm.showEditDialog($event, item.id)">Edit This Feed Item</md-button> -->
-              <md-button class="md-warn feedButton admin_btn" ng-click="vm.deleteFeedItem(item.id)"><i class="material-icons">delete</i></md-button>
+                <md-button class="feedButton md-warn admin_btn" ng-click="vm.deleteFeedItem(item.id)"><i class="material-icons">delete</i></md-button>
+                <md-button class="feedButton md-primary admin_btn" ng-click="vm.displayFeedItem(item.id)"><i class="material-icons">edit</i></md-button>
             </md-card-actions>
           </md-card>
           <br>
