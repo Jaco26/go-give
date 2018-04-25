@@ -321,6 +321,8 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
           self.plan.id = undefined;
           self.getStripeCustomerInfo();
           self.getDonationHistoryFromOurDB();
+          $route.reload()
+
         }).catch(err => {
             console.log(err);
         });
@@ -332,6 +334,7 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
             self.plan.id = undefined;
             self.getStripeCustomerInfo();
             self.getDonationHistoryFromOurDB();
+            $route.reload()
             //animation//
           }).catch(err => {
               console.log(err);
