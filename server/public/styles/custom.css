@@ -53,6 +53,11 @@ li a:hover {
     margin: 20px;
 }
 
+.nav-link_admin {
+  margin-top: 10px;
+  margin-left: 25px;
+}
+
 .md-button.navBtn {
     color: #B7B7B7;
     font-size: 16px;
@@ -62,6 +67,17 @@ li a:hover {
 .md-button.navBtn:not([disabled]):hover {
   background-color: transparent;
   color: #4689DF;
+}
+
+.md-button.navBtn_visiting {
+  color: #4689DF;
+  font-size: 16px;
+  letter-spacing: 2.5px;
+}
+
+.md-button.navBtn_visiting:not([disabled]):hover {
+background-color: transparent;
+color: #4689DF;
 }
 
 .md-button.menu {
@@ -77,6 +93,7 @@ li a:hover {
 
 .md-button.admin_menu {
   margin-top: 12px;
+  padding-right: 5px;
   color: #B7B7B7;
   min-width: 1%;
 }
@@ -391,6 +408,7 @@ h1 {
   font-size: 130%;
   text-decoration: none;
   font-weight: bolder;
+  color: black;
 }
 
 .nonprofit_link:visited {
@@ -495,11 +513,7 @@ md-content {
   padding-left: 30px;
   padding-bottom: 10px;
 }
-md-content .md-button{
-  background-color: none;
 
-}
-
-md-content .md-button.feedButton:not([disabled]):hover{
-  background-color: grey;
+.admin_form {
+  background-color: #ebe9e9
 }
