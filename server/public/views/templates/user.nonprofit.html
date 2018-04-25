@@ -20,24 +20,28 @@
                     <md-card-content>
                         <div layout="row">
                             <div flex-offset="25">
-                                Total impact:
-                                <span style="font-weight: bolder;" ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
-                                    {{nonprofit.sum / 100 | currency}}
-                                </span>
-                                <br>
-                                Your impact:
-                                <span style="font-weight: bolder;" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
-                                    {{nonprofit.sum / 100 | currency}}
-                                </span>
-                                <br>
-                                You are giving:
-                                <span ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
-                                    <span ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
-                                        <span style="font-weight: bolder;" ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
-                                            {{subscription.plan.amount / 100 | currency}}/month
-                                        </span>
+                                <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
+                                    Total impact:
+                                    <span style="font-weight: bolder;">
+                                        {{nonprofit.sum / 100 | currency}}
                                     </span>
-                                </span>
+                                </div>
+                                <div ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
+                                    Your impact:
+                                    <span style="font-weight: bolder;">
+                                        {{nonprofit.sum / 100 | currency}}
+                                    </span>
+                                </div>
+                                <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
+                                    <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
+                                        <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
+                                            You are giving:
+                                            <span style="font-weight: bolder;">
+                                                {{subscription.plan.amount / 100 | currency}}/month
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <p layout-padding ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
