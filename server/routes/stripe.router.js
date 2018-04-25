@@ -6,6 +6,8 @@ const router = express.Router();
 const userReports = require('../modules/stripe.user.reports');
 const insertIntoOnetime_Donations = require('../modules/save.onetime.donation');
 const updateSubscriptionStatus = require('../modules/ourDB.update.subscription.status');
+// FOR PRESENTATION TO IMEDIATLY INSERT NEW SUBSCRIPTION INVOICE TO DB
+const updateInvoices = require('../modules/update.invoices');
 
 console.log('in stripe router', process.env.STRIPE_SECRET_KEY);
 
@@ -139,9 +141,10 @@ router.post('/subscribe_to_plan', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         } else {
-            res.send(subscription);
+            updateInvoices(res);
+            // res.send(subscription);  
         }
-    })
+    });
   } else {
     res.sendStatus(403);
   }
@@ -190,7 +193,6 @@ router.post('/oneTimeDonate', (req, res) => {
             console.log(err);
         } else {
             insertIntoOnetime_Donations(charge, res)
-            // res.sendStatus(200);
         }
     });
   } else {
@@ -244,7 +246,6 @@ router.post('/unsubscribe', (req, res) => {
             console.log(err);
             res.sendStatus(500)
         } else {
-            // console.log('CONFIRMATION ******* CONFIRMATION SUB DEL *******', confirmation);
             updateSubscriptionStatus(confirmation, res);
         }
     });

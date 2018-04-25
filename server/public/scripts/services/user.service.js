@@ -17,7 +17,6 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
     }
   };
 
-
   self.coinOpacity = 1
   self.coinPaddingTop = '0px'
   self.pageOpacity = 1;
@@ -64,7 +63,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
       console.log(response, 'response in getUser');
         if(response.data.name) {
             if(response.data.role === 1) {
-              $location.path("/admin");
+              $location.path("/admin-feed");
             } else {
               $location.path("/feed");
             }
@@ -80,6 +79,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
     console.log('UserService -- getuser');
     console.log(self.userObject, 'userobj in get user');
     self.currentPath = $location.path();
+    $window.scrollTo(0, 0);
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getUser');
         if(response.data.name) {
@@ -114,7 +114,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
 
   self.getAdmin = function() {
     console.log('UserService -- getAdmin');
-
+    self.currentPath = $location.path();
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getAdmin');
       if(response.data.role == 1) {
@@ -307,18 +307,20 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
                 url: '/stripe/unsubscribe',
                 data: {id: subscription.id}
             }).then(response => {
-                self.getStripeCustomerInfo();
+              self.getStripeCustomerInfo();
             }).catch(err => {
                 console.log(err);
-            })
+            });
         }
     }
     //subscribe customer to new subscription
     let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
     $http.post('/stripe/subscribe_to_plan', data)
         .then(response => {
-            self.plan.id = undefined;
-            self.getStripeCustomerInfo();
+          self.plan.id = undefined;
+          self.getStripeCustomerInfo();
+          self.getDonationHistoryFromOurDB();
+
         }).catch(err => {
             console.log(err);
         });
@@ -327,9 +329,10 @@ self.subscribeToThisPlan = function (nonprofit, planId) {
       let data = { planId: planId, customerId: self.userObject.fromOurDB.customer_id };
       $http.post('/stripe/subscribe_to_plan', data)
           .then(response => {
-              self.plan.id = undefined;
-              self.getStripeCustomerInfo();
-              //animation//
+            self.plan.id = undefined;
+            self.getStripeCustomerInfo();
+            self.getDonationHistoryFromOurDB();
+            //animation//
           }).catch(err => {
               console.log(err);
           });
@@ -377,6 +380,7 @@ self.oneTimeDonate = function(product, amount) {
     .then(response => {
         console.log(response);
         self.oneTimeDonation.amount = '';
+        self.getDonationHistoryFromOurDB();
         //animation//
     }).catch(err => {
         console.log(err);
@@ -420,7 +424,7 @@ self.getDonationHistoryFromOurDB = function () {
   });
 }
 
-$window.scrollTo(0, 0);
+
 
 // // JACOB TEST Init for getDonationHistoryFromOurDB
 // self.getDonationHistoryFromOurDB();

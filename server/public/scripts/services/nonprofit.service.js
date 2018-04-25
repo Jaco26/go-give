@@ -38,6 +38,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       }).then(function(response){
         self.allNonprofits.list = response.data.rows;
         self.getReceivedDonationsForNonprofits()
+        console.log(self.allNonprofits.list, 'ALL NONPROFITS!!!');
         // self.getTopDonors();
       }).catch(function(error){
         console.log('error in get all', error);
@@ -134,7 +135,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
           console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
           self.nonprofitToDisplay.solo = self.soloNonprofit;
           console.log('self.nonprofitToDisplay##@@@###@@@###', self.nonprofitToDisplay);
-          
+
         })
     }
 
