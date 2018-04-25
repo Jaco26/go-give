@@ -15,14 +15,11 @@
                     </md-select>
                 </md-input-container>
               </div>
-              <div layout-gt-xs="row">
-                <md-input-container class="md-block">
+              <md-input-container class="md-block">
                   <label>Whats going on?</label>
                   <textarea ng-model="vm.newFeedItem.feed_text" rows="3" md-select-on-focus>
                   </textarea>
                 </md-input-container>
-              </div>
-
               <md-input-container class="md-block">
                 <label>Place Video URL here</label>
                 <input type="text" ng-model="vm.newFeedItem.feed_video">
@@ -69,9 +66,11 @@
               <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
             </md-card-content>
             <md-card-actions>
-              <md-button class="feedButton" ng-click="vm.displayFeedItem(item.id)">Edit This Feed Item</md-button>
+              <md-button class="md-primary feedButton admin_btn" ng-click="vm.displayFeedItem(item.id)"><i class="material-icons">mode edit</i></md-button>
+            </md-card-actions>
+            <md-card-actions>
               <!-- <md-button class="feedButton" ng-click="vm.showEditDialog($event, item.id)">Edit This Feed Item</md-button> -->
-              <md-button class="feedButton" ng-click="vm.deleteFeedItem(item.id)">Delete This Feed Item</md-button>
+              <md-button class="md-warn feedButton admin_btn" ng-click="vm.deleteFeedItem(item.id)"><i class="material-icons">delete</i></md-button>
             </md-card-actions>
           </md-card>
           <br>
