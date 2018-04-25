@@ -462,7 +462,7 @@ h3 {
 }
 
 .feedButton{
-  font-size: 10px;
+  /* font-size: 10px; */
   float: right;
   min-width: 1%;
   min-height: 1%;

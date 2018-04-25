@@ -16,14 +16,11 @@
                 </div>
             </div>
             <div class="content" ng-hide="vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal > 0">
-                <h4>Welcome to cogiv, {{vm.UserService.userObject.fromOurDB.first_name}}!</h4>
-                Head over to the <a class="discover_link" ng-href="#!discover">Discover</a> page to find and donate to nonprofits in your area.
+                <h4>You have not yet donated to any nonprofits. <a class="discover_link" ng-href="#!discover">Click here</a> to discover nonprofits in your area.</h4>
             </div>
             <br>
                 <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
-                    <a href='/#!/nonprofit-profile/{{nonprofit.id}}'>
-                        <img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}">
-                    </a>
+                    <a href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}"/></a>
                     <br>
                     <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
                     <br> 
