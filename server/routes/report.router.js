@@ -7,7 +7,7 @@ const updateInvoices = require('../modules/update.invoices');
 console.log('in report router');
 
 // Execute the code block once every HOUR
-cron.schedule('18 * * * *', function () {
+cron.schedule('01 * * * *', function () {
     console.log('NODE-CRONNING!!', new Date().toLocaleTimeString());
     updateInvoices();
 });

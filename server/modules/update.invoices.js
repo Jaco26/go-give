@@ -72,7 +72,13 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
     .then(response => {
         if(response.rows[0]){
             let ourInvoiceIds = response.rows.map(invoice => invoice.invoice_id);
-            stripeInvoices.forEach(stripeInvoice => checkSubscriptionStatusOf (stripeInvoice, ourInvoiceIds));
+            stripeInvoices.forEach(stripeInvoice => {
+                if (ourInvoiceIds.indexOf(stripeInvoice.id) != -1) {
+                    updateOurDBWith (stripeInvoice);
+                } else {
+                    insertIntoOurDB (stripeInvoice)
+                }
+            });
         } else {
             stripeInvoices.forEach(stripeInvoice => insertIntoOurDB(stripeInvoice));
         }
@@ -82,38 +88,35 @@ function getInvoicesFromDBAndCheckAgainstThese (stripeInvoices) {
     });
 }
 
-// For each invoice passed in, check to see if its associated
-// Stripe subscription is still active or canceled
-function checkSubscriptionStatusOf(invoice, ourInvoiceIds) {
-    stripe.subscriptions.retrieve(invoice.subscription, (err, subscription) => {
-        if (err) {
-            console.log(err);
-        } else {
-            let modifiedInvoice = { invoice: invoice, subscription_status: subscription.status };
-            if(ourInvoiceIds.indexOf(modifiedInvoice.invoice.id) != -1){
-                updateOurDBWith(modifiedInvoice);
-            } else {
-                insertIntoOurDB(modifiedInvoice);
-            }
-        }
-    });
-}
+// // For each invoice passed in, check to see if its associated
+// // Stripe subscription is still active or canceled
+// function checkSubscriptionStatusOf(invoice, ourInvoiceIds) {
+//     stripe.subscriptions.retrieve(invoice.subscription, (err, subscription) => {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             let modifiedInvoice = { invoice: invoice, subscription_status: subscription.status };
+//             if(ourInvoiceIds.indexOf(modifiedInvoice.invoice.id) != -1){
+//                 updateOurDBWith(modifiedInvoice);
+//             } else {
+//                 insertIntoOurDB(modifiedInvoice);
+//             }
+//         }
+//     });
+// }
 
 
 
 // Update ourDB with information from the Stripe invoice passed in.
-function updateOurDBWith (modifiedInvoice) {
-    let invoice = modifiedInvoice.invoice;
-    let subscriptionStatus = modifiedInvoice.subscription_status;
-    console.log('SUBSCRIPTION STATUS ***###***###***###***###', subscriptionStatus);
+function updateOurDBWith (invoice) {
+    // console.log('SUBSCRIPTION STATUS ***###***###***###***###', subscriptionStatus);
 
     const sqlText = `UPDATE invoices SET
             amount_paid=$1,
             last_updated=$2,
-            date=$3,
-            subscription_status=$4
-        WHERE invoice_id=$5;`;
-    pool.query(sqlText, [invoice.amount_paid, new Date(), new Date(invoice.date * 1000), subscriptionStatus, invoice.id])
+            date=$3
+        WHERE invoice_id=$4;`;
+    pool.query(sqlText, [invoice.amount_paid, new Date(), new Date(invoice.date * 1000), invoice.id])
     .then(response => {
         console.log('SUCCESS on UPDATE invoices');
     })
@@ -123,9 +126,7 @@ function updateOurDBWith (modifiedInvoice) {
 }
 
 // Insert into ourDB, info from the Stripe invoice passed in
-function insertIntoOurDB(modifiedInvoice) {
-    let invoice = modifiedInvoice.invoice;
-    let subscriptionStatus = modifiedInvoice.subscription_status;
+function insertIntoOurDB(invoice) {
     const sqlText = `INSERT INTO invoices (
                 amount_paid,
                 invoice_id,
@@ -137,14 +138,13 @@ function insertIntoOurDB(modifiedInvoice) {
                 period_start,
                 period_end,
                 last_updated,
-                subscription_status,
                 user_id,
                 nonprofit_id
             )
             VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11,
-                (SELECT id FROM users WHERE customer_id=$12),
-                (SELECT id FROM nonprofit WHERE product_id=$13)
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
+                (SELECT id FROM users WHERE customer_id=$11),
+                (SELECT id FROM nonprofit WHERE product_id=$12)
             );`;
     pool.query(sqlText, [
         invoice.amount_paid,
@@ -157,7 +157,6 @@ function insertIntoOurDB(modifiedInvoice) {
         new Date(invoice.lines.data[0].period.start * 1000),
         new Date(invoice.lines.data[0].period.end * 1000),
         new Date(),
-        subscriptionStatus,
         invoice.customer,
         invoice.lines.data[0].plan.product
     ])
