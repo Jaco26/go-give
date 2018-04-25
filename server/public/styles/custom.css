@@ -518,3 +518,6 @@ md-content {
   background-color: #ebe9e9
 }
 
+.md-button.admin_btn:not([disabled]):hover {
+  background-color: transparent;
+}
