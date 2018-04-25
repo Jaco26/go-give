@@ -11,7 +11,7 @@ function updateInvoicesTableInOurDB (res) {
 }
 
 // Get all users from the 'users' column of our database (ourDB).
-// Loop through the response–an array of users–and if a 
+// Loop through the response–an array of users–and if a
 // given user's customer_id property evaluates to 'truthy',
 // get that user's customer information from Stripe
 function getUsersFromOurDB (res) {
@@ -31,8 +31,8 @@ function getUsersFromOurDB (res) {
 }
 
 // For the ourDB user object passed in, ask for their Stripe customer info.
-// Then, loop through the 'subscriptions.data' array in 
-// the response and for each subscription, get all invoices 
+// Then, loop through the 'subscriptions.data' array in
+// the response and for each subscription, get all invoices
 // Stripe invoices associated with it
 function getStripeCustomerInfoFor (user, res) {
   console.log(user, '*******************user in getStripeCustomerInfoFor');
@@ -47,8 +47,8 @@ function getStripeCustomerInfoFor (user, res) {
 }
 
 // For the Stripe subscription object passed in, list all
-// Stripe invoices associated with it. Then get the invoice data already 
-// stored in ourDB and compare them with the invoice data returned 
+// Stripe invoices associated with it. Then get the invoice data already
+// stored in ourDB and compare them with the invoice data returned
 // from Stripe.
 function getInvoicesFor (subscription, res) {
     stripe.invoices.list({
@@ -125,7 +125,7 @@ function insertIntoOurDB(invoice, res) {
                 nonprofit_id
             )
             VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10,
                 (SELECT id FROM users WHERE customer_id=$11),
                 (SELECT id FROM nonprofit WHERE product_id=$12)
             );`;
@@ -145,7 +145,7 @@ function insertIntoOurDB(invoice, res) {
     ])
     .then(response => {
         console.log('SUCCESS on INSERT INTO invoices');
-        getSubscriptionWith(invoice.subscription, res);
+        // getSubscriptionWith(invoice.subscription, res);
     })
     .catch(err => {
         console.log('ERROR on INSERT INTO invoices', err);

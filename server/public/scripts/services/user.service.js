@@ -80,6 +80,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
     console.log('UserService -- getuser');
     console.log(self.userObject, 'userobj in get user');
     self.currentPath = $location.path();
+    $window.scrollTo(0, 0);
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getUser');
         if(response.data.name) {
@@ -423,7 +424,7 @@ self.getDonationHistoryFromOurDB = function () {
   });
 }
 
-$window.scrollTo(0, 0);
+
 
 // // JACOB TEST Init for getDonationHistoryFromOurDB
 // self.getDonationHistoryFromOurDB();

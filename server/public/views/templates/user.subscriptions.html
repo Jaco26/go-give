@@ -8,7 +8,11 @@
     <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0" ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
         <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.list">
            <div class="nonprofit_link" ng-if="nonprofit.product_id == subscription.plan.product">
-                {{nonprofit.name}}
+             <a style="padding-top: 5px;" href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_logo" ng-src="{{nonprofit.logo_url}}" alt=""></a>
+
+             <a style="padding-top: 5px;" class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
+
+
            </div>
         </div>
         {{subscription.plan.amount / 100 | currency}}/month
