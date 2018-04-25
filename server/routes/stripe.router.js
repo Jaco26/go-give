@@ -141,10 +141,10 @@ router.post('/subscribe_to_plan', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         } else {
-            updateInvoices();
-            res.send(subscription);
+            updateInvoices(res);
+            // res.send(subscription);  
         }
-    })
+    });
   } else {
     res.sendStatus(403);
   }
@@ -193,7 +193,6 @@ router.post('/oneTimeDonate', (req, res) => {
             console.log(err);
         } else {
             insertIntoOnetime_Donations(charge, res)
-            // res.sendStatus(200);
         }
     });
   } else {
@@ -247,7 +246,6 @@ router.post('/unsubscribe', (req, res) => {
             console.log(err);
             res.sendStatus(500)
         } else {
-            // console.log('CONFIRMATION ******* CONFIRMATION SUB DEL *******', confirmation);
             updateSubscriptionStatus(confirmation, res);
         }
     });
