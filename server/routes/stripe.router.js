@@ -141,8 +141,8 @@ router.post('/subscribe_to_plan', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         } else {
-            updateInvoices();
-            res.send(subscription);  
+            updateInvoices(res);
+            // res.send(subscription);  
         }
     });
   } else {

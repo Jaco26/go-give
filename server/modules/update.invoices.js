@@ -7,6 +7,8 @@ const updateSubscriptionStatus = require('./ourDB.update.subscription.status');
 // Call the first function in the function chain.
 // We module.exports this.
 function updateInvoicesTableInOurDB (res) {
+    // console.log('########$$$$$$$$$@@@@@@@@ res', res);
+    
     getUsersFromOurDB(res)
 }
 
@@ -41,7 +43,7 @@ function getStripeCustomerInfoFor (user, res) {
             if(err){
                 console.log(err);
             } else {
-                customer.subscriptions.data.forEach(subscription => getInvoicesFor(subscription));
+                customer.subscriptions.data.forEach(subscription => getInvoicesFor(subscription, res));
             }
         });
 }
@@ -145,7 +147,7 @@ function insertIntoOurDB(invoice, res) {
     ])
     .then(response => {
         console.log('SUCCESS on INSERT INTO invoices');
-        // getSubscriptionWith(invoice.subscription, res);
+        getSubscriptionWith(invoice.subscription, res);
     })
     .catch(err => {
         console.log('ERROR on INSERT INTO invoices', err);
