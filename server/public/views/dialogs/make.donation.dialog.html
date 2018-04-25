@@ -9,7 +9,7 @@
         <!-- <span flex></span> -->
 
             <div flex>
-            <md-button style="float: right" class="md-raised md-primary" ng-click="UserService.confirmOneTimeDonate(nonprofitToDisplay.solo.product_id, oneTimeDonation.amount, $event)">Donate</md-button>
+            <md-button style="float: right; background-color: #4689DF;" class="md-raised md-primary" ng-click="UserService.confirmOneTimeDonate(nonprofitToDisplay.solo.product_id, oneTimeDonation.amount, $event)">Donate</md-button>
         </div>
     </div>
 
@@ -23,12 +23,12 @@
             </md-select>
         </md-input-container>
         <div>
-            <md-button ng-click="UserService.confirmSubscribe(nonprofitToDisplay.solo, plan.id, $event)" class="md-raised md-primary">Subscribe</md-button>
+            <md-button style="background-color: #4689DF;" ng-click="UserService.confirmSubscribe(nonprofitToDisplay.solo, plan.id, $event)" class="md-raised md-primary">Subscribe</md-button>
         </div>
     </div>
     <div layout>
         <span flex></span>
-        <md-button class="md-raised md-warn" ng-click="closeDialog()">Nevermind</md-button>
+        <md-button class="md-raised" ng-click="closeDialog()">Nevermind</md-button>
     </div>
 
 </md-dialog>

@@ -33,7 +33,7 @@
           </md-input-container>
           <md-input-container class="md-block">
             <div>
-              <md-button class="md-primary md-raised feedButton" ng-click="vm.upload('logo')">Upload Logo</md-button>
+              <md-button style="background-color: #4689DF;" class="md-primary md-raised feedButton" ng-click="vm.upload('logo')">Upload Logo</md-button>
             </div>
             <div>
               <img style="width: 100px;" ng-src="{{vm.newNonprofit.logo_url}}"/>
@@ -41,7 +41,7 @@
           </md-input-container>
           <md-input-container class="md-block">
             <div>
-              <md-button class="md-primary md-raised feedButton" ng-click="vm.upload('photo')">Upload Photo</md-button>
+              <md-button style="background-color: #4689DF;" class="md-primary md-raised feedButton" ng-click="vm.upload('photo')">Upload Photo</md-button>
             </div>
             <div>
               <img style="width: 100px;" ng-src="{{vm.newNonprofit.picture_url}}"/>
@@ -57,10 +57,10 @@
             </textarea>
           </md-input-container> -->
           <div>
-            <md-button class="md-primary md-raised feedButton" ng-hide="vm.editNonprofitToggle.show" ng-click="vm.addNonprofit(vm.newNonprofit)">Add Nonprofit</md-button>
+            <md-button style="background-color: #00C853;" class="md-primary md-raised feedButton" ng-hide="vm.editNonprofitToggle.show" ng-click="vm.addNonprofit(vm.newNonprofit)">Add Nonprofit</md-button>
           </div>
           <div>
-            <md-button class="md-primary md-raised feedButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
+            <md-button style="background-color: #00C853;" class="md-primary md-raised feedButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
           </div>
         </form>
       </md-content><br>
@@ -97,7 +97,7 @@
       </md-card-title>
 
       <md-card-actions>
-        <md-button class="feedButton md-primary admin_btn" ng-click="vm.editNonprofit(nonprofit.id)"><i class="material-icons">mode edit</i></md-button>
+        <md-button style="color: #4689DF;" class="feedButton md-primary admin_btn" ng-click="vm.editNonprofit(nonprofit.id)"><i class="material-icons">mode edit</i></md-button>
       </md-card-actions>
       <md-card-actions>
         <md-button class="feedButton md-warn admin_btn" ng-click="vm.deleteNonprofit(nonprofit.id)"><i class="material-icons">delete</i></md-button>

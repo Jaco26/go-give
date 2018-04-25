@@ -29,12 +29,12 @@
               </div>
               <md-input-container class="md-block">
                 <div layout="row" layout-align="end">
-                  <md-button class="md-primary md-raised feedButton" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
+                  <md-button style="background-color: #4689DF;" class="md-primary md-raised feedButton" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
                 </div>
                 <br>
-                  <md-button class="md-primary md-raised feedButton" ng-hide="vm.editFeedToggle.show" ng-click="vm.addFeedItem(vm.newFeedItem, vm.feedImgUpload)">Add To Feed</md-button>
-                  <md-button class="md-primary md-raised feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Send Edits</md-button>
-                  <md-button class="md-primary md-raised feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.cancelEditFeed()">Cancel Edit</md-button>
+                  <md-button style="background-color: #00C853;" class="md-primary md-raised feedButton" ng-hide="vm.editFeedToggle.show" ng-click="vm.addFeedItem(vm.newFeedItem, vm.feedImgUpload)">Add To Feed</md-button>
+                  <md-button style="background-color: #00C853;" class="md-primary md-raised feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Send Edits</md-button>
+                  <md-button class="md-warn md-raised feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.cancelEditFeed()">Cancel Edit</md-button>
                 </div>
               </md-input-container>
             </form>
@@ -66,7 +66,7 @@
               <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
             </md-card-content>
             <md-card-actions>
-              <md-button class="md-primary feedButton admin_btn" ng-click="vm.displayFeedItem(item.id)"><i class="material-icons">mode edit</i></md-button>
+              <md-button style="color: #4689DF;" class="md-primary feedButton admin_btn" ng-click="vm.displayFeedItem(item.id)"><i class="material-icons">mode edit</i></md-button>
             </md-card-actions>
             <md-card-actions>
               <!-- <md-button class="feedButton" ng-click="vm.showEditDialog($event, item.id)">Edit This Feed Item</md-button> -->
