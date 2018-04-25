@@ -10,7 +10,7 @@
         <ul ng-repeat="user in vm.userArray.list | filter: searchBox">
             <li>
             <img ng-src="https://graph.facebook.com/{{user.fb_id}}/picture"/>
-            {{user.first_name}} {{user.last_name}}<md-button class="md-warn" ng-click="vm.deleteUser(user.id)">Delete User</md-button>
+            {{user.first_name}} {{user.last_name}}<md-button class="md-warn" ng-click="vm.deleteUser(user.id)"><i class="material-icons">delete</i></md-button>
             </li>
 
         </ul>

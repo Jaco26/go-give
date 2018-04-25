@@ -9,9 +9,15 @@
                     </div>
                     <div flex style="padding-top: 10px; padding-left: 20px;">
                         <h1>{{vm.UserService.userObject.fromOurDB.name}}</h1>
-                        Your total impact: <span style="font-weight: bolder;">{{vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal / 100 | currency}}</span>
+                        <div ng-if="vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal > 0">
+                            Your total impact: <span style="font-weight: bolder;">{{vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal / 100 | currency}}</span>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="content" ng-hide="vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal > 0">
+                <h4>Welcome to cogiv, {{vm.UserService.userObject.fromOurDB.first_name}}!</h4>
+                Head over to the <a class="discover_link" ng-href="#!discover">Discover</a> page to find and donate to nonprofits in your area.
             </div>
             <br>
                 <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">

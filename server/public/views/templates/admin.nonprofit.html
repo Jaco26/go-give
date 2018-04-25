@@ -1,5 +1,6 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-<div ng-cloak class="content" >
+
+<div ng-cloak class="content">
     <div id="adminNonprofitForm" style="width: 500px;" flex layout="column"  ng-cloak class="md-inline-form md-padding">
       <h1>Nonprofits</h1><br>
       <md-content class="md-block admin_form" layout-padding>
@@ -56,7 +57,7 @@
             </textarea>
           </md-input-container> -->
           <div>
-            <md-button class="md-primary md-raised feedButton" ng-click="vm.addNonprofit(vm.newNonprofit)" >Submit Nonprofit</md-button>
+            <md-button class="md-primary md-raised feedButton" ng-click="vm.addNonprofit(vm.newNonprofit)" >Add Nonprofit</md-button>
           </div>
           <div>
             <md-button ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
