@@ -82,21 +82,8 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
   
 
 }])
-.config(function($sceDelegateProvider, $mdThemingProvider){
-  let backgroundColor = $mdThemingProvider.extendPalette('grey', {
-    '400': '#b7b7b7',
-    'contrastDefaultColor': 'dark'
-  });
-  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://www.youtube.com/**']),
-  $mdThemingProvider.definePalette('red', backgroundColor)
-  $mdThemingProvider.theme('docs-dark', 'default')
-  .primaryPalette('blue')
-  .backgroundPalette('grey', {
-    'default': '400'
-  })
-  .accentPalette('grey');
-
-
+.config(function($sceDelegateProvider){
+  $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://www.youtube.com/**'])
 });
 
 

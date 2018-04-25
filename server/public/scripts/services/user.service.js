@@ -17,7 +17,6 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
     }
   };
 
-
   self.coinOpacity = 1
   self.coinPaddingTop = '0px'
   self.pageOpacity = 1;
@@ -64,7 +63,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
       console.log(response, 'response in getUser');
         if(response.data.name) {
             if(response.data.role === 1) {
-              $location.path("/admin");
+              $location.path("/admin-feed");
             } else {
               $location.path("/feed");
             }
@@ -115,7 +114,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
 
   self.getAdmin = function() {
     console.log('UserService -- getAdmin');
-
+    self.currentPath = $location.path();
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getAdmin');
       if(response.data.role == 1) {

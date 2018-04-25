@@ -3,7 +3,7 @@
   <div class= "md-padding">
         <h1>Feed</h1><br>
         <div id="adminFeedForm" layout="column" ng-cloak class="md-inline-form">
-          <md-content md-theme="docs-dark" class="md-block" layout-padding>
+          <md-content class="md-block admin_form" layout-padding>
             <form name="feedForm" style="width:400px;">
               <div layout-gt-xs="row" ng-hide="vm.editFeedToggle.show">
                 <md-input-container>
@@ -22,8 +22,6 @@
                   </textarea>
                 </md-input-container>
               </div>
-              <!-- <div>
-              </div> -->
 
               <md-input-container class="md-block">
                 <label>Place Video URL here</label>
@@ -32,14 +30,14 @@
               <div>
                 <img style="width: 100px;" ng-src="{{vm.newFeedItem.feed_img_url}}"/>
               </div>
-            <md-input-container class="md-block">
-              <div>
-                <md-button class="md-primary feedButton" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
-                <md-button class="md-primary feedButton" ng-hide="vm.editFeedToggle.show" ng-click="vm.addFeedItem(vm.newFeedItem, vm.feedImgUpload)" >Add To Feed</md-button>
-                <md-button class="md-primary feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Send Edits</md-button>
-                <md-button class="md-primary feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.cancelEditFeed()">Cancel Edit</md-button>
-              </div>
-            </md-input-container>
+              <md-input-container class="md-block">
+                <div>
+                  <md-button class="md-primary md-raised feedButton" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
+                  <md-button class="md-primary md-raised feedButton" ng-hide="vm.editFeedToggle.show" ng-click="vm.addFeedItem(vm.newFeedItem, vm.feedImgUpload)">Add To Feed</md-button>
+                  <md-button class="md-primary md-raised feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Send Edits</md-button>
+                  <md-button class="md-primary md-raised feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.cancelEditFeed()">Cancel Edit</md-button>
+                </div>
+              </md-input-container>
             </form>
           </md-content>
         </div>

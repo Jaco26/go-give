@@ -18,15 +18,6 @@ myApp.config(['$routeProvider', '$locationProvider', '$mdThemingProvider', funct
         }
       }
   })
-  .when('/admin', {
-    templateUrl: '/views/templates/admin.html',
-    controller: 'AdminController as vm',
-    resolve: {
-        getuser : function(UserService){
-          return UserService.getAdmin();
-        }
-      }
-  })
   .when('/feed', {
     templateUrl: '/views/templates/user.feed.html',
     controller: 'UserStaticController as vm',
