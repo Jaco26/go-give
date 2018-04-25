@@ -115,6 +115,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
   self.getAdmin = function() {
     console.log('UserService -- getAdmin');
     self.currentPath = $location.path();
+    $window.scrollTo(0, 0);
     $http.get('/auth').then(function(response) {
       console.log(response, 'response in getAdmin');
       if(response.data.role == 1) {
