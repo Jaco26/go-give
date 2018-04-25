@@ -22,22 +22,24 @@
                   </textarea>
                 </md-input-container>
               </div>
-              <div>
-                <md-button class="md-primary feedButton" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
-              </div>
-              <div>
-                <img style="width: 100px;" ng-src="{{vm.newFeedItem.feed_img_url}}"/>
-              </div>
+              <!-- <div>
+              </div> -->
+
               <md-input-container class="md-block">
                 <label>Place Video URL here</label>
                 <input type="text" ng-model="vm.newFeedItem.feed_video">
               </md-input-container>
-              <div layout-gt-xs="row">
+              <div>
+                <img style="width: 100px;" ng-src="{{vm.newFeedItem.feed_img_url}}"/>
+              </div>
+            <md-input-container class="md-block">
+              <div>
+                <md-button class="md-primary feedButton" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
                 <md-button class="md-primary feedButton" ng-hide="vm.editFeedToggle.show" ng-click="vm.addFeedItem(vm.newFeedItem, vm.feedImgUpload)" >Add To Feed</md-button>
                 <md-button class="md-primary feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Send Edits</md-button>
                 <md-button class="md-primary feedButton" ng-show="vm.editFeedToggle.show" ng-click="vm.cancelEditFeed()">Cancel Edit</md-button>
-
               </div>
+            </md-input-container>
             </form>
           </md-content>
         </div>
