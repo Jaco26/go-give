@@ -2,16 +2,16 @@
     <div class="container nav">
         <ul>
             <li class="nav-link">
-                <md-menu >
-                    <md-button class="navBtn" ng-click="vm.UserService.openMenu($mdMenu, $event)">
+                <md-menu>
+                    <md-button class="navBtn admin_menu" ng-click="vm.UserService.openMenu($mdMenu, $event)">
                     <i class="material-icons">menu</i>
                     </md-button>
                     <md-menu-content width="4">
                     <md-menu-item>
-                        <md-button ng-href="#!feed">User View</md-button>
+                        <md-button class="md-primary" ng-href="#!feed">User View</md-button>
                     </md-menu-item>
                     <md-menu-item>
-                        <md-button ng-click="vm.UserService.confirmLogout()">Log Out</md-button>
+                        <md-button class="md-warn" ng-click="vm.UserService.confirmLogout()">Log Out</md-button>
                     </md-menu-item>
                     </md-menu-content>
                 </md-menu>

@@ -11,7 +11,6 @@ html {
   background-color: white;
 }
 
-
 .navbar {
     width: 100%;
     border-radius: 0px;
@@ -44,7 +43,6 @@ li a {
     text-decoration: none;
 }
 
-
 li a:hover {
     text-decoration: underline;
     color: #eee;
@@ -61,6 +59,11 @@ li a:hover {
     letter-spacing: 2.5px;
 }
 
+.md-button.navBtn:not([disabled]):hover {
+  background-color: transparent;
+  color: #4689DF;
+}
+
 .md-button.menu {
   margin-top: 2px;
   color: #B7B7B7;
@@ -68,6 +71,17 @@ li a:hover {
 }
 
 .md-button.menu:not([disabled]):hover {
+  background-color: transparent;
+  color: #4689DF;
+}
+
+.md-button.admin_menu {
+  margin-top: 12px;
+  color: #B7B7B7;
+  min-width: 1%;
+}
+
+.md-button.admin_menu:not([disabled]):hover {
   background-color: transparent;
   color: #4689DF;
 }
@@ -408,6 +422,7 @@ h1 {
 
 .donatedNonprofits {
   text-align: center;
+  padding-bottom: 30px;
 }
 
 h3 {
