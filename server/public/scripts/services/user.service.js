@@ -48,6 +48,7 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
   }
 
   self.animatePage = function(){
+    $window.scrollTo(0, 0);
     self.logoZIndex = 1000;
     self.pageOpacity = .5;
     self.logoOpacity = 1;

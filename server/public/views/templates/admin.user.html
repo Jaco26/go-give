@@ -4,15 +4,25 @@
 
     <div class="md-padding">
         <h1>Users</h1><br>
-    <input type="text" placeholder="Search Username" ng-model="searchBox">
+        <div layout="row">
+            <div flex="5">
+                <i class="material-icons">search</i>
+            </div>
+            <div flex>
+                <input type="text" placeholder="Search" ng-model="searchBox">
+            </div>
+        </div>
     <br>
-    <br>
-        <ul ng-repeat="user in vm.userArray.list | filter: searchBox">
-            <li>
-            <img ng-src="https://graph.facebook.com/{{user.fb_id}}/picture"/>
-            {{user.first_name}} {{user.last_name}}<md-button class="md-warn" ng-click="vm.deleteUser(user.id)">Delete User</md-button>
-            </li>
-
-        </ul>
+        <div layout="row" ng-repeat="user in vm.userArray.list | filter: searchBox">
+            <div flex=10>
+                <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{user.fb_id}}/picture"/>
+            </div>
+            <div flex=15 style="padding-top: 15px;">
+                {{user.first_name}} {{user.last_name}}
+            </div>
+            <div style="padding-top: 10px;">
+                <md-button class="md-warn admin_btn" ng-click="vm.deleteUser(user.id)"><i class="material-icons">delete</i></md-button>
+            </div>
+        </div>
     </div>
 </div>

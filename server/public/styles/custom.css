@@ -462,7 +462,7 @@ h3 {
 }
 
 .feedButton{
-  font-size: 10px;
+  /* font-size: 10px; */
   float: right;
   min-width: 1%;
   min-height: 1%;
@@ -516,4 +516,8 @@ md-content {
 
 .admin_form {
   background-color: #ebe9e9
+}
+
+.md-button.admin_btn:not([disabled]):hover {
+  background-color: transparent;
 }
