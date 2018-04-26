@@ -1,8 +1,8 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-<div class="content">
-    
+<div class="content" >
 
-    <div class="md-padding">
+<div class="adminUserForm">
+    <div style="width: 800px"  class="md-padding" >
         <h1>Users</h1><br>
         <div layout="row">
             <div flex="5">
@@ -14,10 +14,10 @@
         </div>
     <br>
         <div layout="row" ng-repeat="user in vm.userArray.list | filter: searchBox">
-            <div flex=10>
+            <div flex=15>
                 <img style="border-radius: 50%;" ng-src="https://graph.facebook.com/{{user.fb_id}}/picture"/>
             </div>
-            <div flex=15 style="padding-top: 15px;">
+            <div flex=25 style="padding-top: 15px;">
                 {{user.first_name}} {{user.last_name}}
             </div>
             <div style="padding-top: 10px;">
@@ -25,4 +25,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
