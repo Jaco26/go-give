@@ -21,7 +21,7 @@
                         <div layout="row">
                             <div flex-offset="25">
                                 <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
-                                    Total impact:
+                                     <span style="color: #4689DF"><strong>cogiv</strong></span> impact:
                                     <span style="font-weight: bolder;">
                                         {{nonprofit.sum / 100 | currency}}
                                     </span>
