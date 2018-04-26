@@ -2,19 +2,21 @@
 <div class="content" ng-cloak>
     <h1>Payment Info</h1>
     <br>
-    <div>
-        <md-card class="creditCard">
-            <br>
-            <h3>{{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.brand.toUpperCase()}}</h3>
-            <br>
-            #### #### #### {{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.last4}}
-        </md-card>
-        <br>
-        <div ng-hide="vm.editingCard == true">
-            <md-button ng-click="vm.editingCard = true" class="md-primary md-raised">Edit Card</md-button>
+    <div style="width: 600px" layout="row">
+        <div flex>
+            <md-card class="creditCard">
+                <br>
+                <h3>{{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.brand.toUpperCase()}}</h3>
+                <br>
+                #### #### #### {{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.last4}}
+            </md-card>
+        </div>
+        <div style="padding-top: 120px" flex ng-hide="vm.editingCard == true">
+            <md-button style="color: #4689DF;" ng-click="vm.editingCard = true"><i class="material-icons">edit</i></md-button>
         </div>
     </div>
     <div ng-show="vm.editingCard == true">
+        <br>
         <div class="cell example example1">
             <form id="register-form">
                 <fieldset>
@@ -27,12 +29,9 @@
         <md-button ng-click="vm.editingCard = false" class="md-raised">Cancel</md-button>
         <md-button ng-click="vm.updateCard(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
     </div>
-    <br>
     <div ng-hide="vm.editingEmail == true">
         {{vm.UserService.userObject.stripeCustomerInfo.customerObject.email}}
-        <br>
-        <br>
-        <md-button ng-click="vm.editingEmail = true" class="md-primary md-raised">Edit Email</md-button>
+        <md-button style="color: #4689DF;" ng-click="vm.editingEmail = true"><i class="material-icons">edit</i></md-button>
     </div>
 
     <div ng-show="vm.editingEmail == true">
