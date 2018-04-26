@@ -1,6 +1,6 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-<div ng-cloak class="content" layout="column" style="width: 500px;">
-  <div class= "md-padding">
+<div ng-cloak class="content" layout-align="center center">
+  <!-- <div class= "md-padding"> -->
         <h1>Feed</h1><br>
         <div id="adminFeedForm" layout="column" ng-cloak class="md-inline-form">
           <md-content class="md-block admin_form" layout-padding>
@@ -39,14 +39,14 @@
               </md-input-container>
             </form>
           </md-content>
-        </div>
+        <!-- </div> -->
         <br>
         <br>
 
-
-        <div ng-repeat="item in vm.allFeedItems.list">
+      <div layout-align="center center" layout="column">
+        <div style="width:33%;" class="feedBox" ng-repeat="item in vm.allFeedItems.list">
           <!-- flex="30" layout-align="center center" layout="column" -->
-          <md-card  style="width:400px;">
+          <md-card  style="width:100%;">
             <md-card-header>
               <md-card-avatar>
                 <img style="border-radius: 50%;" ng-src="{{item.logo_url}}"/>
@@ -75,5 +75,6 @@
           </md-card>
           <br>
         </div>
-      </div>
-</md-content>
+    </div>
+
+</div>

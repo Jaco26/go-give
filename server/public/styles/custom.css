@@ -468,13 +468,16 @@ h3 {
   min-height: 1%;
 }
 
-/* #adminFeedForm{
-  margin-top: 100px;
+#adminFeedForm{
+padding-left: 25%;
+padding-right: 25%;
+
 }
 
 #adminNonprofitForm{
-  margin-top: 100px;
-} */
+  padding-left: 25%;
+  padding-right: 25%;
+}
 
 #dropMenu{
   z-index: 9000;
@@ -520,4 +523,10 @@ md-content {
 
 .md-button.admin_btn:not([disabled]):hover {
   background-color: transparent;
+}
+
+.feedBox{
+  /* padding-right:30%; */
+  /* padding-left:30%; */
+
 }
