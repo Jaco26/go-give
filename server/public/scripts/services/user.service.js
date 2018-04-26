@@ -431,6 +431,9 @@ self.getDonationHistoryFromOurDB = function () {
 // // JACOB TEST Init for getDonationHistoryFromOurDB
 // self.getDonationHistoryFromOurDB();
 
+////////  PRESENTATION HACK HACK HACK  UNDO UNDO UNDO FOR REAL LIFE //////
+
+
 
 
 

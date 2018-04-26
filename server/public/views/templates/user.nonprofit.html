@@ -21,7 +21,7 @@
                         <div layout="row">
                             <div flex-offset="25">
                                 <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
-                                    Total impact:
+                                     <span style="color: #4689DF"><strong>cogiv</strong></span> impact:
                                     <span style="font-weight: bolder;">
                                         {{nonprofit.sum / 100 | currency}}
                                     </span>
@@ -59,7 +59,7 @@
 
                     <md-list>
                         <md-list-item ng-repeat="donor in vm.nonprofitToDisplay.topDonors.allMonthlyGivers">
-                            <img style="border-radius: 50%; margin-right: 10px;" ng-src="https://graph.facebook.com/{{donor.fb_id}}/picture" alt=""> {{donor.username}}
+                            <img style="border-radius: 50%; margin-right: 10px; margin-bottom: 5px; " ng-src="https://graph.facebook.com/{{donor.fb_id}}/picture" alt=""> {{donor.username}}
                         </md-list-item>
                     </md-list>
                 </md-card>
