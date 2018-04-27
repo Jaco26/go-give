@@ -18,15 +18,21 @@ app.use(sessionConfig);
 app.use(passport.initialize());
 app.use(passport.session());
 
-//pem generates our SSL Certifiace here
-pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-  if (err) {
-    throw err
-  }
-//Keys for https are used here
-https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(4430)
-console.log('listening on port 4430');
-})
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, function(){
+  console.log(`server listening on port ${PORT}`);
+});//end app listen
+
+// //pem generates our SSL Certifiace here
+// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+//   if (err) {
+//     throw err
+//   }
+// //Keys for https are used here
+// https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(4430)
+// console.log('listening on port 4430');
+// })
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({extended: true}));
