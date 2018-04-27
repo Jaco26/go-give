@@ -4,7 +4,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     self.newFeedItem = {};
     self.allFeedItems = {list: []};
     self.editFeedToggle = {show: false };
-    self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz");
+    self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
 
     self.addFeedItem = function(newFeed, newFeedImg){
         console.log('added to feed', newFeed, newFeedImg);
