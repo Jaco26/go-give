@@ -56,7 +56,7 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
         },
     });
 
-    card.mount('#example1-card');
+    card.mount('#stripe-card');
 
     self.editingEmail = false;
     self.editingCard = false;
