@@ -1,42 +1,60 @@
-myApp.service('FeedService', ['$http', '$location', '$route', '$mdDialog', '$window', function($http, $location, $route, $mdDialog, $window) {
-  let self = this;
+myApp.service('FeedService', ['$http', '$location', '$route', function($http, $location, $route) {
+    let self = this;
+    
 
-  self.newFeedItem = {};
-  self.allFeedItems = {list: []};
-  self.editFeedToggle = {show: false };
-  self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
+    self.newFeedItem = {};
+    self.allFeedItems = {list: []};
+    self.editFeedToggle = {show: false };
+    
+    self.getFileStackKey = function () {
+      let FILESTACK_KEY
+      $http.get('/filestack-key')
+      .then(response => {
+        FILESTACK_KEY = response.data;
+        self.client = filestack.init(FILESTACK_KEY);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
 
-  self.addFeedItem = function(newFeed, newFeedImg){
-    if(!newFeed.id){
-      self.requireNonprofit();
-    } else {
-      if(newFeed.feed_video && newFeed.feed_img_url){
-        self.requireOnlyPhotoOrVideo();
-      } else {
-        console.log('added to feed', newFeed, newFeedImg);
-        if (newFeed.feed_video){
-          let indexToCut = newFeed.feed_video.lastIndexOf('=');
-          newFeed.feed_video = newFeed.feed_video.substring(indexToCut+1);
-          console.log(newFeed.feed_video, 'truncated video url');
-        }
-        $http({
-            method: 'POST',
-            url: '/feed',
-            data: {newFeed :newFeed, newFeedImg: newFeedImg}
-        }).then(function(response){
-            console.log('success in feed item', response);
-            self.newFeedItem.name = '';
-            self.newFeedItem.title = '';
-            self.newFeedItem.feed_text = '';
-            self.newFeedItem.feed_video = '';
-            self.newFeedItem.feed_img_url = '';
-            self.newFeedItem.id = '';
-            self.getFeedItems();
-            $route.reload();
-        }).catch(function(error){
-            console.log('error in adding a feed',error)
-        })        
-      }        
+    // GET FILESTACK KEY
+    self.getFileStackKey()
+
+
+    self.addFeedItem = function(newFeed, newFeedImg){
+      self.addFeedItem = function(newFeed, newFeedImg){
+        if(!newFeed.id){
+          self.requireNonprofit();
+        } else {
+          if(newFeed.feed_video && newFeed.feed_img_url){
+            self.requireOnlyPhotoOrVideo();
+          } else {
+          console.log('added to feed', newFeed, newFeedImg);
+          if (newFeed.feed_video){
+            let indexToCut = newFeed.feed_video.lastIndexOf('=');
+            newFeed.feed_video = newFeed.feed_video.substring(indexToCut+1);
+            console.log(newFeed.feed_video, 'truncated video url');
+          }
+          $http({
+              method: 'POST',
+              url: '/feed',
+              data: {newFeed :newFeed, newFeedImg: newFeedImg}
+          }).then(function(response){
+              console.log('success in feed item', response);
+              self.newFeedItem.name = '';
+              self.newFeedItem.title = '';
+              self.newFeedItem.feed_text = '';
+              self.newFeedItem.feed_video = '';
+              self.newFeedItem.feed_img_url = '';
+              self.newFeedItem.id = '';
+              self.getFeedItems();
+              $route.reload();
+          }).catch(function(error){
+              console.log('error in adding a feed',error)
+          })        
+        }        
+      }
     }
   }
 //end addFeedItem

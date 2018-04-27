@@ -5,7 +5,7 @@ var pool = require('../modules/pool.js');
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "https://localhost:4430/auth/facebook/callback",
+    callbackURL: "https://ancient-journey-58112.herokuapp.com/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'birthday','first_name', 'last_name',
       'middle_name', 'gender', 'link', 'picture']
   },

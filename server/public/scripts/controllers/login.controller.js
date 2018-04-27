@@ -1,4 +1,4 @@
-myApp.controller('LoginController', [ 'UserService', '$window', '$location', '$route', function(UserService, $window, $location, $route){
+myApp.controller('LoginController', [ 'UserService', 'FeedService', 'NonprofitService', '$window', '$location', '$route', function(UserService, FeedService, NonprofitService, $window, $location, $route){
   console.log('in login controller');
     const self = this;
 
