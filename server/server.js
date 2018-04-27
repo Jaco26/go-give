@@ -56,3 +56,9 @@ app.use('/feed', feedRouter);
 app.use('/report', reportRouter);
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
+
+// Filestack api key
+const FILESTACK_KEY = process.env.FILESTACK_KEY;
+app.get('/filestack-key', (req, res) => {
+  res.send(FILESTACK_KEY);
+});

@@ -1,10 +1,26 @@
 myApp.service('FeedService', ['$http', '$location', '$route', function($http, $location, $route) {
     let self = this;
+    
 
     self.newFeedItem = {};
     self.allFeedItems = {list: []};
     self.editFeedToggle = {show: false };
-    self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
+    
+    self.getFileStackKey = function () {
+      let FILESTACK_KEY
+      $http.get('/filestack-key')
+      .then(response => {
+        FILESTACK_KEY = response.data;
+        self.client = filestack.init(FILESTACK_KEY);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+
+    // GET FILESTACK KEY
+    self.getFileStackKey()
+
 
     self.addFeedItem = function(newFeed, newFeedImg){
         console.log('added to feed', newFeed, newFeedImg);
