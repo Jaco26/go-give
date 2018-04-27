@@ -1,11 +1,11 @@
-myApp.service('FeedService', ['$http', '$location', '$route', function($http, $location, $route) {
+myApp.service('FeedService', ['$http', '$location', '$route', '$mdDialog', '$window', function($http, $location, $route, $mdDialog, $window) {
     let self = this;
-    
+
 
     self.newFeedItem = {};
     self.allFeedItems = {list: []};
     self.editFeedToggle = {show: false };
-    
+
     self.getFileStackKey = function () {
       let FILESTACK_KEY
       $http.get('/filestack-key')
@@ -50,11 +50,11 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
             $route.reload();
         }).catch(function(error){
             console.log('error in adding a feed',error)
-        })        
-      }        
+        })
+      }
     }
   }
-  
+
 //end addFeedItem
 
 self.requireOnlyPhotoOrVideo = function(ev){
@@ -103,7 +103,7 @@ self.requireNonprofit = function(ev){
       self.deleteFeedItem(id);
     }, function() {
       console.log('cancel delete user');
-    });    
+    });
   }
 
   self.deleteFeedItem = function(id) {
