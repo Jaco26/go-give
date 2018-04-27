@@ -15,7 +15,6 @@ myApp.controller('UserNonprofitProfileController',['UserService', 'StripeService
 
     self.oneTimeDonation = UserService.oneTimeDonation;
     self.oneTimeDonate = UserService.oneTimeDonate;
-    // self.oneTimeDonation = UserService.oneTimeDonation;
 
     NonprofitService.getAllNonprofit();
 

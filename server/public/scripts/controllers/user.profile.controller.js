@@ -4,6 +4,5 @@ myApp.controller('UserProfileController', ['UserService', '$window', function(Us
     self.UserService = UserService;
     self.checkStripeRegistration = UserService.checkStripeRegistration
     self.fbLogout = UserService.fbLogout;
-
-
+    
 }]);

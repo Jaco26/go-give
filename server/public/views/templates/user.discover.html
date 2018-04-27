@@ -1,15 +1,11 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
-
-
 <md-content layout-xs="column" layout-gt-xs="row">
-
   <div class="header">
     <h1>Discover</h1>
   </div>
   <md-card ng-hide="nonprofit.name == 'cogiv'" ng-repeat="nonprofit in vm.allNonprofits.list">
     <md-card-header ng-hide="nonprofit.name == 'cogiv'">
       <div>
-        <!-- Nonprofit image / anchor -->
         <a layout="column" layout-align="start center" href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_image" ng-src="{{nonprofit.picture_url}}" alt="nonprofit"/></a>
         <br>
         <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
@@ -18,5 +14,4 @@
       </div>
     </md-card-header>
   </md-card>
-
 </md-content>

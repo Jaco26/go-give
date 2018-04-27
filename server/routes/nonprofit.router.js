@@ -5,8 +5,6 @@ const stripeCreateProduct = require('../modules/stripe.create.product.module.js'
 const getSummaryOfDonationsReveivedFor = require('../modules/ourDB.nonprofit.donation.info');
 const getTopDonors = require('../modules/ourDB.top.donors');
 
-console.log('in nonprofit router');
-
 // GET DONATION HISTORY BY NONPROFIT ID
 router.get('/donation-history/:nonprofitIds', (req, res) => {
   let nonprofitIds = req.params.nonprofitIds;
@@ -19,7 +17,7 @@ router.get('/top-donors/:nonprofitId', (req, res) => {
   getTopDonors(nonprofitId, res);
 });
 
-
+// POST NEW NONPROFIT
 router.post('/', (request, response) => {
   if (request.isAuthenticated()){
     console.log('in post new nonprofit -- route', request.body);
@@ -28,14 +26,13 @@ router.post('/', (request, response) => {
     response.sendStatus(403);
     }
 })
-//end POST new nonprofit
 
+// GET ALL NONPROFITS
 router.get('/', (request, response) => {
   if (request.isAuthenticated()){
     pool.query('SELECT * FROM nonprofit ORDER BY name')
     .then((result) => {
       console.log('success in get all nonprofits', result.rows);
-      // getSummaryOfDonationsReveivedFor(result.rows, response);
       response.send(result);
     })
     .catch((err) => {
@@ -46,8 +43,8 @@ router.get('/', (request, response) => {
   response.sendStatus(403);
   }
 })
-//end get all nonprofits
 
+// POPULATE EDIT FIELDS FOR ADMIN
 router.get('/:id', (request, response) => {
   if (request.isAuthenticated()){
     console.log('in populate edit --get', request.params.id);
@@ -64,8 +61,8 @@ router.get('/:id', (request, response) => {
     response.sendStatus(403);
   }
 })
-//end get populate edit
 
+// DELETE NONPROFIT
 router.delete('/:id', (request, response) => {
   if (request.isAuthenticated()){
     console.log('in delete nonprofit route', request.params.id);
@@ -82,10 +79,8 @@ router.delete('/:id', (request, response) => {
     response.sendStatus(403);
   }
 })
-//end delete nonprofit
 
-
-
+// EDIT NONPROFIT
 router.put('/', (request, response) => {
   if (request.isAuthenticated()){
     console.log('in edit nonprofit route', request.body);
@@ -103,7 +98,5 @@ router.put('/', (request, response) => {
     response.sendStatus(403);
   }
 });
-
-
 
 module.exports = router;

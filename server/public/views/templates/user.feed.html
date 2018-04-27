@@ -1,50 +1,33 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
-
-
 <md-content>
   <div class="header">
     <h1>Today</h1>
   </div>
   <md-card ng-repeat="item in vm.allFeedItems.list">
     <md-card-header>
-      <!-- Charity logo image as link to its profile page -->
         <md-card-avatar ng-hide="(item.name === 'cogiv')">
           <a href='/#!/nonprofit-profile/{{item.nonprofit_id}}'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
         </md-card-avatar>
         <md-card-avatar ng-show="(item.name === 'cogiv')">
           <a href='/#!/support'><img class="nonprofit_logo" ng-src="{{item.logo_url}}" alt=""></a>
         </md-card-avatar>
-    <!-- Charity Name as link to its profile page -->
         <a style="padding-top: 5px;" ng-hide="(item.name === 'cogiv')" class="nonprofit_link" href='/#!/nonprofit-profile/{{item.nonprofit_id}}'>{{item.name}}</a>
         <a style="padding-top: 5px;" ng-show="(item.name === 'cogiv')" class="nonprofit_link" href='/#!/support'>{{item.name}}</a>
-
     </md-card-header>
-
     <md-card-content>
-    <!-- Video -->
       <div layout layout-align="center center">
-        <!-- <div flex-offset="10"> -->
           <iframe class="feed_video" ng-if="item.feed_video_url" width="100%" ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media"
             allowfullscreen></iframe>
-        <!-- </div> -->
       </div>
-    <!-- Photo -->
-        <!-- <div flex-offset="25"> -->
         <div layout="column" layout-align="start center">
           <img class="feed_image" ng-if="item.feed_img_url" ng-src="{{item.feed_img_url}}" alt="">
         </div>
-
-
-    <!-- Text -->
       <div layout="row">
         <p ng-bind-html="item.feed_text">{{item.feed_text}}</p>
       </div>
     </md-card-content>
-
     <md-card-footer>
-      <!-- Date posted -->
       <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
     </md-card-footer>
   </md-card>
-
 </md-content>

@@ -4,7 +4,6 @@ const router = express.Router();
 const cron = require('node-cron');
 const updateInvoices = require('../modules/update.invoices');
 // const axios = require('axios');
-console.log('in report router');
 
 // Execute the code block once every HOUR
 cron.schedule('50 * * * *', function () {

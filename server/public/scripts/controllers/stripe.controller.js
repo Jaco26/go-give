@@ -1,41 +1,36 @@
 myApp.controller('StripeController', ['UserService', '$location', '$window', '$http', '$mdDialog', function(UserService, $location, $window, $http, $mdDialog){
+    
     const self = this;
 
+    self.userObject = UserService.userObject;
+    self.UserService = UserService;
+    self.getAdmin = UserService.getAdmin;
+    self.getUser = UserService.getUser;
 
-  self.userObject = UserService.userObject;
-  self.UserService = UserService;
-  self.getAdmin = UserService.getAdmin;
-  self.getUser = UserService.getUser;
+    self.stripeCustomerInfo = UserService.stripeCustomerInfo;
+    self.getStripeCustomerInfo = UserService.getStripeCustomerInfo;
 
-  self.stripeCustomerInfo = UserService.stripeCustomerInfo;
-  self.getStripeCustomerInfo = UserService.getStripeCustomerInfo;
+    self.fbLogout = UserService.fbLogout;
 
-  self.fbLogout = UserService.fbLogout;
+    self.plan;
 
-  var stripe = Stripe('pk_test_am5RbEIakojCTGAR6pNGMvfO');
-    let elements = stripe.elements({
-        fonts: [
-            {
-                cssSrc: 'https://fonts.googleapis.com/css?family=Nunito',
-            },
-        ],
-        // Stripe's examples are localized to specific languages, but if
-        // you wish to have Elements automatically detect your user's locale,
-        // use `locale: 'auto'` instead.
-        locale: 'auto'
-    });
+    var stripe = Stripe('pk_test_am5RbEIakojCTGAR6pNGMvfO');
+        let elements = stripe.elements({
+            fonts: [
+                {
+                    cssSrc: 'https://fonts.googleapis.com/css?family=Nunito',
+                },
+            ],
+            locale: 'auto'
+        });
 
-    // STEP 2: continued from payment form creation on HTML
-    // custom styling can be passed to to options when creating an Element
     let style = {
         base: {
-            // Add your base input styles here
             fontSize: '16px',
             color: '#32325d',
         }
     };
 
-    // create an instance of the card Element
     let card = elements.create('card', {
         iconStyle: 'solid',
         style: {
@@ -114,7 +109,6 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
             } else {
               self.getUser();
             }
-            // self.getStripeCustomerInfo();
             $location.path('/payment');
         }).catch(err => {
             console.log(err);
@@ -162,12 +156,6 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
 
     self.charities = {list: []};
 
-    // Hard coded for stripe spike. dynamically filled with info from DB
-    // upon successful login with facebook
-
-
-    // Get a a list of 'products' (charities).
-    // Each product should have a list of 'plans'
     self.getNonprofits = function () {
         $http.get('/database/nonprofits')
             .then(response => {
@@ -177,9 +165,5 @@ myApp.controller('StripeController', ['UserService', '$location', '$window', '$h
                 console.log(err);
             });
     }
-
-    self.plan;
-
-
-
+    
 }]);

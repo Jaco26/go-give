@@ -1,85 +1,70 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-
 <div ng-cloak class="content">
-    <div id="adminNonprofitForm"  flex layout="column"  ng-cloak class="md-inline-form md-padding">
-      <h1>Nonprofits</h1><br>
-      <md-content class="md-block admin_form" layout-padding>
-        <form name="nonprofitForm">
-
-          <div layout-gt-xs="row">
-            <md-input-container>
-              <label>Name</label>
-              <input type="text" ng-model="vm.newNonprofit.name">
-            </md-input-container>
-          </div>
-          <div layout-gt-xs="row">
-            <md-input-container>
-              <label>City</label>
-              <input type="text" ng-model="vm.newNonprofit.city">
-            </md-input-container>
-            <md-input-container>
-              <label>State</label>
-                <md-select ng-model="vm.newNonprofit.state">
-                  <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
-                    {{state.abbrev}}
-                  </md-option>
-                </md-select>
-            </md-input-container>
-          </div>
-          <md-input-container class="md-block">
-            <label>Description</label>
-            <textarea ng-model="vm.newNonprofit.description" rows="3" md-select-on-focus>
-            </textarea>
+  <div id="adminNonprofitForm"  flex layout="column"  ng-cloak class="md-inline-form md-padding">
+    <h1>Nonprofits</h1>
+    <br>
+    <md-content class="md-block admin_form" layout-padding>
+      <form name="nonprofitForm">
+        <div layout-gt-xs="row">
+          <md-input-container>
+            <label>Name</label>
+            <input type="text" ng-model="vm.newNonprofit.name">
           </md-input-container>
-          <md-input-container class="md-block">
-            <div>
-              <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.cropAlert('logo', $event)">Upload Logo</md-button>
-            </div>
-            <div>
-              <img style="width: 100px;" ng-src="{{vm.newNonprofit.logo_url}}"/>
-            </div>
+        </div>
+        <div layout-gt-xs="row">
+          <md-input-container>
+            <label>City</label>
+            <input type="text" ng-model="vm.newNonprofit.city">
           </md-input-container>
-          <md-input-container class="md-block">
-            <div>
-              <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.upload('photo')">Upload Photo</md-button>
-            </div>
-            <div>
-              <img style="width: 100px;" ng-src="{{vm.newNonprofit.picture_url}}"/>
-            </div>
+          <md-input-container>
+            <label>State</label>
+              <md-select ng-model="vm.newNonprofit.state">
+                <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
+                  {{state.abbrev}}
+                </md-option>
+              </md-select>
           </md-input-container>
-          <!-- <md-input-container class="md-block">
-            <label>Goal Amount</label>
-            <input type="text" ng-model="vm.newNonprofit.goal_value">
-          </md-input-container>
-          <md-input-container class="md-block">
-            <label>Goal Description</label>
-            <textarea ng-model="vm.newNonprofit.goal_description" rows="3" md-select-on-focus>
-            </textarea>
-          </md-input-container> -->
+        </div>
+        <md-input-container class="md-block">
+          <label>Description</label>
+          <textarea ng-model="vm.newNonprofit.description" rows="3" md-select-on-focus></textarea>
+        </md-input-container>
+        <md-input-container class="md-block">
           <div>
-            <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-hide="vm.editNonprofitToggle.show" ng-click="vm.addNonprofit(vm.newNonprofit)">Add Nonprofit</md-button>
+            <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.cropAlert('logo', $event)">Upload Logo</md-button>
           </div>
           <div>
-            <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
-            <md-button class="md-warn md-raised adminButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.cancelEditNonprofit()">Cancel Edit</md-button>
-
+            <img style="width: 100px;" ng-src="{{vm.newNonprofit.logo_url}}"/>
           </div>
-        </form>
-      </md-content><br>
-      <br>
-      <div layout="row">
-        <div flex="5">
-          <i class="material-icons">search</i>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <div>
+            <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.upload('photo')">Upload Photo</md-button>
+          </div>
+          <div>
+            <img style="width: 100px;" ng-src="{{vm.newNonprofit.picture_url}}"/>
+          </div>
+        </md-input-container>
+        <div>
+          <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-hide="vm.editNonprofitToggle.show" ng-click="vm.addNonprofit(vm.newNonprofit)">Add Nonprofit</md-button>
         </div>
-        <div flex>
-          <input style="margin-left: 20px; margin-right: 40px;" type="text" placeholder="Search" ng-model="nonprofitSearchBox">
+        <div>
+          <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
+          <md-button class="md-warn md-raised adminButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.cancelEditNonprofit()">Cancel Edit</md-button>
         </div>
+      </form>
+    </md-content>
+    <br>
+    <br>
+    <div layout="row">
+      <div flex="5">
+        <i class="material-icons">search</i>
+      </div>
+      <div flex>
+        <input style="margin-left: 20px; margin-right: 40px;" type="text" placeholder="Search" ng-model="nonprofitSearchBox">
       </div>
     </div>
-
-
-  <!-- <input style="margin-left: 20px;" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox"> -->
-
+  </div>
   <div class="md-padding" ng-cloak  layout="row" layout-wrap layout-align="center center">
       <!-- the ng-hide hides cogiv from the list of nonprofits, it needs to be isted as a nonprofit in order to post to the feed -->
     <md-card  style="min-height: 600px;" ng-repeat="nonprofit in vm.allNonprofits.list | filter: nonprofitSearchBox" ng-hide="(nonprofit.name == 'cogiv')" flex="25" flex-sm="80">
@@ -104,7 +89,6 @@
         <md-button class="feedButton md-warn admin_btn" ng-click="vm.confirmDeleteNonprofit(nonprofit.id, $event)"><i class="material-icons">delete</i></md-button>
         <md-button style="color: #4689DF;" class="feedButton md-primary admin_btn" ng-click="vm.editNonprofit(nonprofit.id)"><i class="material-icons">edit</i></md-button>
       </md-card-actions>
-
     </md-card>
     <br>
   </div>

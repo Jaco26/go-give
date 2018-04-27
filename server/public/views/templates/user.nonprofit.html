@@ -1,83 +1,69 @@
-    <div ng-include="'views/partials/user.navbar.html'"></div>
-
-
-
-        <div class="page" ng-style="{'opacity': vm.UserService.pageOpacity, 'z-index': vm.UserService.logoZIndex}">
-            <md-content>
-                <md-card style="margin-top: 20px;">
-                    <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}}
-                        alt="logo hi hi">
-                </md-card>
-
-
-                <md-card layout-padding layout-gt-xs="row" layout-xs="column">
-                    <md-card-header>
-                      <md-card-avatar flex=20>
-                        <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
-                      </md-card-avatar>
-                        <h1 style="padding-top: 15px; padding-left: 3px;">{{vm.nonprofitToDisplay.solo.name}}</h1>
-                    </md-card-header>
-                    <md-card-content>
-                        <div layout="row">
-                            <div flex-offset="25">
-                                <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
-                                     <span style="color: #4689DF"><strong>cogiv</strong></span> impact:
+<div ng-include="'views/partials/user.navbar.html'"></div>
+<div class="page" ng-style="{'opacity': vm.UserService.pageOpacity, 'z-index': vm.UserService.logoZIndex}">
+    <md-content>
+        <md-card style="margin-top: 20px;">
+            <img ng-show="vm.nonprofitToDisplay.solo.picture_url != null" class="nonprofit_image" ng-src={{vm.nonprofitToDisplay.solo.picture_url}}
+                alt="logo hi hi">
+        </md-card>
+        <md-card layout-padding layout-gt-xs="row" layout-xs="column">
+            <md-card-header>
+                <md-card-avatar flex=20>
+                <img class="nonprofit_logo" src="{{vm.nonprofitToDisplay.solo.logo_url}}" alt="logo">
+                </md-card-avatar>
+                <h1 style="padding-top: 15px; padding-left: 3px;">{{vm.nonprofitToDisplay.solo.name}}</h1>
+            </md-card-header>
+            <md-card-content>
+                <div layout="row">
+                    <div flex-offset="25">
+                        <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.receivedDonations.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
+                                <span style="color: #4689DF"><strong>cogiv</strong></span> impact:
+                            <span style="font-weight: bolder;">
+                                {{nonprofit.sum / 100 | currency}}
+                            </span>
+                        </div>
+                        <div ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
+                            Your impact:
+                            <span style="font-weight: bolder;">
+                                {{nonprofit.sum / 100 | currency}}
+                            </span>
+                        </div>
+                        <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
+                            <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
+                                <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
+                                    You are giving:
                                     <span style="font-weight: bolder;">
-                                        {{nonprofit.sum / 100 | currency}}
+                                        {{subscription.plan.amount / 100 | currency}}/month
                                     </span>
-                                </div>
-                                <div ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals" ng-if="nonprofit.name == vm.nonprofitToDisplay.solo.name">
-                                    Your impact:
-                                    <span style="font-weight: bolder;">
-                                        {{nonprofit.sum / 100 | currency}}
-                                    </span>
-                                </div>
-                                <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0">
-                                    <div ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
-                                        <div ng-if="subscription.plan.product == vm.nonprofitToDisplay.solo.product_id">
-                                            You are giving:
-                                            <span style="font-weight: bolder;">
-                                                {{subscription.plan.amount / 100 | currency}}/month
-                                            </span>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <p layout-padding ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
-                        <div flex-offset ="70">
-                            <md-button style="background-color: #4689DF;" class="md-raised md-primary" ng-click="vm.showDonationDialog($event)">Donate</md-button>
-                        </div>
-                    </md-card-content>
-                </md-card>
-            <!-- END row -->
+                    </div>
+                </div>
+                <p layout-padding ng-bind-html="vm.nonprofitToDisplay.solo.description">{{vm.nonprofitToDisplay.solo.description}}</p>
+                <div flex-offset ="70">
+                    <md-button style="background-color: #4689DF;" class="md-raised md-primary" ng-click="vm.showDonationDialog($event)">Donate</md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card ng-if="vm.nonprofitToDisplay.topDonors.allMonthlyGivers.length > 0">
+            <md-card-header>
+                <h3>Top Monthly Givers</h3>
+            </md-card-header>
 
-                <md-card ng-if="vm.nonprofitToDisplay.topDonors.allMonthlyGivers.length > 0">
-                    <md-card-header>
-                        <h3>Top Monthly Givers</h3>
-                    </md-card-header>
-
-                    <md-list>
-                        <md-list-item ng-repeat="donor in vm.nonprofitToDisplay.topDonors.allMonthlyGivers">
-                            <img style="border-radius: 50%; margin-right: 10px; margin-bottom: 5px; " ng-src="https://graph.facebook.com/{{donor.fb_id}}/picture" alt=""> {{donor.username}}
-                        </md-list-item>
-                    </md-list>
-                </md-card>
-
-            </md-content>
-        </div>
-
-
-
-
-
-
-    <div class="animation_wrapper" ng-style="{'opacity': vm.UserService.logoOpacity, 'z-index': vm.UserService.logoZIndex}">
-        <div class="logo_hand">
-            <img src="styles/assets/logo_hand.png" alt="">
-        </div>
-        <div class="logo_coin">
-            <img ng-style="{'opacity': vm.UserService.coinOpacity, 'padding-top': vm.UserService.coinPaddingTop}" src="styles/assets/logo_coin.png"
-                alt="">
-        </div>
+            <md-list>
+                <md-list-item ng-repeat="donor in vm.nonprofitToDisplay.topDonors.allMonthlyGivers">
+                    <img style="border-radius: 50%; margin-right: 10px; margin-bottom: 5px; " ng-src="https://graph.facebook.com/{{donor.fb_id}}/picture" alt=""> {{donor.username}}
+                </md-list-item>
+            </md-list>
+        </md-card>
+    </md-content>
+</div>
+<div class="animation_wrapper" ng-style="{'opacity': vm.UserService.logoOpacity, 'z-index': vm.UserService.logoZIndex}">
+    <div class="logo_hand">
+        <img src="styles/assets/logo_hand.png" alt="">
     </div>
+    <div class="logo_coin">
+        <img ng-style="{'opacity': vm.UserService.coinOpacity, 'padding-top': vm.UserService.coinPaddingTop}" src="styles/assets/logo_coin.png"
+            alt="">
+    </div>
+</div>

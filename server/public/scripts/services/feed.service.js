@@ -1,33 +1,31 @@
 myApp.service('FeedService', ['$http', '$location', '$route', '$mdDialog', '$window', function($http, $location, $route, $mdDialog, $window) {
-    let self = this;
+  let self = this;
 
+  self.newFeedItem = {};
+  self.allFeedItems = {list: []};
+  self.editFeedToggle = {show: false };
 
-    self.newFeedItem = {};
-    self.allFeedItems = {list: []};
-    self.editFeedToggle = {show: false };
+  self.getFileStackKey = function () {
+    let FILESTACK_KEY
+    $http.get('/filestack-key')
+    .then(response => {
+      FILESTACK_KEY = response.data;
+      self.client = filestack.init(FILESTACK_KEY);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
 
-    self.getFileStackKey = function () {
-      let FILESTACK_KEY
-      $http.get('/filestack-key')
-      .then(response => {
-        FILESTACK_KEY = response.data;
-        self.client = filestack.init(FILESTACK_KEY);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }
+  self.getFileStackKey()
 
-    // GET FILESTACK KEY
-    self.getFileStackKey()
-
-    self.addFeedItem = function(newFeed, newFeedImg){
-      if(!newFeed.id){
-        self.requireNonprofit();
+  self.addFeedItem = function(newFeed, newFeedImg){
+    if(!newFeed.id){
+      self.requireNonprofit();
+    } else {
+      if(newFeed.feed_video && newFeed.feed_img_url){
+        self.requireOnlyPhotoOrVideo();
       } else {
-        if(newFeed.feed_video && newFeed.feed_img_url){
-          self.requireOnlyPhotoOrVideo();
-        } else {
         console.log('added to feed', newFeed, newFeedImg);
         if (newFeed.feed_video){
           let indexToCut = newFeed.feed_video.lastIndexOf('=');
@@ -55,29 +53,27 @@ myApp.service('FeedService', ['$http', '$location', '$route', '$mdDialog', '$win
     }
   }
 
-//end addFeedItem
+  self.requireOnlyPhotoOrVideo = function(ev){
+    $mdDialog.show(
+      $mdDialog.alert()
+          .parent(angular.element(document.querySelector('#popupContainer')))
+          .clickOutsideToClose(true)
+          .title('Please upload photo OR video.')
+          .ok('OK')
+          .targetEvent(ev)
+    );
+  }
 
-self.requireOnlyPhotoOrVideo = function(ev){
-  $mdDialog.show(
-    $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Please upload photo OR video.')
-        .ok('OK')
-        .targetEvent(ev)
-  );
-}
-
-self.requireNonprofit = function(ev){
-  $mdDialog.show(
-    $mdDialog.alert()
-        .parent(angular.element(document.querySelector('#popupContainer')))
-        .clickOutsideToClose(true)
-        .title('Please select a nonprofit.')
-        .ok('OK')
-        .targetEvent(ev)
-  );
-}
+  self.requireNonprofit = function(ev){
+    $mdDialog.show(
+      $mdDialog.alert()
+          .parent(angular.element(document.querySelector('#popupContainer')))
+          .clickOutsideToClose(true)
+          .title('Please select a nonprofit.')
+          .ok('OK')
+          .targetEvent(ev)
+    );
+  }
 
   self.getFeedItems = function (){
     console.log('in get feed items');
@@ -91,7 +87,6 @@ self.requireNonprofit = function(ev){
       console.log('error in getting all feed items', error);
     })
   }
-// end getFeedItem
 
   self.confirmDeleteFeedItem = function(id, ev){
     let confirm = $mdDialog.confirm()
@@ -119,7 +114,6 @@ self.requireNonprofit = function(ev){
 
     })
   }
-// end deleteFeedItem
 
   self.displayFeedItem = function(id){
     $http({
@@ -164,15 +158,12 @@ self.requireNonprofit = function(ev){
         })
       }
   }
-  // end updateFeedItem
 
   self.cancelEditFeed = function(){
     console.log('in cancelEditFeed');
     self.newFeedItem = {};
-
     self.editFeedToggle.show = false;
     $route.reload();
-
   }
 
   self.feedPhotoUpload = function(){
@@ -189,6 +180,4 @@ self.requireNonprofit = function(ev){
     })
   }
 
-
-
-}]); // end service
+}]); 
