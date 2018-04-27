@@ -193,12 +193,12 @@ color: #4689DF;
 
   .example.example1 button {
     display: block;
-    width: calc(100% - 30px);
+    width: 100px;
     height: 40px;
-    margin: 40px 15px 0;
-    background-color: #FF5B9A;
+    margin: 40px 15px 0px;
+    background-color: #00C853;
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #FF5B9A;
+      inset 0 1px 0 #00C853;
     border-radius: 4px;
     color: #fff;
     font-weight: 600;
@@ -206,9 +206,9 @@ color: #4689DF;
   }
 
   .example.example1 button:active {
-    background-color: rgb(250, 128, 175);
+    background-color: rgb(88, 212, 140);
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgb(250, 128, 175);
+      inset 0 1px 0 rgb(88, 212, 140);
   }
 
   .example.example1 .error svg .base {
@@ -306,26 +306,6 @@ color: #4689DF;
 
 .example.example1 input:-ms-input-placeholder {
   color: #87bbfd;
-}
-
-.example.example1 button {
-  display: block;
-  width: calc(100% - 30px);
-  height: 40px;
-  margin: 40px 15px 0;
-  background-color: #FF5B9A;
-  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #FF5B9A;
-  border-radius: 4px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.example.example1 button:active {
-  background-color: rgb(250, 128, 175);
-  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgb(250, 128, 175);
 }
 
 .example.example1 .error svg .base {
@@ -455,6 +435,7 @@ h3 {
 .logo_coin {
   position: relative;
 }
+
 .postedDate {
   font-size: 10px;
   float: right;
@@ -462,19 +443,27 @@ h3 {
 }
 
 .feedButton{
-  font-size: 10px;
+  /* font-size: 10px; */
   float: right;
   min-width: 1%;
   min-height: 1%;
 }
 
-/* #adminFeedForm{
-  margin-top: 100px;
+#adminFeedForm{
+padding-left: 25%;
+padding-right: 25%;
+
 }
 
 #adminNonprofitForm{
-  margin-top: 100px;
-} */
+  padding-left: 25%;
+  padding-right: 25%;
+}
+
+.adminUserForm{
+  padding-left: 25%;
+  padding-right: 25%;
+}
 
 #dropMenu{
   z-index: 9000;
@@ -516,4 +505,21 @@ md-content {
 
 .admin_form {
   background-color: #ebe9e9
+}
+
+.md-button.admin_btn:not([disabled]):hover {
+  background-color: transparent;
+}
+
+
+
+.edit_btns{
+  float:right;
+}
+
+.adminButton {
+  float: right;
+  min-width: 1%;
+  min-height: 1%;
+  width: 130px;
 }

@@ -1,6 +1,7 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-<div ng-cloak class="content" >
-    <div id="adminNonprofitForm" style="width: 500px;" flex layout="column"  ng-cloak class="md-inline-form md-padding">
+
+<div ng-cloak class="content">
+    <div id="adminNonprofitForm"  flex layout="column"  ng-cloak class="md-inline-form md-padding">
       <h1>Nonprofits</h1><br>
       <md-content class="md-block admin_form" layout-padding>
         <form name="nonprofitForm">
@@ -32,7 +33,7 @@
           </md-input-container>
           <md-input-container class="md-block">
             <div>
-              <md-button class="md-primary md-raised feedButton" ng-click="vm.upload('logo')">Upload Logo</md-button>
+              <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.upload('logo')">Upload Logo</md-button>
             </div>
             <div>
               <img style="width: 100px;" ng-src="{{vm.newNonprofit.logo_url}}"/>
@@ -40,7 +41,7 @@
           </md-input-container>
           <md-input-container class="md-block">
             <div>
-              <md-button class="md-primary md-raised feedButton" ng-click="vm.upload('photo')">Upload Photo</md-button>
+              <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.upload('photo')">Upload Photo</md-button>
             </div>
             <div>
               <img style="width: 100px;" ng-src="{{vm.newNonprofit.picture_url}}"/>
@@ -56,24 +57,30 @@
             </textarea>
           </md-input-container> -->
           <div>
-            <md-button class="md-primary md-raised feedButton" ng-click="vm.addNonprofit(vm.newNonprofit)" >Submit Nonprofit</md-button>
+            <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-hide="vm.editNonprofitToggle.show" ng-click="vm.addNonprofit(vm.newNonprofit)">Add Nonprofit</md-button>
           </div>
           <div>
-            <md-button ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
+            <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
           </div>
         </form>
       </md-content><br>
-      <input style="margin-left: 20px; margin-right: 40px;" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox">
-
+      <br>
+      <div layout="row">
+        <div flex="5">
+          <i class="material-icons">search</i>
+        </div>
+        <div flex>
+          <input style="margin-left: 20px; margin-right: 40px;" type="text" placeholder="Search" ng-model="nonprofitSearchBox">
+        </div>
+      </div>
     </div>
-    <br>
-    <br>
+
 
   <!-- <input style="margin-left: 20px;" type="text" placeholder="Filter Nonprofits" ng-model="nonprofitSearchBox"> -->
 
-  <div class="md-padding" ng-cloak  layout="row" layout-wrap>
+  <div class="md-padding" ng-cloak  layout="row" layout-wrap layout-align="center center">
       <!-- the ng-hide hides cogiv from the list of nonprofits, it needs to be isted as a nonprofit in order to post to the feed -->
-    <md-card  ng-repeat="nonprofit in vm.allNonprofits.list | filter: nonprofitSearchBox" ng-hide="(nonprofit.name == 'cogiv')" flex="25" flex-sm="80">
+    <md-card  style="min-height: 600px;" ng-repeat="nonprofit in vm.allNonprofits.list | filter: nonprofitSearchBox" ng-hide="(nonprofit.name == 'cogiv')" flex="25" flex-sm="80">
       <md-card-header>
         <md-card-avatar>
           <img ng-src="{{nonprofit.logo_url}}"/>
@@ -90,9 +97,10 @@
       </md-card-title>
 
       <md-card-actions>
-        <md-button class="feedButton" ng-click="vm.editNonprofit(nonprofit.id)">Edit This Nonprofit</md-button>
-        <md-button class="feedButton" ng-click="vm.deleteNonprofit(nonprofit.id)">Delete This Nonprofit</md-button>
+        <md-button class="feedButton md-warn admin_btn" ng-click="vm.deleteNonprofit(nonprofit.id)"><i class="material-icons">delete</i></md-button>
+        <md-button style="color: #4689DF;" class="feedButton md-primary admin_btn" ng-click="vm.editNonprofit(nonprofit.id)"><i class="material-icons">edit</i></md-button>
       </md-card-actions>
+
     </md-card>
     <br>
   </div>

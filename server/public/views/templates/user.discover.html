@@ -10,9 +10,7 @@
     <md-card-header ng-hide="nonprofit.name == 'cogiv'">
       <div>
         <!-- Nonprofit image / anchor -->
-        <a layout="column" layout-align="start center" href='/#!/nonprofit-profile/{{nonprofit.id}}'>
-          <img class="nonprofit_image" ng-src="{{nonprofit.picture_url}}" alt="nonprofit">
-        </a>
+        <a layout="column" layout-align="start center" href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_image" ng-src="{{nonprofit.picture_url}}" alt="nonprofit"/></a>
         <br>
         <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
         <br>
