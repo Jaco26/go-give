@@ -13,7 +13,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       solo: {},
       topDonors: {}
     };
-    self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz");
+    self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
 
     self.addNonprofit = function (newNonprofit){
         console.log('add non profit', newNonprofit);
