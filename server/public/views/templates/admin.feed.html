@@ -1,67 +1,81 @@
 <div ng-include="'views/partials/admin.navbar.html'"></div>
-<div class="content">
-        <h1>Feed</h1>
+<div ng-cloak class="content" layout-align="center center">
+  <!-- <div class= "md-padding"> -->
 
+        <div id="adminFeedForm" layout="column" ng-cloak class="md-inline-form">
+          <h1>Feed</h1><br>
+          <md-content class="md-block admin_form" layout-padding>
+            <form name="feedForm" >
+              <div layout-gt-xs="row" ng-hide="vm.editFeedToggle.show">
+                <md-input-container>
+                  <label>Nonprofit</label>
+                    <md-select ng-model="vm.newFeedItem.id">
+                      <md-option ng-repeat="name in vm.allNonprofits.list" value="{{name.id}}">
+                        {{name.name}}
+                      </md-option>
+                    </md-select>
+                </md-input-container>
+              </div>
+              <md-input-container class="md-block">
+                  <label>Whats going on?</label>
+                  <textarea ng-model="vm.newFeedItem.feed_text" rows="3" md-select-on-focus>
+                  </textarea>
+                </md-input-container>
+              <md-input-container class="md-block">
+                <label>Place Video URL here</label>
+                <input type="text" ng-model="vm.newFeedItem.feed_video">
+              </md-input-container>
+              <div>
+                <img style="width: 100px;" ng-src="{{vm.newFeedItem.feed_img_url}}"/>
+              </div>
+              <md-input-container class="md-block">
+                <div layout="row" layout-align="end">
+                  <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.feedPhotoUpload()">Upload Photo</md-button>
+                </div>
+                <br>
+                  <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-hide="vm.editFeedToggle.show" ng-click="vm.addFeedItem(vm.newFeedItem, vm.feedImgUpload)">Add To Feed</md-button>
+                  <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Send Edits</md-button>
+                  <md-button class="md-warn md-raised adminButton" ng-show="vm.editFeedToggle.show" ng-click="vm.cancelEditFeed()">Cancel Edit</md-button>
+                </div>
+              </md-input-container>
+            </form>
+          </md-content>
+        <!-- </div> -->
+        <br>
+        <br>
 
+      <div layout-align="center center" layout="column">
+        <div style="width:33%;" class="feedBox" ng-repeat="item in vm.allFeedItems.list">
+          <!-- flex="30" layout-align="center center" layout="column" -->
+          <md-card  style="width:100%;">
+            <md-card-header>
+              <md-card-avatar>
+                <img style="border-radius: 50%;" ng-src="{{item.logo_url}}"/>
+              </md-card-avatar>
+              <md-card-header-text>
+                <span class="md-title">{{item.name}}</span>
+              </md-card-header-text>
+            </md-card-header>
+            <img ng-show="item.feed_img_url" ng-src="{{item.feed_img_url}}" class="md-card-image" alt="feed picture"/>
+          <div ng-show="item.feed_video_url">
+            <iframe  width="100%"
+                ng-src="{{vm.getIframeSrc(item.feed_video_url)}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
 
+            <md-card-content>
+              <p ng-bind-html="item.feed_text">{{item.feed_text}}</p>
+              <p class="postedDate">posted on: {{item.feed_date_posted.substring(0,10)}}</p>
+              <br>
+            </md-card-content>
+            <md-card-actions>
+                <md-button class="feedButton md-warn admin_btn" ng-click="vm.deleteFeedItem(item.id)"><i class="material-icons">delete</i></md-button>
+                <md-button class="feedButton md-primary admin_btn" ng-click="vm.displayFeedItem(item.id)"><i class="material-icons">edit</i></md-button>
+            </md-card-actions>
+          </md-card>
+          <br>
+        </div>
+    </div>
 
-        <div>
-        <div ng-hide="vm.editFeedToggle.show">
-                <label for ="nonprofitSelect">Select Nonprofit: </label>
-                <select name="nonprofitSelect" ng-model="vm.newFeedItem.id">
-                <option ng-repeat="name in vm.allNonprofits.list" value="{{name.id}}"
-                        label="{{name.name}}">{{name.id}}</option>
-                </select>
-        </div>
-        <div>
-                <label for="">Title</label>
-                <input type="text" ng-model="vm.newFeedItem.title"  placeholder="title">
-        </div>
-        <div>
-                <label>Feed Text</label>
-                <input type="text" ng-model="vm.newFeedItem.feed_text" placeholder="Feed text">
-        </div>
-        <div>
-                <label for="">Feed Img URL</label>
-                <button ng-click="vm.feedUpload('photo')">Upload Photo</button>
-                <p>{{vm.newFeedItem.feed_img}}</p>
-        </div>
-        <!-- <div>
-                <label>Picture Url</label>
-                <button ng-click="vm.upload('photo')">Upload Photo</button>
-                <p>{{vm.newNonprofit.picture_url}}</p>
-        </div> -->
-        <!-- <div>
-                <label for="">Feed Img URL</label>
-                <input type="text" ng-model="vm.newFeedItem.feed_img" placeholder="Img Url">
-        </div> -->
-        <div>
-                <label for="">Feed Video URL</label>
-                <input type="text" ng-model="vm.newFeedItem.feed_video" placeholder="Video">
-        </div>
-        <div ng-hide="vm.editFeedToggle.show">
-                <label for="">Date</label>
-                <input type="text" ng-model="vm.newFeedItem.feed_date" placeholder="Date" >
-        </div>
-        <div>
-        <button ng-click="vm.addFeedItem(vm.newFeedItem)">Submit Feed Item</button>
-        <button ng-click="vm.getFeedItems()">Get Feed Items</button>
-        <button ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Submit Edit</button>
-        </div>
-
-        <div>
-        <ul  ng-repeat="item in vm.allFeedItems.list">
-        <li>name: {{item.name}}</li><br>
-        <li>title: {{item.title}}</li><br>
-        <li>text: {{item.feed_text}}</li><br>
-        <li><img ng-src="{{item.feed_img_url}}" width="100px"/></li><br><br><br><br>
-        <li>video url: {{item.feed_video_url}}</li><br>
-        <li>date posted: {{item.feed_date_posted | limitTo: 10}}</li><br><br>
-        <button type="submit" ng-click="vm.displayFeedItem(item.id)">Edit</button>
-        <button type="submit" ng-click="vm.deleteFeedItem(item.id)">Delete</button>
-
-        </ul>
-        </div>
 </div>
 
 

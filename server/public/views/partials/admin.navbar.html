@@ -1,25 +1,31 @@
-<div class="navbar">
-    <div class="container nav">
-        <ul>
-            <li class="nav-link">
-                <md-menu>
-                    <md-button class="navBtn" ng-click="vm.UserService.openMenu($mdMenu, $event)">
-                    <i class="material-icons">menu</i>
-                    </md-button>
-                    <md-menu-content width="4">
-                    <md-menu-item>
-                        <md-button ng-href="#!feed">User View</md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button ng-click="vm.fbLogout()">Log Out</md-button>
-                    </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
-            </li>
-            <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-csv">CSV</md-button></li>
-            <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-feed">Feed</md-button></li>
-            <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-nonprofits">Nonprofits</md-button></li>
-            <li class="nav-link"><md-button class="navBtn" ng-href="#!admin-users">Users</md-button></li>
-        </ul>
+<div md-whiteframe class="navbar">
+    <div class="container nav" layout="row">
+        <div flex=20 class="nav-link_admin">
+            <md-menu>
+                <md-button class="navBtn admin_menu" ng-click="vm.UserService.openMenu($mdMenu, $event)">
+                <i class="material-icons">menu</i>
+                </md-button>
+                <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button class="md-primary" ng-href="#!feed">User View</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button class="md-warn" ng-click="vm.UserService.confirmLogout()">Log Out</md-button>
+                </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+        <div flex=25 class="nav-link_admin">
+            <md-button ng-hide="vm.UserService.currentPath === '/admin-feed'" class="navBtn" ng-href="#!admin-feed">Feed</md-button>
+            <md-button ng-if="vm.UserService.currentPath === '/admin-feed'" class="navBtn_visiting" ng-href="#!admin-feed">Feed</md-button>
+        </div>
+        <div flex=30 class="nav-link_admin">
+            <md-button ng-hide="vm.UserService.currentPath === '/admin-nonprofits'" class="navBtn" ng-href="#!admin-nonprofits">Nonprofits</md-button>
+            <md-button ng-if="vm.UserService.currentPath === '/admin-nonprofits'" class="navBtn_visiting" ng-href="#!admin-nonprofits">Nonprofits</md-button>
+        </div>
+        <div flex=20 class="nav-link_admin">
+            <md-button ng-hide="vm.UserService.currentPath === '/admin-users'" class="navBtn" ng-href="#!admin-users">Users</md-button>
+            <md-button ng-if="vm.UserService.currentPath === '/admin-users'" class="navBtn_visiting" ng-href="#!admin-users">Users</md-button>
+        </div>
     </div>
 </div>

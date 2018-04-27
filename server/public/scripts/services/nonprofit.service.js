@@ -3,12 +3,17 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
     let self = this;
 
     self.newNonprofit = {};
-    self.allNonprofits = {};
+    self.allNonprofits = {
+      list: [],
+      receivedDonations: {},
+    };
     self.editNonprofitToggle = {show: false};
     self.soloNonprofit = {};
-    self.nonprofitToDisplay = {};
-    self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz")
-
+    self.nonprofitToDisplay = {
+      solo: {},
+      topDonors: {}
+    };
+    self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
 
     self.addNonprofit = function (newNonprofit){
         console.log('add non profit', newNonprofit);
@@ -17,7 +22,6 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
             url:'/nonprofit',
             data: newNonprofit
         }).then(function(response){
-            // console.log('success in post', response);
             self.newNonprofit = {}
             $route.reload();
         }).catch(function(error){
@@ -25,20 +29,47 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         })
     }
 
+    // GET ALL NONPROFIT INFO
     self.getAllNonprofit = function (){
       console.log('in get all nonprofits -- service');
       $http({
         method: 'GET',
         url: '/nonprofit'
       }).then(function(response){
-        // console.log('success in get all', response);
-        self.allNonprofits.list = response.data.rows
-        console.log(self.allNonprofits.list, 'list of all nonprofits');
+        self.allNonprofits.list = response.data.rows;
+        self.getReceivedDonationsForNonprofits()
+        console.log(self.allNonprofits.list, 'ALL NONPROFITS!!!');
+        // self.getTopDonors();
       }).catch(function(error){
         console.log('error in get all', error);
       })
     }
     //end get allNonprofits
+
+    // GET TOTALS RECEIVED FOR EACH NONPROFIT
+    self.getReceivedDonationsForNonprofits = function () {
+      let nonprofitIds = self.allNonprofits.list.map(item => item.id);
+      $http.get(`/nonprofit/donation-history/${nonprofitIds}`)
+          .then(response => {
+            self.allNonprofits.receivedDonations = response.data;
+            console.log('',self.allNonprofits);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    }
+
+    // GET TOP DONORS BY NONPROFIT
+    self.getTopDonors = function (nonprofitId) {
+      $http.get(`/nonprofit/top-donors/${nonprofitId}`)
+      .then(response => {
+        console.log('TOP DONORS RESPONSE ******', response.data);
+        self.nonprofitToDisplay.topDonors = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
 
     self.editNonprofit = function(id){
       console.log('in edit nonprofit', id);
@@ -67,11 +98,13 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         self.editNonprofitToggle.show = true;
         self.newNonprofit.name = self.soloNonprofit.name;
         self.newNonprofit.description = self.soloNonprofit.description;
-        self.newNonprofit.goal = self.soloNonprofit.goal_value;
+        self.newNonprofit.goal_value = self.soloNonprofit.goal_value;
         self.newNonprofit.goal_description = self.soloNonprofit.goal_description;
         self.newNonprofit.picture_url = self.soloNonprofit.picture_url;
         self.newNonprofit.logo_url = self.soloNonprofit.logo_url;
         self.newNonprofit.id = self.soloNonprofit.id;
+        self.newNonprofit.state = self.soloNonprofit.state;
+        self.newNonprofit.city = self.soloNonprofit.city;
       })
     }
     //end populateEditFields
@@ -96,10 +129,13 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
 
     self.displaySoloNonprofit = function(id){
       console.log('in displaySoloNonprofit', id);
+      self.getTopDonors(id);
       self.getSoloNonprofit(id)
         .then(function(){
-          // console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
+          console.log(self.soloNonprofit, 'soloNonprofit in displaySoloNonprofit');
           self.nonprofitToDisplay.solo = self.soloNonprofit;
+          console.log('self.nonprofitToDisplay##@@@###@@@###', self.nonprofitToDisplay);
+
         })
     }
 
@@ -124,17 +160,16 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         maxFiles: 1
       }).then(function(result){
         console.log(result, 'filestack upload');
-        $route.reload();
 
-        if (type == 'photo'){
+
+        if (type == 'photo') {
         self.newNonprofit.picture_url = result.filesUploaded[0].url;
-        console.log('self.newNonprofit.picture_url', self.newNonprofit.picture_url)
+        console.log('self.newNonprofit.picture_url', self.newNonprofit.picture_url);
       } else if(type == 'logo') {
         self.newNonprofit.logo_url = result.filesUploaded[0].url;
-        console.log('self.newNonprofit.logo_url', self.newNonprofit.logo_url)
+        console.log('self.newNonprofit.logo_url', self.newNonprofit.logo_url);
       }
-
-
+      $route.reload();
       })
     }
 

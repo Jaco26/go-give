@@ -3,10 +3,24 @@ body {
   background-color: white;
 }
 
+main {
+  margin-top: 60px;
+}
+
+html {
+  background-color: white;
+}
+
 .navbar {
     width: 100%;
     border-radius: 0px;
     padding-left: 0px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    height: 60px;
+    padding-top: 0px;
 }
 
 ul {
@@ -25,10 +39,9 @@ li a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 0px 16px;
     text-decoration: none;
 }
-
 
 li a:hover {
     text-decoration: underline;
@@ -40,16 +53,61 @@ li a:hover {
     margin: 20px;
 }
 
+.nav-link_admin {
+  margin-top: 10px;
+  margin-left: 25px;
+}
+
 .md-button.navBtn {
     color: #B7B7B7;
     font-size: 16px;
     letter-spacing: 2.5px;
 }
 
+.md-button.navBtn:not([disabled]):hover {
+  background-color: transparent;
+  color: #4689DF;
+}
+
+.md-button.navBtn_visiting {
+  color: #4689DF;
+  font-size: 16px;
+  letter-spacing: 2.5px;
+}
+
+.md-button.navBtn_visiting:not([disabled]):hover {
+background-color: transparent;
+color: #4689DF;
+}
+
 .md-button.menu {
-  margin-top: 10px;
+  margin-top: 2px;
   color: #B7B7B7;
   min-width: 1%;
+}
+
+.md-button.menu:not([disabled]):hover {
+  background-color: transparent;
+  color: #4689DF;
+}
+
+.md-button.admin_menu {
+  margin-top: 12px;
+  padding-right: 5px;
+  color: #B7B7B7;
+  min-width: 1%;
+}
+
+.md-button.admin_menu:not([disabled]):hover {
+  background-color: transparent;
+  color: #4689DF;
+}
+
+.md-button.login_btn {
+  color: white;
+  width: 200px;
+  font-weight: bolder;
+  background-color: #0770D9;
 }
 
 .example.example1 * {
@@ -57,7 +115,7 @@ li a:hover {
     font-size: 16px;
     font-weight: 500;
   }
-  
+
   .example.example1 fieldset {
     margin: 0 15px 20px;
     padding: 0;
@@ -67,7 +125,7 @@ li a:hover {
       inset 0 1px 0 #829fff;
     border-radius: 4px;
   }
-  
+
   .example.example1 .row {
     display: -ms-flexbox;
     display: flex;
@@ -75,11 +133,11 @@ li a:hover {
     align-items: center;
     margin-left: 15px;
   }
-  
+
   .example.example1 .row + .row {
     border-top: 1px solid #819efc;
   }
-  
+
   .example.example1 label {
     width: 15%;
     min-width: 70px;
@@ -89,7 +147,7 @@ li a:hover {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  
+
   .example.example1 input, .example.example1 button {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -97,22 +155,22 @@ li a:hover {
     outline: none;
     border-style: none;
   }
-  
+
   .example.example1 input:-webkit-autofill {
     -webkit-text-fill-color: #fce883;
     transition: background-color 100000000s;
     -webkit-animation: 1ms void-animation-out;
   }
-  
+
   .example.example1 .StripeElement--webkit-autofill {
     background: transparent !important;
   }
-  
+
   .example.example1 .StripeElement {
     width: 100%;
     padding: 11px 15px 11px 0;
   }
-  
+
   .example.example1 input {
     width: 100%;
     padding: 11px 15px 11px 0;
@@ -120,80 +178,177 @@ li a:hover {
     background-color: transparent;
     -webkit-animation: 1ms void-animation-out;
   }
-  
+
   .example.example1 input::-webkit-input-placeholder {
     color: #87bbfd;
   }
-  
+
   .example.example1 input::-moz-placeholder {
     color: #87bbfd;
   }
-  
+
   .example.example1 input:-ms-input-placeholder {
     color: #87bbfd;
   }
-  
+
   .example.example1 button {
     display: block;
-    width: calc(100% - 30px);
+    width: 100px;
     height: 40px;
-    margin: 40px 15px 0;
-    background-color: #FF5B9A;
+    margin: 40px 15px 0px;
+    background-color: #00C853;
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 #FF5B9A;
+      inset 0 1px 0 #00C853;
     border-radius: 4px;
     color: #fff;
     font-weight: 600;
     cursor: pointer;
   }
-  
+
   .example.example1 button:active {
-    background-color: rgb(250, 128, 175);
+    background-color: rgb(88, 212, 140);
     box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgb(250, 128, 175);
+      inset 0 1px 0 rgb(88, 212, 140);
   }
-  
+
   .example.example1 .error svg .base {
     fill: #fff;
   }
-  
+
   .example.example1 .error svg .glyph {
     fill: #6772e5;
   }
-  
+
   .example.example1 .error .message {
     color: #fff;
   }
-  
+
   .example.example1 .success .icon .border {
     stroke: #87bbfd;
   }
-  
+
   .example.example1 .success .icon .checkmark {
     stroke: #fff;
   }
-  
+
   .example.example1 .success .title {
     color: #fff;
   }
-  
+
   .example.example1 .success .message {
     color: #9cdbff;
   }
-  
+
   .example.example1 .success .reset path {
     fill: #fff;
   }
 
-  .form {
-    padding: 30px;
-    width: 400px;
-    background-color: lightgray;
-    margin: 10px;
-  }
+.example.example1 .row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.example.example1 .row + .row {
+  border-top: 1px solid #819efc;
+}
+
+.example.example1 label {
+  width: 15%;
+  min-width: 70px;
+  padding: 11px 0;
+  color: #D8F1FE;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.example.example1 input, .example.example1 button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border-style: none;
+}
+
+.example.example1 input:-webkit-autofill {
+  -webkit-text-fill-color: #fce883;
+  transition: background-color 100000000s;
+  -webkit-animation: 1ms void-animation-out;
+}
+
+.example.example1 .StripeElement--webkit-autofill {
+  background: transparent !important;
+}
+
+.example.example1 .StripeElement {
+  width: 100%;
+  padding: 11px 15px 11px 0;
+}
+
+.example.example1 input {
+  width: 100%;
+  padding: 11px 15px 11px 0;
+  color: #fff;
+  background-color: transparent;
+  -webkit-animation: 1ms void-animation-out;
+}
+
+.example.example1 input::-webkit-input-placeholder {
+  color: #87bbfd;
+}
+
+.example.example1 input::-moz-placeholder {
+  color: #87bbfd;
+}
+
+.example.example1 input:-ms-input-placeholder {
+  color: #87bbfd;
+}
+
+.example.example1 .error svg .base {
+  fill: #fff;
+}
+
+.example.example1 .error svg .glyph {
+  fill: #6772e5;
+}
+
+.example.example1 .error .message {
+  color: #fff;
+}
+
+.example.example1 .success .icon .border {
+  stroke: #87bbfd;
+}
+
+.example.example1 .success .icon .checkmark {
+  stroke: #fff;
+}
+
+.example.example1 .success .title {
+  color: #fff;
+}
+
+.example.example1 .success .message {
+  color: #9cdbff;
+}
+
+.example.example1 .success .reset path {
+  fill: #fff;
+}
+
+.form {
+  padding: 30px;
+  /* width: 400px; */
+  background-color: lightgray;
+  margin: 10px;
+}
 
 .material-icons {
-    padding-top: 6px;
+    padding-top: 0px;
 }
 
 .creditCard {
@@ -205,20 +360,13 @@ li a:hover {
   background-color: #D8F1FE;
 }
 
-.content {
-  margin-top: 0px;
-  /* padding-top: 0px;
-  padding: 20px; */
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
 .nonprofit_image {
-  max-width: 300px;
+  width: 100%;
 }
 
 .feed_image {
-  max-width: 250px;
+  /* max-width: 240px; */
+  width: 100%;
 }
 
 .nonprofit_logo {
@@ -233,16 +381,27 @@ li a:hover {
 
 h1 {
   margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .nonprofit_link {
   font-size: 130%;
   text-decoration: none;
   font-weight: bolder;
+  color: black;
 }
 
 .nonprofit_link:visited {
   color: black;
+}
+
+.discover_link {
+  text-decoration: none;
+  color: #4689DF;
+}
+
+.discover_link:visited {
+  color: #4689DF;
 }
 
 .login {
@@ -250,6 +409,8 @@ h1 {
   width: 400px;
   position: absolute;
   margin: auto;
+
+
   top: 0;
   right: 0;
   bottom: 0;
@@ -259,10 +420,106 @@ h1 {
 
 .donatedNonprofits {
   text-align: center;
+  padding-bottom: 30px;
 }
 
-.strong {
-  font-size: 130%;
-  text-decoration: none;
-  font-weight: bolder;
+h3 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.logo_hand {
+  position: absolute;
+}
+
+.logo_coin {
+  position: relative;
+}
+
+.postedDate {
+  font-size: 10px;
+  float: right;
+  padding: 0px;
+}
+
+.feedButton{
+  /* font-size: 10px; */
+  float: right;
+  min-width: 1%;
+  min-height: 1%;
+}
+
+#adminFeedForm{
+padding-left: 25%;
+padding-right: 25%;
+
+}
+
+#adminNonprofitForm{
+  padding-left: 25%;
+  padding-right: 25%;
+}
+
+.adminUserForm{
+  padding-left: 25%;
+  padding-right: 25%;
+}
+
+#dropMenu{
+  z-index: 9000;
+}
+
+md-content {
+  height: 100%;
+  background-color: white;
+}
+
+.animation_wrapper {
+  position: absolute;
+  top: 45%;
+  left: 55%;
+  margin: -100px 0 0 -100px;
+  /* z-index: -1; */
+}
+
+.donation-dialog {
+  z-index: 900;
+}
+
+.content {
+  padding-top: 35px;
+  padding-left: 30px;
+}
+
+.header {
+  padding-top: 35px;
+  padding-left: 30px;
+  padding-bottom: 10px;
+}
+
+.profile_header {
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-bottom: 10px;
+}
+
+.admin_form {
+  background-color: #ebe9e9
+}
+
+.md-button.admin_btn:not([disabled]):hover {
+  background-color: transparent;
+}
+
+
+
+.edit_btns{
+  float:right;
+}
+
+.adminButton {
+  float: right;
+  min-width: 1%;
+  min-height: 1%;
+  width: 130px;
 }

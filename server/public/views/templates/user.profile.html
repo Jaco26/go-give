@@ -1,11 +1,74 @@
 <div ng-include="'views/partials/user.navbar.html'"></div>
-<div class="content">
-    <h1>{{vm.UserService.user.name}}</h1>
-    <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.oneTimeDonations">
-        <a href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt=""></a>
-        <br>
-        <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
-        <br>
-        You've donated ${{nonprofit.totalCharged / 100}}.00
+
+    <div layout flex>
+        <div flex>
+            <div class="profile_header">
+                <div layout="row">
+                    <div flex=20>
+                        <img style="border-radius: 50%; width: 75px;" ng-src="https://graph.facebook.com/{{vm.UserService.userObject.fromOurDB.fb_id}}/picture"/>
+                    </div>
+                    <div flex style="padding-top: 10px; padding-left: 20px;">
+                        <h1>{{vm.UserService.userObject.fromOurDB.name}}</h1>
+                        <div ng-if="vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal > 0">
+                            Your total impact: <span style="font-weight: bolder;">{{vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal / 100 | currency}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content" ng-hide="vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.allTimeTotal > 0">
+                <h4>You have not yet donated to any nonprofits.
+                <br> 
+                <a class="discover_link" ng-href="#!discover">Click here</a> to discover nonprofits in your area.</h4>
+            </div>
+            <br>
+                <div class="donatedNonprofits" ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals">
+                    <a href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}"/></a>
+                    <br>
+                    <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
+                    <br>
+                    Your impact: <span style="font-weight: bolder;">{{nonprofit.sum / 100 | currency}}</span>
+                </div>
+        </div>
     </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+<!--
+
+<md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+    md-row-height-gt-md="1:1"
+    md-row-height="3:2"
+    md-gutter="12px" md-gutter-gt-sm="8px"
+    layout layout-padding>
+
+    <md-grid-tile
+    ng-repeat="nonprofit in vm.UserService.userObject.fromOurDB.donationHistory.totalsSummary.grandTotals"
+    md-rowspan="1"
+    md-rowspan-gt-xs="2"
+    md-colspan="1" >
+
+        <md-grid-tile-header layout layout-padding>
+            <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}' ng-click="">{{nonprofit.name}}</a>
+        </md-grid-tile-header>
+
+        <a href='/#!/nonprofit-profile/{{nonprofit.id}}'>
+            <img class="nonprofit_logo_user" ng-src="{{nonprofit.logo_url}}" alt="">
+        </a>
+
+        <md-grid-tile-footer layout layout-padding>
+             You've donated {{nonprofit.sum / 100 | currency}}
+        </md-grid-tile-footer>
+
+    </md-grid-tile>
+
+
+</md-grid-list>
+
+-->

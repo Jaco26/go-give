@@ -1,0 +1,25 @@
+<div ng-include="'views/partials/user.navbar.html'"></div>
+<div class="content" ng-cloak>
+    <h1>Subscriptions</h1>
+    <br>
+    <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length == 0">
+        <h4>You are not currently subscribed to any nonprofits. <a class="discover_link" ng-href="#!discover">Click here</a> to discover nonprofits in your area.</h4>
+    </div>
+    <div ng-if="vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data.length > 0" ng-repeat="subscription in vm.UserService.userObject.stripeCustomerInfo.customerObject.subscriptions.data">
+        <div ng-repeat="nonprofit in vm.NonprofitService.allNonprofits.list">
+           <div ng-if="nonprofit.product_id == subscription.plan.product">
+             <a href='/#!/nonprofit-profile/{{nonprofit.id}}'><img class="nonprofit_logo" ng-src="{{nonprofit.logo_url}}" alt=""></a>
+             <a class="nonprofit_link" href='/#!/nonprofit-profile/{{nonprofit.id}}'>{{nonprofit.name}}</a>
+           </div>
+        </div>
+        <div style="padding-left: 80px;">
+            {{subscription.plan.amount / 100 | currency}}/month
+            <br>
+            Start Date: {{ subscription.start * 1000 | date}}
+            <br>
+            <md-button ng-click="vm.confirmUnsubscribe(subscription.id, $event)" class="md-raised md-warn">Unsubscribe</md-button>
+        </div>
+        <br>
+        <br>
+    </div>
+</div>

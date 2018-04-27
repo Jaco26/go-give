@@ -1,23 +1,32 @@
 myApp.service('FeedService', ['$http', '$location', '$route', function($http, $location, $route) {
-
     let self = this;
 
     self.newFeedItem = {};
-    self.allFeedItems = {};
+    self.allFeedItems = {list: []};
     self.editFeedToggle = {show: false };
-    self.client = filestack.init("AK86VsSwcSeSUJAN5iXmTz")
+    self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
 
-    self.addFeedItem = function( newFeedItem){
-        console.log('added to feed', newFeedItem);
+    self.addFeedItem = function(newFeed, newFeedImg){
+        console.log('added to feed', newFeed, newFeedImg);
+        if (newFeed.feed_video){
+          let indexToCut = newFeed.feed_video.lastIndexOf('=');
+          newFeed.feed_video = newFeed.feed_video.substring(indexToCut+1);
+          console.log(newFeed.feed_video, 'truncated video url');
+        }
         $http({
             method: 'POST',
             url: '/feed',
-            data: newFeedItem
+            data: {newFeed :newFeed, newFeedImg: newFeedImg}
         }).then(function(response){
-            // console.log('success in feed item', response);
-            self.newFeedItem = {}
-            $route.reload();
+            console.log('success in feed item', response);
+            self.newFeedItem.name = '';
+            self.newFeedItem.title = '';
+            self.newFeedItem.feed_text = '';
+            self.newFeedItem.feed_video = '';
+            self.newFeedItem.feed_img_url = '';
+            self.newFeedItem.id = '';
             self.getFeedItems();
+            $route.reload();
         }).catch(function(error){
             console.log('error in adding a feed',error)
         })
@@ -30,8 +39,8 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
       method:'GET',
       url: '/feed'
     }).then(function(response){
-      // console.log('success in feed item get', response);
       self.allFeedItems.list = response.data.rows;
+      console.log(self.allFeedItems.list, 'feed items');
     }).catch(function(error){
       console.log('error in getting all feed items', error);
     })
@@ -54,7 +63,6 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 // end deleteFeedItem
 
   self.displayFeedItem = function(id){
-    // console.log('in display feed');
     $http({
       method:'GET',
       url:`/feed/${id}`
@@ -64,12 +72,10 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 
         self.editFeedToggle.show = true;
         console.log('self.editFeedToggle', self.editFeedToggle);
-        $route.reload();
         self.newFeedItem.name = editableFeedItem.name;
-        self.newFeedItem.feed_img = editableFeedItem.feed_img_url;
+        self.newFeedItem.feed_img_url = editableFeedItem.feed_img_url;
         self.newFeedItem.feed_text = editableFeedItem.feed_text;
         self.newFeedItem.feed_video = editableFeedItem.feed_video_url;
-        self.newFeedItem.feed_date = editableFeedItem.feed_date_posted;
         self.newFeedItem.title = editableFeedItem.title;
         self.newFeedItem.id = editableFeedItem.id;
     }).catch((error) => {
@@ -97,18 +103,27 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
   }
   // end updateFeedItem
 
-  self.feedUpload = function(type){
-    console.log('in feedUpload');
+  self.cancelEditFeed = function(){
+    console.log('in cancelEditFeed');
+    self.newFeedItem = {};
+
+    self.editFeedToggle.show = false;
+    $route.reload();
+
+  }
+
+  self.feedPhotoUpload = function(){
+    console.log('in upload');
     self.client.pick({
-      accept:'image/*',
+      accept: 'image/*',
       maxFiles: 1
     }).then(function(result){
-      console.log('feedFilestack upload', result);
+      console.log(result, 'filestack upload');
+      self.newFeedItem.feed_img_url = result.filesUploaded[0].url;
+      console.log('self.newFeedItem.feed_img_url', self.newFeedItem.feed_img_url);
       $route.reload();
-      self.newFeedItem.feed_img = result.filesUploaded[0].url;
-      console.log('self.newFeedItem.feed_img_url', self.newFeedItem.feed_img);
+
     })
-    
   }
 
 
