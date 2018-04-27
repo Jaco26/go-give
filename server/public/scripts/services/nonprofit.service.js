@@ -1,7 +1,7 @@
 myApp.service('NonprofitService', ['$http', '$location', '$route', function($http, $location, $route) {
 
     let self = this;
-
+    
     self.newNonprofit = {};
     self.allNonprofits = {
       list: [],
@@ -13,7 +13,23 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
       solo: {},
       topDonors: {}
     };
-    self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
+  
+ 
+  self.getFileStackKey = function () {
+    let FILESTACK_KEY;
+    $http.get('/filestack-key')
+      .then(response => {
+        FILESTACK_KEY = response.data;
+        self.client = filestack.init(FILESTACK_KEY);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  // GET FILESTACK KEY
+  self.getFileStackKey();
+  
 
     self.addNonprofit = function (newNonprofit){
         console.log('add non profit', newNonprofit);
@@ -36,6 +52,7 @@ myApp.service('NonprofitService', ['$http', '$location', '$route', function($htt
         method: 'GET',
         url: '/nonprofit'
       }).then(function(response){
+ 
         self.allNonprofits.list = response.data.rows;
         self.getReceivedDonationsForNonprofits()
         console.log(self.allNonprofits.list, 'ALL NONPROFITS!!!');
