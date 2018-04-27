@@ -34,7 +34,7 @@
                 </div>
                 <br>
                   <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-hide="vm.editFeedToggle.show" ng-click="vm.addFeedItem(vm.newFeedItem, vm.feedImgUpload)">Add To Feed</md-button>
-                  <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Send Edits</md-button>
+                  <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-show="vm.editFeedToggle.show" ng-click="vm.updateFeedItem(vm.newFeedItem)">Submit Edits</md-button>
                   <md-button class="md-warn md-raised adminButton" ng-show="vm.editFeedToggle.show" ng-click="vm.cancelEditFeed()">Cancel Edit</md-button>
                 </div>
               </md-input-container>
@@ -68,7 +68,7 @@
               <br>
             </md-card-content>
             <md-card-actions>
-                <md-button class="feedButton md-warn admin_btn" ng-click="vm.deleteFeedItem(item.id)"><i class="material-icons">delete</i></md-button>
+                <md-button class="feedButton md-warn admin_btn" ng-click="vm.confirmDeleteFeedItem(item.id, $event)"><i class="material-icons">delete</i></md-button>
                 <md-button class="feedButton md-primary admin_btn" ng-click="vm.displayFeedItem(item.id)"><i class="material-icons">edit</i></md-button>
             </md-card-actions>
           </md-card>

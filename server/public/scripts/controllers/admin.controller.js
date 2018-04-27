@@ -25,21 +25,23 @@ myApp.controller('AdminController', ['UserService', 'NonprofitService','FeedServ
     self.feedPhotoUpload = FeedService.feedPhotoUpload;
 
     self.editNonprofit = NonprofitService.editNonprofit;
-    self.deleteNonprofit = NonprofitService.deleteNonprofit;
+    self.cancelEditNonprofit = NonprofitService.cancelEditNonprofit
+    self.confirmDeleteNonprofit = NonprofitService.confirmDeleteNonprofit;
     self.submitEditedNonprofit = NonprofitService.submitEditedNonprofit;
-    self.editNonprofitToggle = NonprofitService.editNonprofitToggle
+    self.editNonprofitToggle = NonprofitService.editNonprofitToggle;
+    self.cropAlert = NonprofitService.cropAlert;
     self.upload = NonprofitService.upload;
     self.feedImgUpload = NonprofitService.feedImgUpload;
 
     self.updateFeedItem = FeedService.updateFeedItem;
-    self.deleteFeedItem = FeedService.deleteFeedItem;
+    self.confirmDeleteFeedItem = FeedService.confirmDeleteFeedItem;
     self.displayFeedItem = FeedService.displayFeedItem;
     self.editFeedToggle = FeedService.editFeedToggle;
 
     self.userArray = UserService.userArray;
     self.getAllUsers = UserService.getAllUsers;
     self.getAllUsers();
-    self.deleteUser = UserService.deleteUser;
+    self.confirmDeleteUser = UserService.confirmDeleteUser;
 
     self.getIframeSrc = function (videoId) {
       return 'https://www.youtube.com/embed/' + videoId;

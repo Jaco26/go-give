@@ -21,7 +21,7 @@
                 {{user.first_name}} {{user.last_name}}
             </div>
             <div style="padding-top: 10px;">
-                <md-button class="md-warn admin_btn" ng-click="vm.deleteUser(user.id)"><i class="material-icons">delete</i></md-button>
+                <md-button class="md-warn admin_btn" ng-click="vm.confirmDeleteUser(user.id, $event)"><i class="material-icons">delete</i></md-button>
             </div>
         </div>
     </div>
