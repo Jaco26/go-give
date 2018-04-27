@@ -212,6 +212,19 @@ myApp.service('UserService', ['$http', '$location', '$window', '$route', '$mdDia
       });
   }
 
+  self.confirmDeleteUser = function(id, ev){
+    let confirm = $mdDialog.confirm()
+        .title('Are you sure you want to delete this user?')
+        .targetEvent(ev)
+        .ok('DELETE')
+        .cancel('CANCEL');
+    $mdDialog.show(confirm).then(function() {
+      self.deleteUser(id);
+    }, function() {
+      console.log('cancel delete user');
+    });
+  }
+
 self.deleteUser = function (id){
   console.log('in Delete user');
   $http({

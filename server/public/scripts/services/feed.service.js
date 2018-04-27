@@ -1,12 +1,18 @@
-myApp.service('FeedService', ['$http', '$location', '$route', function($http, $location, $route) {
-    let self = this;
+myApp.service('FeedService', ['$http', '$location', '$route', '$mdDialog', '$window', function($http, $location, $route, $mdDialog, $window) {
+  let self = this;
 
-    self.newFeedItem = {};
-    self.allFeedItems = {list: []};
-    self.editFeedToggle = {show: false };
-    self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
+  self.newFeedItem = {};
+  self.allFeedItems = {list: []};
+  self.editFeedToggle = {show: false };
+  self.client = filestack.init("A9UMmW5TQR3WuVWEcKYKJz");
 
-    self.addFeedItem = function(newFeed, newFeedImg){
+  self.addFeedItem = function(newFeed, newFeedImg){
+    if(!newFeed.id){
+      self.requireNonprofit();
+    } else {
+      if(newFeed.feed_video && newFeed.feed_img_url){
+        self.requireOnlyPhotoOrVideo();
+      } else {
         console.log('added to feed', newFeed, newFeedImg);
         if (newFeed.feed_video){
           let indexToCut = newFeed.feed_video.lastIndexOf('=');
@@ -29,9 +35,33 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
             $route.reload();
         }).catch(function(error){
             console.log('error in adding a feed',error)
-        })
+        })        
+      }        
     }
+  }
 //end addFeedItem
+
+self.requireOnlyPhotoOrVideo = function(ev){
+  $mdDialog.show(
+    $mdDialog.alert()
+        .parent(angular.element(document.querySelector('#popupContainer')))
+        .clickOutsideToClose(true)
+        .title('Please upload photo OR video.')
+        .ok('OK')
+        .targetEvent(ev)
+  );
+}
+
+self.requireNonprofit = function(ev){
+  $mdDialog.show(
+    $mdDialog.alert()
+        .parent(angular.element(document.querySelector('#popupContainer')))
+        .clickOutsideToClose(true)
+        .title('Please select a nonprofit.')
+        .ok('OK')
+        .targetEvent(ev)
+  );
+}
 
   self.getFeedItems = function (){
     console.log('in get feed items');
@@ -46,6 +76,19 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     })
   }
 // end getFeedItem
+
+  self.confirmDeleteFeedItem = function(id, ev){
+    let confirm = $mdDialog.confirm()
+        .title('Are you sure you want to delete this feed item?')
+        .targetEvent(ev)
+        .ok('DELETE')
+        .cancel('CANCEL');
+    $mdDialog.show(confirm).then(function() {
+      self.deleteFeedItem(id);
+    }, function() {
+      console.log('cancel delete user');
+    });    
+  }
 
   self.deleteFeedItem = function(id) {
     console.log('delete item');
@@ -78,28 +121,32 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
         self.newFeedItem.feed_video = editableFeedItem.feed_video_url;
         self.newFeedItem.title = editableFeedItem.title;
         self.newFeedItem.id = editableFeedItem.id;
+        $window.scrollTo(0, 0);
     }).catch((error) => {
       console.log('error in display', error);
     })
-    }
-
+  }
 
   self.updateFeedItem = function(newFeedItem) {
-    console.log('updated feed item');
-    $http({
-      method:'PUT',
-      url:`/feed`,
-      data: newFeedItem
-    }).then((response)=> {
-      console.log('success in update', response);
-      self.editFeedToggle.show = false;
-      self.newFeedItem = {};
-      self.getFeedItems();
-      $route.reload();
+    if(newFeedItem.feed_video && newFeedItem.feed_img_url){
+      self.requireOnlyPhotoOrVideo();
+    } else {
+        console.log('updated feed item');
+        $http({
+          method:'PUT',
+          url:`/feed`,
+          data: newFeedItem
+        }).then((response)=> {
+          console.log('success in update', response);
+          self.editFeedToggle.show = false;
+          self.newFeedItem = {};
+          self.getFeedItems();
+          $route.reload();
 
-    }).catch((error) => {
-      console.log('error in update', error);
-    })
+        }).catch((error) => {
+          console.log('error in update', error);
+        })
+      }
   }
   // end updateFeedItem
 

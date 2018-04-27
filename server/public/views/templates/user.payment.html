@@ -3,7 +3,7 @@
     <h1>Payment Info</h1>
     <br>
     <div layout="row">
-        <div flex>
+        <div>
             <md-card class="creditCard">
                 <br>
                 <h3>{{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.brand.toUpperCase()}}</h3>
@@ -11,8 +11,8 @@
                 #### #### #### {{vm.UserService.userObject.stripeCustomerInfo.customerObject.sources.data[0].card.last4}}
             </md-card>
         </div>
-        <div style="padding-top: 120px" flex ng-hide="vm.editingCard == true">
-            <!-- <md-button style="color: #4689DF;" ng-click="vm.editingCard = true"><i class="material-icons">edit</i></md-button> -->
+        <div style="padding-top: 120px;" ng-hide="vm.editingCard == true">
+            <md-button style="color: #4689DF;" ng-click="vm.editingCard = true"><i class="material-icons">edit</i></md-button>
         </div>
     </div>
     <div ng-show="vm.editingCard == true">
@@ -27,12 +27,12 @@
             </form>
         </div>
         <md-button ng-click="vm.editingCard = false" class="md-raised">Cancel</md-button>
-        <md-button ng-click="vm.updateCard(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
+        <md-button style="background-color: #00C853" ng-click="vm.updateCard(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
     </div>
     <br>
     <div ng-hide="vm.editingEmail == true">
         {{vm.UserService.userObject.stripeCustomerInfo.customerObject.email}}
-        <!-- <md-button style="color: #4689DF;" ng-click="vm.editingEmail = true"><i class="material-icons edit_btns">edit</i></md-button> -->
+        <md-button style="color: #4689DF;" ng-click="vm.editingEmail = true"><i class="material-icons">edit</i></md-button>
     </div>
 
     <div ng-show="vm.editingEmail == true">
@@ -47,7 +47,7 @@
             </form>
         </div>
         <md-button ng-click="vm.editingEmail = false; updateEmail(vm.updatedEmail)" class="md-raised">Cancel</md-button>
-        <md-button ng-click="vm.updateEmail(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
+        <md-button style="background-color: #00C853" ng-click="vm.updateEmail(vm.UserService.userObject.stripeCustomerInfo.customerObject.id)" class="md-primary md-raised">Save Changes</md-button>
     </div>
     <br>
     <br>

@@ -33,7 +33,7 @@
           </md-input-container>
           <md-input-container class="md-block">
             <div>
-              <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.upload('logo')">Upload Logo</md-button>
+              <md-button style="background-color: #4689DF;" class="md-primary md-raised adminButton" ng-click="vm.cropAlert('logo', $event)">Upload Logo</md-button>
             </div>
             <div>
               <img style="width: 100px;" ng-src="{{vm.newNonprofit.logo_url}}"/>
@@ -61,6 +61,8 @@
           </div>
           <div>
             <md-button style="background-color: #00C853;" class="md-primary md-raised adminButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.submitEditedNonprofit(vm.newNonprofit)">Submit Edits</md-button>
+            <md-button class="md-warn md-raised adminButton" ng-show="vm.editNonprofitToggle.show" ng-click="vm.cancelEditNonprofit()">Cancel Edit</md-button>
+
           </div>
         </form>
       </md-content><br>
@@ -83,7 +85,7 @@
     <md-card  style="min-height: 600px;" ng-repeat="nonprofit in vm.allNonprofits.list | filter: nonprofitSearchBox" ng-hide="(nonprofit.name == 'cogiv')" flex="25" flex-sm="80">
       <md-card-header>
         <md-card-avatar>
-          <img ng-src="{{nonprofit.logo_url}}"/>
+          <img style="border-radius: 50%" ng-src="{{nonprofit.logo_url}}"/>
         </md-card-avatar>
         <md-card-header-text>
           <span class="md-title">{{nonprofit.name}}</span>
@@ -95,9 +97,11 @@
           <span class="md-headline">{{nonprofit.name}}</span>
         </md-card-title-text>
       </md-card-title>
-
+      <md-card-content>
+        {{nonprofit.description}}
+      </md-card-content>
       <md-card-actions>
-        <md-button class="feedButton md-warn admin_btn" ng-click="vm.deleteNonprofit(nonprofit.id)"><i class="material-icons">delete</i></md-button>
+        <md-button class="feedButton md-warn admin_btn" ng-click="vm.confirmDeleteNonprofit(nonprofit.id, $event)"><i class="material-icons">delete</i></md-button>
         <md-button style="color: #4689DF;" class="feedButton md-primary admin_btn" ng-click="vm.editNonprofit(nonprofit.id)"><i class="material-icons">edit</i></md-button>
       </md-card-actions>
 
