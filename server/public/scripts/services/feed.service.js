@@ -5,7 +5,6 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
     self.newFeedItem = {};
     self.allFeedItems = {list: []};
     self.editFeedToggle = {show: false };
-
     
     self.getFileStackKey = function () {
       let FILESTACK_KEY
@@ -21,6 +20,7 @@ myApp.service('FeedService', ['$http', '$location', '$route', function($http, $l
 
     // GET FILESTACK KEY
     self.getFileStackKey()
+
 
     self.addFeedItem = function(newFeed, newFeedImg){
         console.log('added to feed', newFeed, newFeedImg);
