@@ -36,15 +36,32 @@ You will need to create a .env file in the project root. There you will need to 
 STRIPE_SECRET_KEY=‘<YOUR_KEY_HERE>’
 FACEBOOK_APP_SECRET='<YOUR_KEY_HERE>'
 FACEBOOK_APP_ID='<YOUR_KEY_HERE>'
-SERVER_SESSION_SECRET='VCHADLQncP4P2B59vQ4C'
+SERVER_SESSION_SECRET='<YOUR_KEY_HERE>'
 FILESTACK_KEY='<YOUR_KEY_HERE>'
 DEV=‘false’
 DEPLOY_REDIRECT_URL=’https://cogiv.herokuapp.com/auth/facebook/callback'
 LOCALHOST_REDIRECT_URL=‘https://localhost:4430/auth/facebook/callback’
 ```
 
+You will also need to create a database: 
+
+In Postico, create a "New Favorite" with "Host" set to ``localhost`` and "Port" set to ``5432``. Then create a new "Database" named ``co_giv``. Next, copy and paste the contents of the ``database.sql`` file into the SQL Query window.
 
 
-You will need to create a database: 
+You will need to create and register a new application with Facebook.
+Go to developers.facebook.com and log in.
+From the 'My Apps' menu on the top right select 'add a new app'.
+Enter the information when prompted, and click 'Create App Id'.
+After that In the 'Facebook Login' box select 'Set Up'.
+Select 'Web'.
+Enter the sites Url and click continur.
+Hit next through the next 3 pages.
+Copy the App Id and paste it into youe .env file.
+Select the main settings, then 'basic'. Click 'show secret', then copy and paste that into youe .env.
 
-In Postico, after starting create a "New Favorite" with "Host" set to ``localhost`` and "Port" set to ``5432``. 
+You will need to provide Facebook with a Valid OAuth Redirect URI:
+for local development use 'https://localhost:4430/auth/facebook/callback'.
+For deployment replace 'localhost:4430' with the site domain.
+
+You will need to provide Facebook with the domain of the site, do this in the basic settings, for local development use 'localhost:4430' for deployment use the site domain.
+Also, in the basic settings provide the site URL, again for local development use 'localhost:4430' and for deployment use the app domain.
